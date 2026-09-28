@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  command = ""         # no build step for plain HTML
+
+# Private client deliverable: keep it (and the source .md files) out of search engines
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
