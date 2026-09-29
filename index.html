@@ -17,9 +17,12 @@
   --solar:#e0a800; --day:#f3dd8f; --load:#2a78d6; --charge:#12925a; --drain:#dd7a00; --gen:#c63b1f; --on-gen:#ffffff;
   --lp:#7d8a92; --neutral:#5b6870; --soc:#55646d;
   --danger:#c42b2b; --danger-bg:#fcecec; --danger-ink:#8e1d1d;
+  --good:#18843a; --bad:#c42b2b; --pending:#b36b00;
   --shadow:0 1px 2px rgba(16,24,28,.05);
-  --font-ui:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --font-din:Bahnschrift,"DIN Alternate","DIN Next","D-DIN","Roboto Condensed","Arial Narrow",system-ui,sans-serif;
+  /* Reading serif from the device: Charter/Iowan (Apple), Sitka (Windows), Noto Serif (Android) */
+  --font-serif:Charter,"Iowan Old Style","Sitka Text",Cambria,Georgia,"Noto Serif",serif;
+  --font-head:Charter,"Iowan Old Style","Sitka Heading","Sitka Text",Cambria,Georgia,"Noto Serif",serif;
   --gutter:16px; --tabbar-h:50px;
 }
 @media (prefers-color-scheme:dark){
@@ -31,6 +34,7 @@
     --solar:#e3b12b; --day:#4d4114; --load:#4a92ea; --charge:#22a566; --drain:#cf7818; --gen:#ee5b3d; --on-gen:#1a0b06;
     --lp:#8d9aa1; --neutral:#9aa7ae; --soc:#c2ced4;
     --danger:#f05252; --danger-bg:#3a1719; --danger-ink:#ffc2c2;
+    --good:#43c06f; --bad:#f26565; --pending:#f0a830;
     --shadow:none;
   }
 }
@@ -42,6 +46,7 @@
   --solar:#e3b12b; --day:#4d4114; --load:#4a92ea; --charge:#22a566; --drain:#cf7818; --gen:#ee5b3d; --on-gen:#1a0b06;
   --lp:#8d9aa1; --neutral:#9aa7ae; --soc:#c2ced4;
   --danger:#f05252; --danger-bg:#3a1719; --danger-ink:#ffc2c2;
+    --good:#43c06f; --bad:#f26565; --pending:#f0a830;
   --shadow:none;
 }
 @media (min-width:720px){ :root{ --gutter:28px; } }
@@ -49,13 +54,13 @@
 /* ---------- base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--font-ui);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font-serif);font-variant-numeric:lining-nums;-webkit-font-smoothing:antialiased}
 svg{max-width:100%}
 a{color:inherit;text-decoration-color:var(--line-2);text-underline-offset:3px}
 a:hover{text-decoration-color:currentColor}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:3px}
 [hidden]{display:none!important}
-h1,h2,h3,h4{font-family:var(--font-din);font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:600;line-height:1.2;margin:0;text-wrap:balance}
 p{margin:0}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .skip{position:absolute;left:12px;top:-60px;z-index:50;background:var(--ink);color:var(--bg);padding:8px 12px;border-radius:6px}
@@ -65,6 +70,7 @@ p{margin:0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
 .est{display:inline-block;font:600 10.5px/1 var(--font-din);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);border:1px dashed var(--line-2);border-radius:4px;padding:3px 5px 2px;vertical-align:2px;white-space:nowrap}
 .tag{display:inline-block;font:600 10.5px/1 var(--font-din);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:3px 5px 2px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.tag.opt{color:var(--ink);background:transparent;border:1px dashed var(--ink-2)}
 .key{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--c);flex:none}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
 .lk{display:inline-block;width:18px;border-top:2.5px solid var(--c);flex:none}
@@ -73,11 +79,11 @@ p{margin:0}
 /* ---------- masthead ---------- */
 .masthead{padding-block:22px 26px;display:grid;gap:12px}
 .mast-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.masthead h1{font-size:clamp(28px,5vw,42px);letter-spacing:-.005em}
-.lede{max-width:68ch;color:var(--ink-2);font-size:16px}
-.status{display:inline-flex;align-items:center;gap:9px;width:fit-content;font-weight:600;font-size:14px;padding:5px 13px 5px 10px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface)}
+.masthead h1{font-size:clamp(30px,5vw,46px);letter-spacing:-.01em}
+.lede{max-width:64ch;color:var(--ink-2);font-size:17.5px;line-height:1.55}
+.status{display:inline-flex;align-items:center;gap:9px;width:fit-content;font-weight:600;font-size:14.5px;padding:5px 14px 5px 10px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface)}
 .status-mark{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink);background:linear-gradient(90deg,var(--ink) 50%,transparent 50%)}
-.theme-btn{display:inline-flex;align-items:center;gap:6px;font:500 13px var(--font-ui);color:var(--ink-2);background:transparent;border:1px solid var(--line-2);border-radius:999px;padding:5px 11px;cursor:pointer}
+.theme-btn{display:inline-flex;align-items:center;gap:6px;font:500 13.5px var(--font-din);color:var(--ink-2);background:transparent;border:1px solid var(--line-2);border-radius:999px;padding:5px 11px;cursor:pointer}
 .theme-btn:hover{color:var(--ink);border-color:var(--ink-2)}
 .theme-btn svg{width:15px;height:15px}
 .keyfigs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:6px 0 0;border-block:1px solid var(--line)}
@@ -86,7 +92,7 @@ p{margin:0}
 .keyfigs dt{font:500 11.5px/1.3 var(--font-din);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .keyfigs dd{margin:4px 0 0;font:500 15px/1.2 var(--font-din);color:var(--ink-2)}
 .keyfigs dd b{font-size:28px;font-weight:600;color:var(--ink);margin-right:3px}
-.keyfigs small{display:block;font:13px/1.35 var(--font-ui);color:var(--muted);margin-top:4px}
+.keyfigs small{display:block;font:14px/1.4 var(--font-serif);color:var(--muted);margin-top:4px}
 @media (max-width:719px){
   .keyfigs{grid-template-columns:repeat(2,minmax(0,1fr))}
   .keyfigs>div:nth-child(3){padding-left:0;border-left:0}
@@ -94,27 +100,37 @@ p{margin:0}
 }
 
 /* ---------- tabs ---------- */
-.tabbar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
-.tabs{display:flex;gap:4px}
-.tabs [role=tab]{appearance:none;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;padding:13px 12px 11px;font:600 15px/1.2 var(--font-din);letter-spacing:.01em;color:var(--muted);cursor:pointer}
-.tabs [role=tab]:first-child{padding-left:0}
-.tabs [role=tab]:hover{color:var(--ink)}
-.tabs [role=tab][aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
+.tabbar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 8px 14px -12px rgba(0,0,0,.45)}
+.tabs{display:flex;gap:10px;padding-block:10px;overflow-x:auto}
+.tabs [role=tab]{appearance:none;display:flex;align-items:center;gap:11px;padding:9px 18px 9px 13px;border:1.5px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink-2);font:600 15.5px/1.15 var(--font-din);letter-spacing:.01em;text-align:left;white-space:nowrap;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.25);transition:background .15s,border-color .15s,color .15s}
+.tabs [role=tab]:hover{border-color:var(--ink-2);color:var(--ink);background:var(--surface-2)}
+.tabs [role=tab][aria-selected=true]{background:var(--ink);border-color:var(--ink);color:var(--bg);box-shadow:none}
+.tabs .ti{width:20px;height:20px;flex:none}
+.tabs .tl{display:grid;gap:3px}
+.tabs .td{font:400 12.5px/1.2 var(--font-serif);letter-spacing:0;color:var(--muted)}
+.tabs [aria-selected=true] .td{color:inherit;opacity:.72}
 .tabs .sm{display:none}
-@media (max-width:430px){ .tabs .lg{display:none} .tabs .sm{display:inline} .tabs [role=tab]{padding-inline:10px} }
+@media (max-width:719px){ .tabs{gap:8px} .tabs .td{display:none} .tabs [role=tab]{gap:8px;padding:9px 13px 9px 10px} }
+@media (max-width:430px){ .tabs .lg{display:none} .tabs .sm{display:inline} .tabs [role=tab]{padding:9px 11px 9px 9px;font-size:15px} .tabs .ti{width:18px;height:18px} }
+@media (max-width:370px){ .tabs .ti{display:none} }
+.next{display:flex;justify-content:flex-end;margin-top:32px}
+.next .btn{padding:12px 18px;font-size:15.5px}
 
 /* ---------- panels & blocks ---------- */
 .panel{padding-block:4px 56px}
-.block{margin-top:44px}
-.block-head{display:grid;gap:6px;margin-bottom:16px}
-.block-head h2{font-size:24px}
-.block-head p{color:var(--ink-2);max-width:72ch}
-.footnote{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);max-width:80ch}
+.block{margin-top:56px}
+.block-head{display:grid;gap:8px;margin-bottom:18px}
+.block-head h2{font-size:28px;letter-spacing:-.005em}
+.block-head p{color:var(--ink-2);max-width:68ch}
+.sub-h{font-size:21px;margin:34px 0 8px}
+.block-head+.sub-h{margin-top:4px}
+.sub-p{color:var(--ink-2);max-width:68ch;margin-bottom:14px}
+.footnote{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);max-width:76ch}
 
 /* ---------- tables ---------- */
 .tbl-wrap{overflow-x:auto}
-.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
-.tbl th,.tbl td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+.tbl{width:100%;border-collapse:collapse;font-size:15.5px;line-height:1.55}
+.tbl th,.tbl td{text-align:left;vertical-align:top;padding:13px 16px;border-bottom:1px solid var(--line)}
 .tbl tbody tr:last-child>*{border-bottom:0}
 .tbl thead th{font:600 11.5px/1.3 var(--font-din);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--surface-2);white-space:nowrap}
 .tbl thead th:first-child{border-top-left-radius:9px}
@@ -122,7 +138,7 @@ p{margin:0}
 .tbl .rid{font:600 14px/1.4 var(--font-din);color:var(--ink-2);white-space:nowrap}
 .tbl .rtitle{display:block;font-weight:600}
 .tbl .soft{color:var(--ink-2)}
-.tbl .n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl .n{font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
 @media (max-width:719px){
   .stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   .stack,.stack tbody,.stack tr,.stack td,.stack th{display:block;width:100%}
@@ -145,56 +161,67 @@ p{margin:0}
 .oneline{display:block;width:100%;height:auto}
 .oneline .box{fill:var(--surface);stroke:var(--line-2);stroke-width:1.2}
 .oneline .pc{fill:var(--pc-fill);stroke:var(--ink-2);stroke-width:1.4}
-.oneline .nt{font:600 13px var(--font-ui);fill:var(--ink)}
-.oneline .ns{font:11px var(--font-ui);fill:var(--muted)}
+.oneline .nt{font:600 13.5px var(--font-head);fill:var(--ink)}
+.oneline .ns{font:400 11.5px var(--font-din);fill:var(--ink-2)}
 .oneline .port{font:600 10px var(--font-din);letter-spacing:.06em;fill:var(--ink-2)}
 .oneline .pcl{font:600 10.5px var(--font-din);letter-spacing:.09em;fill:var(--ink)}
 .oneline .jn{fill:var(--load)}
+.oneline .rl{font:600 9.5px var(--font-din);letter-spacing:.02em;fill:var(--ink)}
 .w{fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .w-solar{stroke:var(--solar)} .w-batt{stroke:var(--charge)} .w-gen{stroke:var(--gen)} .w-load{stroke:var(--load)} .w-lp{stroke:var(--lp)}
 .w-sig{stroke:var(--ink-2);stroke-width:1.6;stroke-dasharray:5 4;stroke-linecap:butt}
 .ah-solar{fill:var(--solar)} .ah-batt{fill:var(--charge)} .ah-gen{fill:var(--gen)} .ah-load{fill:var(--load)} .ah-sig{fill:var(--ink-2)} .ah-lp{fill:var(--lp)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
 .legend>span{display:inline-flex;align-items:center;gap:7px}
-.howto{display:grid;gap:16px;align-content:start}
-.howto h3{font-size:19px}
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
-.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;max-width:62ch}
-.steps li::before{content:counter(s);display:block;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink-2);font:600 14px/23px var(--font-din);text-align:center;color:var(--ink)}
+.howto{display:grid;gap:18px;align-content:start}
+.howto h3{font-size:22px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:16px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;max-width:60ch;font-size:16.5px;line-height:1.55}
+.steps li::before{content:counter(s);display:block;width:26px;height:26px;margin-top:1px;border-radius:50%;border:1.5px solid var(--ink-2);font:600 14px/23px var(--font-din);text-align:center;color:var(--ink)}
 .steps b{font-weight:600}
-.aside{font-size:14px;color:var(--ink-2);max-width:62ch;padding-top:14px;border-top:1px solid var(--line)}
+.aside{font-size:15px;color:var(--ink-2);max-width:60ch;padding-top:16px;border-top:1px solid var(--line)}
 
 /* ---------- equipment nameplates ---------- */
-.plates{display:grid;gap:12px}
-.plate{display:grid;gap:12px 28px;padding:16px 18px}
-@media (min-width:760px){ .plate{grid-template-columns:250px minmax(0,1fr)} }
-.plate-id{display:grid;gap:4px;align-content:start}
+.plates{display:grid;gap:14px}
+.plate{display:grid;gap:14px 32px;padding:18px 20px}
+@media (min-width:760px){ .plate{grid-template-columns:260px minmax(0,1fr)} }
+.plate-id{display:grid;gap:5px;align-content:start}
 .plate-cat{display:flex;align-items:center;gap:8px;font:600 11.5px/1.3 var(--font-din);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.plate-name{font:600 18px/1.25 var(--font-din);color:var(--ink)}
-.plate-qty{font-size:13.5px;color:var(--ink-2)}
-.plate-qty b{font:600 15px var(--font-din);color:var(--ink)}
-.plate-src{font-size:12.5px;color:var(--muted);margin-top:2px}
-.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 20px;margin:0}
-.specs>div{border-top:1px solid var(--line);padding-top:6px}
+.plate-name{font:600 20px/1.25 var(--font-head);color:var(--ink)}
+.plate-qty{font-size:15px;color:var(--ink-2)}
+.plate-qty b{font:600 15.5px var(--font-din);color:var(--ink)}
+.plate-src{font-size:14px;color:var(--muted);margin-top:2px}
+.plate-links{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:3px;font-size:14.5px}
+.plate-links a{color:var(--ink-2)}
+.plate-links li:first-child a{color:var(--ink);font-weight:600}
+.plate-body{display:grid;gap:14px;align-content:start}
+.plate.optional,.sel.optional{border-style:dashed;border-color:var(--line-2);background:transparent;box-shadow:none}
+.st.opt{--c:var(--muted);border-style:dashed}
+.optnote{margin:14px 0 0;padding:12px 14px;border-radius:8px;background:var(--surface-2);font-size:15.5px;line-height:1.5;color:var(--ink-2);max-width:78ch}
+.optnote b{color:var(--ink)}
+.opts .badge.soft{background:transparent;color:var(--ink);border:1px dashed var(--ink-2)}
+.plate-what{font-size:16px;line-height:1.5;color:var(--ink-2);max-width:66ch}
+.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px 22px;margin:0}
+.specs>div{border-top:1px solid var(--line);padding-top:7px}
 .specs dt{font:500 11px/1.3 var(--font-din);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.specs dd{margin:3px 0 0;font:600 15.5px/1.3 var(--font-din);color:var(--ink);font-variant-numeric:tabular-nums}
-.specs dd small{display:block;font:400 12.5px/1.35 var(--font-ui);color:var(--ink-2)}
+.specs dd{margin:4px 0 0;font:600 16px/1.3 var(--font-din);color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.specs dd small{display:block;margin-top:2px;font:400 14px/1.4 var(--font-serif);color:var(--ink-2)}
 
 /* ---------- capacity ---------- */
-.cap{padding:2px 18px}
-.cap-row{display:grid;gap:12px 32px;padding:16px 0;border-bottom:1px solid var(--line)}
+.cap{padding:2px 20px}
+.cap-row{display:grid;gap:14px 36px;padding:20px 0;border-bottom:1px solid var(--line)}
 .cap-row:last-child{border-bottom:0}
 @media (min-width:840px){ .cap-row{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center} }
-.cap-text h3{font-size:16.5px}
-.cap-text dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:6px 0 0;font-size:14px}
+.cap-text h3{font-size:19px}
+.cap-text dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:8px 0 0;font-size:15.5px;line-height:1.5}
 .cap-text dt{color:var(--muted)}
 .cap-text dd{margin:0}
-.cap-verdict{margin-top:6px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
-.cap-bars{display:grid;gap:9px}
-.cbar{display:grid;grid-template-columns:66px minmax(0,1fr) 96px;align-items:center;gap:10px;font-size:12.5px}
+.cap-verdict{margin-top:8px;font-size:15px;color:var(--ink-2)}
+.cap-bars{display:grid;gap:10px}
+.cbar{display:grid;grid-template-columns:66px minmax(0,1fr) 96px;align-items:center;gap:10px;font:500 13.5px var(--font-din)}
 .cbar .lbl{font:500 11px/1.2 var(--font-din);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .cbar .trk{display:flex;height:12px;background:var(--surface-2);border-radius:2px}
-.cbar .val{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.cbar .val{font-variant-numeric:lining-nums tabular-nums;color:var(--ink-2)}
 .cseg{height:100%;min-width:3px;background:var(--c)}
 .cseg:last-child{border-radius:0 4px 4px 0}
 .cseg+.cseg{margin-left:2px}
@@ -203,32 +230,70 @@ p{margin:0}
 @media (max-width:480px){ .cbar{grid-template-columns:58px minmax(0,1fr);} .cbar .val{grid-column:2;margin-top:-4px} }
 
 /* ---------- equipment selection ---------- */
-.sel-list{display:grid;gap:18px}
-.sel{padding:18px 18px 6px}
+.sel-list{display:grid;gap:24px}
+.sel{padding:22px 20px 8px}
 .sel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.sel-head h3{font-size:21px}
+.sel-head h3{font-size:24px}
 .sel-count{font:500 12px var(--font-din);letter-spacing:.08em;color:var(--muted)}
-.minspec{margin:12px 0 14px;padding:12px 14px;background:var(--surface-2);border-radius:8px}
-.minspec h4{font:600 11.5px/1.3 var(--font-din);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.minspec ul{margin:0;padding:0;list-style:none;display:grid;gap:4px 24px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));font-size:14px}
-.minspec li{position:relative;padding-left:16px}
-.minspec li::before{content:"";position:absolute;left:1px;top:.55em;width:7px;height:7px;border:1.5px solid var(--ink-2);border-radius:1px}
-.opts{margin-inline:-18px}
-.opts .tbl{font-size:14px}
-.opts .tbl th:first-child,.opts .tbl td:first-child{padding-left:18px}
-.opts .tbl th:last-child,.opts .tbl td:last-child{padding-right:18px}
+.minspec{margin:14px 0 16px;padding:14px 16px;background:var(--surface-2);border-radius:8px}
+.minspec h4{font:600 11.5px/1.3 var(--font-din);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.minspec ul{margin:0;padding:0;list-style:none;display:grid;gap:5px 28px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));font-size:15.5px;line-height:1.5}
+.minspec li{position:relative;padding-left:17px}
+.minspec li::before{content:"";position:absolute;left:1px;top:.6em;width:7px;height:7px;border:1.5px solid var(--ink-2);border-radius:1px}
+.opts{margin-inline:-20px}
+.opts .tbl{font-size:15px;line-height:1.5}
+.opts .tbl th:first-child,.opts .tbl td:first-child{padding-left:20px}
+.opts .tbl th:last-child,.opts .tbl td:last-child{padding-right:20px}
 .opts thead th{border-radius:0!important}
 .opts ul{margin:0;padding:0;list-style:none}
-.opts li{position:relative;padding-left:14px;margin:2px 0}
+.opts li{position:relative;padding-left:14px;margin:3px 0}
 .opts li::before{content:"·";position:absolute;left:3px;color:var(--muted)}
-.opts .pro li::before{content:"+";left:0;color:var(--ink-2);font-weight:700}
-.opts .con li::before{content:"−";left:0;color:var(--ink-2);font-weight:700}
-.opts .oname{font:600 15px/1.3 var(--font-din);min-width:150px}
+.opts .pro li,.opts .con li{padding-left:18px}
+.opts .pro li::before,.opts .con li::before{left:0;top:-1px;font:700 17px/1.4 var(--font-din)}
+.opts .pro li::before{content:"+";color:var(--good)}
+.opts .con li::before{content:"−";color:var(--bad)}
+.pm{font:700 16px/1 var(--font-din);margin-right:3px}
+.pm.good{color:var(--good)} .pm.bad{color:var(--bad)}
+.opts .stack td.pro[data-label]::before{color:var(--good)}
+.opts .stack td.con[data-label]::before{color:var(--bad)}
+.st{display:inline-grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--c);color:var(--c);font:700 12px/1 var(--font-din)}
+.st.ok{--c:var(--good)} .st.wait{--c:var(--pending)}
+.met{display:flex;gap:10px;align-items:flex-start}
+.met .st{margin-top:2px}
+.owner{display:inline-block;font:600 11.5px/1 var(--font-din);letter-spacing:.07em;text-transform:uppercase;padding:5px 8px 4px;border-radius:4px;border:1px solid var(--line-2);color:var(--ink);white-space:nowrap}
+.cap-verdict.met .st{margin-top:1px;width:18px;height:18px;font-size:11px}
+.story b{font:600 1em var(--font-din);letter-spacing:.01em}
+.chip .ic{color:var(--c)}
+.chip.off .ic{color:var(--muted)}
+.opts .oname{font:600 16.5px/1.3 var(--font-head);min-width:150px}
 .opts .badge{display:inline-block;margin-top:6px;font:600 10.5px/1 var(--font-din);letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--bg);border-radius:4px;padding:4px 6px 3px}
 .opts tr.pick{background:var(--surface-2)}
 .opts tr.alt{color:var(--ink-2)}
 .opts tr.alt .oname{color:var(--ink-2)}
-.opts col.c-opt{width:20%} .opts col.c-key{width:34%} .opts col.c-pro,.opts col.c-con{width:23%}
+.opts col.c-opt{width:18%} .opts col.c-key{width:30%} .opts col.c-pro,.opts col.c-con{width:20%} .opts col.c-price{width:12%}
+.opts td.price,.sum-tbl td.price{font:600 15px/1.4 var(--font-din);white-space:nowrap}
+.opts .oname a{color:inherit}
+.sel{scroll-margin-top:calc(var(--tabbar-h) + 16px)}
+.sum-tbl th a.jump{color:var(--ink);text-decoration-color:var(--line-2)}
+.sum-tbl .pickname{display:inline-flex;gap:8px;align-items:flex-start}
+.sum-tbl .pickname .st{width:18px;height:18px;font-size:11px;margin-top:2px}
+.sum-tbl .pickname a{color:var(--ink);font-weight:600}
+.subtotal{margin-top:14px;font-size:16px;color:var(--ink-2)}
+.subtotal b{font:600 18px var(--font-din);color:var(--ink)}
+.callouts{display:grid;gap:12px;margin:18px 0 28px}
+@media (min-width:760px){ .callouts{grid-template-columns:1fr 1fr} }
+.callout{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);font-size:15.5px;line-height:1.5}
+.callout .st{margin-top:2px}
+.screened{margin:0 0 16px;font-size:15px}
+.screened summary{cursor:pointer;font-weight:600;color:var(--ink-2);width:fit-content}
+.screened summary .cnt{font:500 14px var(--font-din);color:var(--muted)}
+.screened ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:5px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.screened li{position:relative;padding-left:18px;color:var(--ink-2)}
+.screened li::before{content:"×";position:absolute;left:1px;top:-1px;font:700 16px/1.5 var(--font-din);color:var(--bad)}
+.screened li b{color:var(--ink);font-weight:600}
+.screened.none{color:var(--muted);font-size:14.5px}
+.also{margin:14px 0 12px;font-size:15px;color:var(--ink-2)}
+.also b{color:var(--ink)}
 @media (max-width:719px){
   .opts{margin-inline:0;padding-bottom:12px}
   .opts .stack tr{border:1px solid var(--line);border-radius:8px;margin-bottom:10px;padding:12px 14px}
@@ -238,28 +303,28 @@ p{margin:0}
 }
 
 /* ---------- controls ---------- */
-.btn{display:inline-flex;align-items:center;gap:7px;font:600 14px/1 var(--font-ui);padding:9px 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:7px;font:600 14.5px/1 var(--font-din);letter-spacing:.01em;padding:10px 15px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
 .btn:hover{border-color:var(--ink-2)}
 .btn svg{width:14px;height:14px}
 .btn-ink{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .btn-ink:hover{border-color:var(--ink)}
 .seg{border:0;margin:0;padding:0;min-width:0}
-.seg legend{font-weight:600;font-size:14px;padding:0;margin-bottom:6px}
+.seg legend{font-weight:600;font-size:15.5px;padding:0;margin-bottom:8px}
 .seg-opts{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border-radius:9px;background:var(--surface-2);border:1px solid var(--line)}
 .seg-opts input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
-.seg-opts label{padding:6px 11px;border-radius:6px;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;white-space:nowrap}
-.seg-opts label small{font-weight:400;font-size:12px;color:var(--muted);margin-left:4px}
+.seg-opts label{padding:7px 12px;border-radius:6px;font:600 14px/1.2 var(--font-din);color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.seg-opts label small{font-weight:400;font-size:12.5px;color:var(--muted);margin-left:5px}
 .seg-opts input:checked+label{background:var(--ink);color:var(--bg)}
 .seg-opts input:checked+label small{color:inherit;opacity:.75}
 .seg-opts input:focus-visible+label{outline:2px solid var(--focus);outline-offset:1px}
 .seg.inline{display:flex;align-items:center;gap:8px}
-.seg.inline legend{float:left;margin:0;font-weight:500;font-size:13px;color:var(--ink-2)}
-.ctl{display:grid;gap:2px;margin-top:14px}
+.seg.inline legend{float:left;margin:0;font-weight:400;font-size:14.5px;color:var(--ink-2)}
+.ctl{display:grid;gap:3px;margin-top:22px}
 .ctl:first-of-type{margin-top:0}
 .ctl-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.ctl-top label{font-weight:600;font-size:14px}
-.ctl output{font:600 15px var(--font-din);font-variant-numeric:tabular-nums;white-space:nowrap}
-.help{font-size:12.5px;color:var(--muted)}
+.ctl-top label{font-weight:600;font-size:15.5px}
+.ctl output{font:600 16px var(--font-din);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.help{font-size:14px;line-height:1.5;color:var(--muted)}
 .rng{position:relative}
 input[type=range]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:26px;margin:0;background:transparent;cursor:pointer;position:relative;z-index:1;--f:0;
   --tb:linear-gradient(90deg,var(--ink-2) 0 calc(10px + (100% - 20px) * var(--f)),var(--track) 0)}
@@ -272,39 +337,44 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--fo
 input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--focus);outline-offset:2px}
 #time{--tb:linear-gradient(90deg,var(--track) 0 var(--rise),var(--day) var(--rise) var(--set),var(--track) var(--set))}
 .reftick{position:absolute;top:5px;height:16px;width:2px;margin-left:-1px;background:var(--ink-2);left:calc(10px + (100% - 20px) * var(--f));z-index:0}
-.ticklabels{position:relative;height:16px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ticklabels{position:relative;height:18px;font:12px/1.4 var(--font-din);color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
 .ticklabels span{position:absolute;left:calc(10px + (100% - 20px) * var(--f));transform:translateX(-50%);white-space:nowrap}
 .ticklabels span.first{left:0;transform:none}
 .ticklabels span.last{left:auto;right:0;transform:none}
 
 /* ---------- simulator ---------- */
-.sim{display:grid;gap:16px;grid-template-areas:"live" "ctl"}
-@media (min-width:960px){ .sim{grid-template-columns:minmax(300px,370px) minmax(0,1fr);grid-template-areas:"ctl live";gap:24px;align-items:start} }
-.sim-live{grid-area:live;padding:16px 18px 18px;min-width:0}
-@media (min-width:960px) and (min-height:800px){ .sim-live{position:sticky;top:calc(var(--tabbar-h) + 14px)} }
-.sim-ctl{grid-area:ctl;display:grid;gap:14px;align-content:start;min-width:0}
-.ctl-card{padding:14px 16px 16px}
-.ctl-card>h3{font:600 12px/1.3 var(--font-din);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ctl-card .seg+.seg,.ctl-card .seg+.ctl{margin-top:14px}
-.timebar{display:grid;gap:4px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.sim{display:grid;gap:20px;grid-template-areas:"live" "ctl"}
+@media (min-width:960px){ .sim{grid-template-columns:minmax(300px,380px) minmax(0,1fr);grid-template-areas:"ctl live";gap:28px;align-items:start} }
+.sim-live{grid-area:live;padding:20px 22px 22px;min-width:0}
+.sim-live.stick{position:sticky;top:calc(var(--tabbar-h) + 14px)}
+.sim-ctl{grid-area:ctl;display:grid;gap:20px;align-content:start;min-width:0}
+.ctl-card{padding:18px 20px 22px}
+.ctl-card>h3{font:600 12px/1.3 var(--font-din);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctl-card .seg+.seg,.ctl-card .seg+.ctl{margin-top:22px}
+.timebar{display:grid;gap:6px}
 .time-top{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap}
-.time-read{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.time-read label{font-weight:600;font-size:14px}
-.time-out{font:600 30px/1 var(--font-din);font-variant-numeric:tabular-nums}
+.time-read{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.time-read label{font-weight:600;font-size:15.5px}
+.time-out{font:600 32px/1 var(--font-din);font-variant-numeric:lining-nums tabular-nums}
 .time-ctl{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap}
+.story{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:18.5px;line-height:1.55;max-width:58ch;text-wrap:pretty}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.chip{display:inline-flex;align-items:center;gap:7px;padding:4px 11px 4px 9px;border-radius:999px;border:1px solid var(--line-2);font-size:13px;font-weight:600;background:var(--surface);white-space:nowrap}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:5px 12px 4px 10px;border-radius:999px;border:1px solid var(--line-2);font:600 13.5px/1.2 var(--font-din);letter-spacing:.01em;background:var(--surface);white-space:nowrap}
 .chip .ic{font-size:12px;width:10px;text-align:center}
 .chip.off{color:var(--muted);font-weight:500}
 .chip.alert{border-color:var(--danger);color:var(--danger-ink);background:var(--danger-bg)}
-.banner{margin-top:12px;display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;background:var(--danger-bg);color:var(--danger-ink);border:1px solid var(--danger);font-weight:600;font-size:14px}
-.meters{display:grid;gap:14px;margin-top:16px}
-.meter{display:grid;gap:5px}
-.meter.leg{padding-left:18px}
+.banner{margin-top:14px;display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-radius:8px;background:var(--danger-bg);color:var(--danger-ink);border:1px solid var(--danger);font-weight:600;font-size:15px}
+.meters{display:grid;gap:32px;margin-top:26px}
+.mgroup{display:grid;gap:20px}
+.mg-h{display:flex;align-items:center;gap:12px;font:600 11.5px/1 var(--font-din);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mg-h::after{content:"";flex:1;border-top:1px solid var(--line)}
+.meter{display:grid;gap:7px}
+.meter.leg{padding-left:22px;gap:6px}
 .m-head{display:flex;justify-content:space-between;align-items:baseline;gap:2px 12px;flex-wrap:wrap}
-.m-name{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
-.m-val{display:inline-flex;align-items:baseline;gap:8px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
-.m-val b{font:600 17px var(--font-din);color:var(--ink)}
+.m-name{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:16.5px}
+.meter.leg .m-name{font-weight:400;font-size:15px;color:var(--ink-2)}
+.m-val{display:inline-flex;align-items:baseline;gap:8px;font:500 13.5px var(--font-din);color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+.m-val b{font:600 18.5px var(--font-din);color:var(--ink)}
 .run{align-self:center;font:700 10.5px/1 var(--font-din);letter-spacing:.1em;padding:4px 6px 3px;border-radius:4px;background:var(--gen);color:var(--on-gen)}
 .run.is-off{background:var(--track);color:var(--muted)}
 .track{position:relative;height:14px;border-radius:3px;background:var(--track)}
@@ -314,78 +384,83 @@ input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--focus)
 .fill.over{--c:var(--danger)}
 .mark{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--c);box-shadow:0 0 0 1.5px var(--surface)}
 .mark.end{left:auto;right:0;margin:0}
-.m-sub{font-size:12.5px;color:var(--muted);min-height:1.4em}
-.m-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mark.tick{top:0;bottom:0;opacity:.85}
+.m-sub{font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.m-note{font-size:14px;line-height:1.45;color:var(--muted);padding-left:22px;margin-top:-6px}
+.m-sub:empty{display:none}
+.m-ends{display:flex;justify-content:space-between;font:12px var(--font-din);color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
 .meter.is-off .m-name{color:var(--muted)}
-.m-keys{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;color:var(--muted)}
+.m-keys{display:flex;flex-wrap:wrap;gap:2px 16px;font:12.5px var(--font-din);color:var(--muted)}
 .m-keys span{display:inline-flex;align-items:center;gap:6px}
 .m-keys i{display:inline-block;width:2px;height:12px;background:var(--c)}
-.session{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-.dwell{padding-top:12px;margin-top:12px;border-top:1px solid var(--line)}
+.session{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
+.dwell{padding-top:18px;margin-top:18px;border-top:1px solid var(--line)}
 .dwell:first-of-type{padding-top:0;margin-top:0;border-top:0}
-.dwell-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
-.dwell-head b{font:600 15px var(--font-din)}
-.dwell-head span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.load{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:0 10px;padding:6px 0;cursor:pointer;position:relative}
+.dwell-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dwell-head b{font:600 17.5px var(--font-head)}
+.dwell-head span{font:12.5px var(--font-din);color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
+.dwell>.help{margin-bottom:6px}
+.load{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:0 12px;padding:7px 0;cursor:pointer;position:relative}
 .load input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
 .switch{grid-row:1/span 2;width:34px;height:20px;border-radius:10px;background:var(--line-2);position:relative;transition:background .15s}
 .switch::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s}
 .load input:checked+.switch{background:var(--load)}
 .load input:checked+.switch::after{transform:translateX(14px)}
 .load input:focus-visible+.switch{outline:2px solid var(--focus);outline-offset:2px}
-.load-name{font-size:14px}
-.load-meta{grid-column:2;font-size:12px;color:var(--muted)}
-.load-w{grid-column:3;grid-row:1/span 2;font:600 14px var(--font-din);font-variant-numeric:tabular-nums}
+.load-name{font-size:15.5px;line-height:1.35}
+.load-meta{grid-column:2;font:12.5px/1.4 var(--font-din);color:var(--muted)}
+.load-w{grid-column:3;grid-row:1/span 2;font:600 15px var(--font-din);font-variant-numeric:lining-nums tabular-nums}
 .load input:not(:checked)~.load-w{color:var(--muted);font-weight:500}
+.load input:not(:checked)~.load-name{color:var(--ink-2)}
 .load.fixed{cursor:default}
 .load.fixed .switch{background:var(--track)}
 .load.fixed .switch::after{display:none}
 .ctl-foot{display:flex;justify-content:flex-end}
-.readout{position:fixed;left:0;right:0;top:var(--tabbar-h);z-index:15;display:flex;gap:14px;align-items:center;padding:7px var(--gutter);background:var(--surface);border-bottom:1px solid var(--line);font-size:12.5px;white-space:nowrap;overflow-x:auto;font-variant-numeric:tabular-nums;transform:translateY(-130%);visibility:hidden;transition:transform .18s ease,visibility .18s}
+.readout{position:fixed;left:0;right:0;top:var(--tabbar-h);z-index:15;background:var(--surface);border-bottom:1px solid var(--line);transform:translateY(-130%);visibility:hidden;transition:transform .18s ease,visibility .18s}
 .readout.show{transform:none;visibility:visible}
-.readout>span{display:inline-flex;align-items:center;gap:6px}
-.readout b{font:600 14px var(--font-din)}
-@media (min-width:960px){ .readout{display:none} }
+.ro-in{display:flex;gap:18px;align-items:center;padding-block:8px;font:13px var(--font-din);color:var(--ink-2);white-space:nowrap;overflow-x:auto;font-variant-numeric:lining-nums tabular-nums}
+.ro-in>span{display:inline-flex;align-items:center;gap:6px}
+.readout b{font:600 15px var(--font-din);color:var(--ink)}
 
 /* ---------- projection ---------- */
-.proj{margin-top:24px;padding:18px}
-.proj-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 16px}
-.proj-head h3{font-size:20px;display:flex;align-items:center;gap:10px}
-.proj-head p{color:var(--ink-2);font-size:14px;max-width:70ch}
-.proj-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);margin-top:10px}
+.proj{margin-top:32px;padding:22px 22px 18px}
+.proj-head{display:grid;gap:8px}
+.proj-head h3{font-size:24px;display:flex;align-items:center;gap:10px}
+.proj-head p{color:var(--ink-2);font-size:16px;max-width:64ch}
+.proj-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin-top:14px}
 .proj-legend>span{display:inline-flex;align-items:center;gap:7px}
 .proj-legend .sw{display:inline-block;width:14px;height:10px;border-radius:2px;background:var(--c);opacity:var(--o,1)}
 .chart{position:relative;margin-top:8px;border-radius:6px}
 .chart svg{display:block;width:100%;height:auto;overflow:visible}
 .ch-grid{stroke:var(--line);stroke-width:1}
 .ch-axis{stroke:var(--line-2);stroke-width:1}
-.ch-tick{font:11px var(--font-ui);fill:var(--muted);font-variant-numeric:tabular-nums}
+.ch-tick{font:12px var(--font-din);fill:var(--muted);font-variant-numeric:lining-nums tabular-nums}
 .ch-gen{fill:var(--gen);opacity:.14}
 .ch-day{fill:var(--solar);opacity:.6}
 .ch-area{fill:var(--soc);opacity:.08}
 .ch-line{fill:none;stroke:var(--soc);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
 .ch-thr{stroke:var(--gen);stroke-width:1;stroke-dasharray:4 3}
 .ch-floor{stroke:var(--ink-2);stroke-width:1;stroke-dasharray:2 3}
-.ch-lbl{font:11px var(--font-ui);fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
+.ch-lbl{font:12px var(--font-din);fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
 .ch-now{stroke:var(--ink);stroke-width:1}
 .ch-now-l{font:600 11px var(--font-din);fill:var(--ink)}
 .ch-end{font:600 12.5px var(--font-din);fill:var(--ink)}
 .ch-cross{stroke:var(--ink-2);stroke-width:1}
 .ch-dot{fill:var(--soc);stroke:var(--surface);stroke-width:2}
 .ch-hit{fill:transparent;cursor:crosshair}
-.tip{position:absolute;top:8px;pointer-events:none;z-index:5;min-width:168px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 10px;font-size:12.5px;box-shadow:0 6px 18px rgba(0,0,0,.14)}
-.tip .tt{font:600 13px var(--font-din);margin-bottom:4px}
+.tip{position:absolute;top:8px;pointer-events:none;z-index:5;min-width:168px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 12px;font:13.5px var(--font-din);box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.tip .tt{font:600 14px var(--font-din);margin-bottom:4px}
 .tip .tr{display:flex;align-items:center;gap:7px;line-height:1.5;white-space:nowrap}
-.tip .tr b{font-variant-numeric:tabular-nums}
+.tip .tr b{font-variant-numeric:lining-nums tabular-nums}
 .tip .tr span{color:var(--muted)}
 .tip .lk{width:12px}
-.totals{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:16px;border-top:1px solid var(--line)}
-.tot{padding:12px 12px 2px 0}
-.tot+.tot{padding-left:14px;border-left:1px solid var(--line)}
+.totals{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:20px;border-top:1px solid var(--line)}
+.tot{padding:14px 12px 4px 0}
+.tot+.tot{padding-left:16px;border-left:1px solid var(--line)}
 .tot .tl{font:500 11.5px/1.3 var(--font-din);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.tot .tv{margin-top:3px;font:500 14px var(--font-din);color:var(--ink-2)}
-.tot .tv b{font-size:26px;font-weight:600;color:var(--ink);margin-right:3px}
-.tot .ts{font-size:12px;color:var(--muted);margin-top:2px}
+.tot .tv{margin-top:4px;font:500 14px var(--font-din);color:var(--ink-2)}
+.tot .tv b{font-size:27px;font-weight:600;color:var(--ink);margin-right:3px}
+.tot .ts{font-size:14px;line-height:1.4;color:var(--muted);margin-top:3px}
 @media (max-width:899px){
   .totals{grid-template-columns:repeat(3,minmax(0,1fr))}
   .tot:nth-child(4){padding-left:0;border-left:0}
@@ -397,9 +472,9 @@ input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--focus)
   .tot:nth-child(odd){padding-left:0;border-left:0}
   .tot:nth-child(n+3){border-top:1px solid var(--line)}
 }
-details.more{margin-top:14px;font-size:14px}
+details.more{margin-top:16px;font-size:15px}
 details.more summary{cursor:pointer;font-weight:600;color:var(--ink-2);width:fit-content}
-details.more .tbl{font-size:13px;margin-top:8px}
+details.more .tbl{font:13.5px var(--font-din);margin-top:8px}
 details.more .tbl th,details.more .tbl td{padding:6px 10px}
 
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
@@ -417,22 +492,22 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
     </button>
   </div>
   <h1>WV Farm Camp Power System</h1>
-  <p class="lede">Solar array, battery bank and an auto-start propane generator for two campers, a cabin and a shed. 120/240V split-phase AC, 48V DC. Install summer 2027.</p>
-  <p class="status"><span class="status-mark" aria-hidden="true"></span>Design complete; site survey pending.</p>
+  <p class="lede">Solar panels, a battery bank and a propane generator that starts itself, powering two campers, a cabin and a shed with the same 120/240V power as a house. Installation is planned for summer 2027.</p>
+  <p class="status"><span class="status-mark" aria-hidden="true"></span>Equipment selected; quotes and site survey pending.</p>
   <dl class="keyfigs">
-    <div><dt>Solar array</dt><dd><b>15.48</b>kWdc<small>11.61 kWdc in phase 1</small></dd></div>
-    <div><dt>Battery bank</dt><dd><b>43.0</b>kWh<small>34.4 kWh usable</small></dd></div>
-    <div><dt>Inverter</dt><dd><b>12</b>kW<small>continuous, 120/240V</small></dd></div>
-    <div><dt>Generator</dt><dd><b>14</b>kW<small>propane, auto-start</small></dd></div>
+    <div><dt>Solar panels</dt><dd><b>15.48</b>kW<small>11.61 kW in phase 1</small></dd></div>
+    <div><dt>Battery bank</dt><dd><b>41.0</b>kWh<small>36.9 kWh usable</small></dd></div>
+    <div><dt>Inverter</dt><dd><b>12</b>kW<small>on battery; 15 kW with solar</small></dd></div>
+    <div><dt>Generator</dt><dd><b>18</b>kW<small>propane, starts itself</small></dd></div>
   </dl>
 </header>
 
 <div class="tabbar" id="tabbar">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Sections">
-      <button type="button" role="tab" id="tab-system" aria-controls="panel-system" aria-selected="true">System</button>
-      <button type="button" role="tab" id="tab-equipment" aria-controls="panel-equipment" aria-selected="false" tabindex="-1"><span class="lg">Equipment selection</span><span class="sm">Equipment</span></button>
-      <button type="button" role="tab" id="tab-simulator" aria-controls="panel-simulator" aria-selected="false" tabindex="-1">Simulator</button>
+      <button type="button" role="tab" id="tab-system" aria-controls="panel-system" aria-selected="true"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2" y="2.5" width="6" height="5" rx="1"/><rect x="12" y="2.5" width="6" height="5" rx="1"/><rect x="7" y="12.5" width="6" height="5" rx="1"/><path d="M5 7.5v2.5h10V7.5M10 10v2.5"/></g></svg><span class="tl"><span>System</span><small class="td">Design and capacity</small></span></button>
+      <button type="button" role="tab" id="tab-equipment" aria-controls="panel-equipment" aria-selected="false" tabindex="-1"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3" width="13" height="15" rx="1.5"/><path d="M7.5 3V1.8h5V3"/><path d="M6.5 8.5l1.3 1.3 2.2-2.4M11.5 9h2.5M6.5 13.5l1.3 1.3 2.2-2.4M11.5 14h2.5"/></g></svg><span class="tl"><span><span class="lg">Equipment selection</span><span class="sm">Equipment</span></span><small class="td">Picks and prices</small></span></button>
+      <button type="button" role="tab" id="tab-simulator" aria-controls="panel-simulator" aria-selected="false" tabindex="-1"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M8.2 6.6v6.8l5.4-3.4z" fill="currentColor"/></g></svg><span class="tl"><span>Simulator</span><small class="td">Try it out</small></span></button>
     </div>
   </div>
 </div>
@@ -446,7 +521,7 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   <section class="block" aria-labelledby="h-req">
     <div class="block-head">
       <h2 id="h-req">Requirements</h2>
-      <p>What the owner asked for, and how the design answers each item.</p>
+      <p>What the owner asked for, and how the design delivers each one.</p>
     </div>
     <div class="card tbl-wrap">
       <table class="tbl stack req">
@@ -459,13 +534,13 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   <section class="block" aria-labelledby="h-diagram">
     <div class="block-head">
       <h2 id="h-diagram">System diagram</h2>
-      <p>Simplified one-line. Conductor sizes and protection follow the EG4 manual and NEC; final connections by a licensed electrician.</p>
+      <p>How the pieces connect. This is a simplified picture; the electrician's wiring follows the Sol-Ark manual and the electrical code.</p>
     </div>
     <div class="diagram-grid">
       <figure class="card diagram">
         <svg class="oneline" viewBox="0 0 400 656" role="img" aria-labelledby="dg-t dg-d">
           <title id="dg-t">System one-line diagram</title>
-          <desc id="dg-d">The solar array feeds the EG4 18kPV PV inputs. The battery bank connects to the inverter on DC in both directions. The propane tank feeds the generator, which feeds the inverter's GEN port; the inverter starts the generator over a dashed 2-wire auto-start line. The inverter's LOAD output feeds the main panel. The inverter, batteries and main panel sit inside the power center container. The main panel feeds the camp subpanel, the cabin 20A circuit and the shed 20A circuit. The camp subpanel feeds a 50A pedestal for the 30-ft camper and a 30A pedestal for the small camper.</desc>
+          <desc id="dg-d">The solar panels feed the Sol-Ark 15K inverter's solar inputs. The eight battery modules connect to the inverter in both directions. The propane tank feeds the Kohler generator, which feeds the inverter's generator input; the inverter starts the generator through a 12V relay over a dashed start-signal line. A manual bypass switch lets the generator feed the main panel directly. The inverter's output feeds the main panel. The inverter, batteries, relay, bypass switch, main panel and heater sit inside the power center container. The main panel feeds the camp panel, the cabin 20A circuit and the shed 20A circuit. The camp panel feeds a 50A hookup for the 30-ft camper and a 30A hookup for the small camper.</desc>
           <defs>
             <marker id="ah-solar" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah-solar" d="M0 .6 8 4 0 7.4z"/></marker>
             <marker id="ah-batt" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah-batt" d="M0 .6 8 4 0 7.4z"/></marker>
@@ -482,7 +557,10 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
           <path class="w w-solar" d="M178 70V200" marker-end="url(#ah-solar)"/>
           <path class="w w-lp" d="M312 70V96" marker-end="url(#ah-lp)"/>
           <path class="w w-gen" d="M262 154V200" marker-end="url(#ah-gen)"/>
-          <path class="w w-sig" d="M290 250H372V154" marker-end="url(#ah-sig)"/>
+          <path class="w w-gen" d="M380 154V308" marker-end="url(#ah-gen)"/>
+          <path class="w w-gen" d="M292 334H270" marker-end="url(#ah-gen)"/>
+          <path class="w w-sig" d="M290 214H300"/>
+          <path class="w w-sig" d="M340 204V154" marker-end="url(#ah-sig)"/>
           <path class="w w-batt" d="M132 239H162" marker-start="url(#ah-batt)" marker-end="url(#ah-batt)"/>
           <path class="w w-load" d="M226 278V308" marker-end="url(#ah-load)"/>
           <path class="w w-load" d="M212 360V528"/>
@@ -494,17 +572,17 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
           <path class="w w-load" d="M28 613H48" marker-end="url(#ah-load)"/>
           <circle class="jn" cx="212" cy="448" r="3"/>
 
-          <text class="port" x="184" y="195">PV</text>
+          <text class="port" x="184" y="195">SOLAR</text>
           <text class="port" x="268" y="195">GEN</text>
-          <text class="port" x="232" y="298">LOAD</text>
+          <text class="port" x="232" y="298">TO CAMP</text>
           <text class="port" x="147" y="231" text-anchor="middle">DC</text>
-          <text class="port" x="300" y="268">2-WIRE</text>
-          <text class="port" x="300" y="281">AUTO-START</text>
-          <text class="port" x="318" y="87">LP</text>
+          <text class="port" x="300" y="240">START</text>
+          <text class="port" x="300" y="252">SIGNAL</text>
+          <text class="port" x="318" y="87">PROPANE</text>
 
           <rect class="box" x="12" y="12" width="180" height="58" rx="8"/>
-          <text class="nt" x="24" y="35">Solar array</text>
-          <text class="ns" x="24" y="54">36 × 430W · 15.48 kWdc</text>
+          <text class="nt" x="24" y="35">Solar panels</text>
+          <text class="ns" x="24" y="54">36 × 430W · 15.48 kW</text>
 
           <rect class="box" x="236" y="12" width="152" height="58" rx="8"/>
           <text class="nt" x="248" y="35">Propane tank</text>
@@ -512,25 +590,36 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
 
           <rect class="box" x="236" y="96" width="152" height="58" rx="8"/>
           <text class="nt" x="248" y="119">Generator</text>
-          <text class="ns" x="248" y="138">Generac 14 kW · LP</text>
+          <text class="ns" x="248" y="138">Kohler 18 kW · propane</text>
 
           <rect class="box" x="16" y="200" width="116" height="78" rx="8"/>
           <text class="nt" x="28" y="223">Batteries</text>
-          <text class="ns" x="28" y="243">3 × 14.34 kWh</text>
-          <text class="ns" x="28" y="260">43.0 kWh · 48V</text>
+          <text class="ns" x="28" y="243">8 × 5.12 kWh</text>
+          <text class="ns" x="28" y="260">41.0 kWh · 48V</text>
 
           <rect class="box" x="162" y="200" width="128" height="78" rx="8"/>
-          <text class="nt" x="174" y="223">EG4 18kPV</text>
+          <text class="nt" x="174" y="223">Sol-Ark 15K</text>
           <text class="ns" x="174" y="243">Inverter/charger</text>
-          <text class="ns" x="174" y="260">12 kW</text>
+          <text class="ns" x="174" y="260">12–15 kW</text>
 
-          <rect class="box" x="166" y="308" width="120" height="52" rx="8"/>
-          <text class="nt" x="178" y="330">Main panel</text>
-          <text class="ns" x="178" y="348">120/240V</text>
+          <rect class="box" x="300" y="204" width="56" height="20" rx="4"/>
+          <text class="rl" x="328" y="218" text-anchor="middle">12V relay</text>
+
+          <rect class="box" x="16" y="296" width="116" height="44" rx="8"/>
+          <text class="nt" x="28" y="315">Heater</text>
+          <text class="ns" x="28" y="331">and exhaust fan</text>
+
+          <rect class="box" x="170" y="308" width="100" height="52" rx="8"/>
+          <text class="nt" x="182" y="330">Main panel</text>
+          <text class="ns" x="182" y="348">120/240V</text>
+
+          <rect class="box" x="292" y="308" width="96" height="52" rx="8"/>
+          <text class="nt" x="302" y="330">Bypass</text>
+          <text class="ns" x="302" y="348">manual switch</text>
 
           <rect class="box" x="12" y="420" width="176" height="56" rx="8"/>
-          <text class="nt" x="24" y="443">Camp subpanel</text>
-          <text class="ns" x="24" y="462">Camp feeder, length TBD</text>
+          <text class="nt" x="24" y="443">Camp panel</text>
+          <text class="ns" x="24" y="462">Wire run length TBD</text>
 
           <rect class="box" x="236" y="420" width="152" height="56" rx="8"/>
           <text class="nt" x="248" y="443">Cabin</text>
@@ -541,21 +630,21 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
           <text class="ns" x="248" y="542">20A · 120V · L1</text>
 
           <rect class="box" x="48" y="500" width="140" height="62" rx="8"/>
-          <text class="nt" x="60" y="522">50A pedestal</text>
+          <text class="nt" x="60" y="522">50A hookup</text>
           <text class="ns" x="60" y="540">30-ft camper</text>
           <text class="ns" x="60" y="555">120/240V · L1 + L2</text>
 
           <rect class="box" x="48" y="582" width="140" height="62" rx="8"/>
-          <text class="nt" x="60" y="604">30A pedestal</text>
+          <text class="nt" x="60" y="604">30A hookup</text>
           <text class="ns" x="60" y="622">Small camper</text>
           <text class="ns" x="60" y="637">120V · L1</text>
         </svg>
         <figcaption class="legend">
-          <span><i class="lk" style="--c:var(--solar)"></i>Solar DC</span>
-          <span><i class="lk" style="--c:var(--charge)"></i>Battery DC</span>
-          <span><i class="lk" style="--c:var(--gen)"></i>Generator AC</span>
-          <span><i class="lk" style="--c:var(--load)"></i>AC to loads</span>
-          <span><i class="lk dash" style="--c:var(--ink-2)"></i>Auto-start signal</span>
+          <span><i class="lk" style="--c:var(--solar)"></i>Solar power</span>
+          <span><i class="lk" style="--c:var(--charge)"></i>Battery power</span>
+          <span><i class="lk" style="--c:var(--gen)"></i>Generator power</span>
+          <span><i class="lk" style="--c:var(--load)"></i>Power to the camp</span>
+          <span><i class="lk dash" style="--c:var(--ink-2)"></i>Generator start signal</span>
           <span><i class="lk" style="--c:var(--lp)"></i>Propane</span>
         </figcaption>
       </figure>
@@ -565,10 +654,10 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
         <ol class="steps">
           <li><span><b>Solar first.</b> The array supplies the loads. Any extra charges the batteries.</span></li>
           <li><span><b>Batteries fill the gap.</b> At night, on cloudy days or under heavy use, the batteries cover what solar can't.</span></li>
-          <li><span><b>Generator on low battery.</b> When the battery falls to the start point, the inverter starts the generator over its 2-wire contact.</span></li>
+          <li><span><b>Generator on low battery.</b> When the battery falls to the start point, the inverter starts the generator through a small relay.</span></li>
           <li><span><b>Generator charges, then stops.</b> The generator carries the loads, puts the rest of its output into the batteries, and shuts off at the stop point.</span></li>
         </ol>
-        <p class="aside">The generator starts on low battery, not on each load spike. The bottom 20% of the battery stays in reserve, so the usable window is 20–100% (34.4 kWh). Start and stop points are inverter settings; the simulator uses 25% and 90%.</p>
+        <p class="aside">The generator starts because the battery is low, not because something big switched on. The bottom 10% of the battery is held in reserve, which leaves 36.9 kWh to use. The start and stop points are inverter settings; the simulator uses 25% and 90%. If the inverter ever fails, a manual bypass switch lets the generator run the camp directly.</p>
       </div>
     </div>
   </section>
@@ -576,41 +665,40 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   <section class="block" aria-labelledby="h-equip">
     <div class="block-head">
       <h2 id="h-equip">Equipment</h2>
-      <p>The selected components and their key specs. Runners-up and the reasons for each pick are on the Equipment selection tab.</p>
+      <p>What we picked and the key numbers for each. The Equipment selection tab explains why, and what else was considered.</p>
     </div>
     <div class="plates" id="plates"></div>
   </section>
 
   <section class="block" aria-labelledby="h-cap">
     <div class="block-head">
-      <h2 id="h-cap">Capacity</h2>
-      <p>Design need against what the system can deliver. <span class="est">Estimate</span></p>
+      <h2 id="h-cap">Will it be enough?</h2>
+      <p>What the camp needs, next to what the system can supply. <span class="est">Estimate</span></p>
     </div>
     <div class="card cap" id="capList"></div>
   </section>
 
-  <section class="block" aria-labelledby="h-strings">
+  <section class="block" aria-labelledby="h-install">
     <div class="block-head">
-      <h2 id="h-strings">PV strings</h2>
-      <p>Four strings of 9 modules. Phase 1 installs three strings (75%); phase 2 adds the fourth (25%). The split differs from the owner's two-thirds/one-third because string length is fixed by voltage; it front-loads capacity for summer A/C.</p>
+      <h2 id="h-install">For the installer</h2>
+      <p>Wiring details for the electrician and installer. The owner doesn't need to act on anything in this section.</p>
     </div>
+
+    <h3 class="sub-h" id="h-strings">Panel wiring</h3>
+    <p class="sub-p">The 36 panels are wired in four groups ("strings") of 9. Phase 1 installs three strings (75%); phase 2 adds the fourth (25%). The owner asked for two-thirds, then one-third, but string length is fixed by voltage, so the split front-loads capacity for summer A/C.</p>
     <div class="card tbl-wrap">
       <table class="tbl stack">
-        <thead><tr><th scope="col">MPPT</th><th scope="col">Limits (18kPV)</th><th scope="col">Strings</th><th scope="col">Isc / Imp</th><th scope="col">Phase</th></tr></thead>
+        <thead><tr><th scope="col">Solar input (MPPT)</th><th scope="col">Limits (Sol-Ark 15K)</th><th scope="col">Strings</th><th scope="col">Isc / Imp</th><th scope="col">Phase</th></tr></thead>
         <tbody id="stringBody"></tbody>
       </table>
     </div>
     <ul class="notes">
-      <li>String voltage: 296V at STC maximum power, inside the 140–500V MPPT range.</li>
-      <li>Cold open-circuit voltage: 407V at the state record low of −37°F (−0.24%/K), under the 550V MPPT protection limit.</li>
-      <li>MPPT 1 clips about 4% at peak irradiance after phase 2.</li>
+      <li>String voltage: 296V at STC maximum power and about 251–256V on a hot day, inside Sol-Ark's 150–425V MPPT range.</li>
+      <li>Cold open-circuit voltage: 408V at the state record low of −37°F (−0.24%/K), under the 500V maximum.</li>
+      <li>MPPT 1 clips negligibly after phase 2 (26.1A against 26A).</li>
     </ul>
-  </section>
 
-  <section class="block" aria-labelledby="h-dist">
-    <div class="block-head">
-      <h2 id="h-dist">Distribution and protection</h2>
-    </div>
+    <h3 class="sub-h" id="h-dist">Distribution and protection</h3>
     <div class="card tbl-wrap">
       <table class="tbl stack">
         <thead><tr><th scope="col">Item</th><th scope="col">Requirement</th></tr></thead>
@@ -621,18 +709,19 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
 
   <section class="block" aria-labelledby="h-open">
     <div class="block-head">
-      <h2 id="h-open">Open items</h2>
-      <p>What's left is site survey, permits and owner confirmations, not sizing.</p>
+      <h2 id="h-open">Still to do</h2>
+      <p>The sizing is done. What's left is a site walk-through, permits and a few owner confirmations.</p>
     </div>
     <div class="card tbl-wrap">
       <table class="tbl stack">
-        <thead><tr><th scope="col">Item</th><th scope="col">Owner</th></tr></thead>
+        <thead><tr><th scope="col">Task</th><th scope="col">Who</th></tr></thead>
         <tbody id="openBody"></tbody>
       </table>
     </div>
   </section>
 
-  <p class="footnote">Load figures are estimates for 13,500 BTU-class A/C units, based on <a href="https://www.rvacunit.com/how-many-watts-does-a-13500-btu-rv-ac-use/" target="_blank" rel="noopener">1,300–1,600W running</a>. Solar output uses a 0.75 derate on the <a href="https://www.turbinegenerator.org/solar/west-virginia/" target="_blank" rel="noopener">3.65 peak-sun-hour</a> West Virginia annual average until a site PVWatts run replaces it.</p>
+  <p class="footnote">Power-use figures are estimates, based on 13,500 BTU A/C units drawing <a href="https://www.rvacunit.com/how-many-watts-does-a-13500-btu-rv-ac-use/" target="_blank" rel="noopener">1,300–1,600W while running</a>. Solar figures assume the panels deliver 75% of their rating after real-world losses, and West Virginia's average of <a href="https://www.turbinegenerator.org/solar/west-virginia/" target="_blank" rel="noopener">3.65 hours of full sun a day</a>, until a solar study of the actual site (PVWatts) replaces them.</p>
+  <div class="next"><button type="button" class="btn btn-ink" data-go="equipment">Next: Equipment selection <svg viewBox="0 0 14 14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M2 7h9.5M7.5 3l4 4-4 4"/></svg></button></div>
 </section>
 
 <!-- =================== EQUIPMENT SELECTION =================== -->
@@ -640,9 +729,21 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   <section class="block" aria-labelledby="h-sel">
     <div class="block-head">
       <h2 id="h-sel">Equipment selection</h2>
-      <p>For each component: the minimum it must meet, the pick, and the runners-up with pros and cons. Prices are approximate and were checked when the spec was drafted.</p>
+      <p>For each part of the system: what it has to do, what was ruled out, what we picked and the runners-up, with pros, cons and prices. Picks come from a market survey on Sep 27–28, 2026; prices are approximate.</p>
+    </div>
+    <div class="card tbl-wrap">
+      <table class="tbl stack sum-tbl">
+        <thead><tr><th scope="col">Component</th><th scope="col">Pick</th><th scope="col">Runners-up</th><th scope="col">Price</th></tr></thead>
+        <tbody id="sumBody"></tbody>
+      </table>
+    </div>
+    <p class="subtotal">Major-equipment subtotal about <b>$31,900</b>, not counting the battery rack, racking, tank, container, wiring, freight and labor.</p>
+    <div class="callouts">
+      <div class="callout"><span class="st wait" aria-hidden="true">!</span><p><b>The container is heated.</b> None of the chosen batteries or inverters is rated for West Virginia's −37°F record low.</p></div>
+      <div class="callout"><span class="st wait" aria-hidden="true">!</span><p><b>A small relay starts the generator.</b> The Sol-Ark's generator-start contact is rated only 12V and 100mA, so a relay sits between it and the generator's 2-wire start input.</p></div>
     </div>
     <div class="sel-list" id="selList"></div>
+    <div class="next"><button type="button" class="btn btn-ink" data-go="simulator">Next: Try the simulator <svg viewBox="0 0 14 14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M2 7h9.5M7.5 3l4 4-4 4"/></svg></button></div>
   </section>
 </section>
 
@@ -651,16 +752,18 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   <section class="block" aria-labelledby="h-sim">
     <div class="block-head">
       <h2 id="h-sim">Power simulator</h2>
-      <p>Turn loads on and off, change the season and the weather, and move through the day to see where power comes from. <span class="est">Estimate</span> Every load and result here is an estimate from the design figures.</p>
+      <p>Switch things on and off, change the season and the weather, and move through the day to see where the power comes from. <span class="est">Estimate</span> Every load and result here is an estimate from the design figures.</p>
     </div>
 
     <div class="readout" id="readout" aria-hidden="true">
-      <span><b id="ro-time">13:00</b></span>
-      <span><i class="key" style="--c:var(--solar)"></i>Solar <b id="ro-solar">0.0</b></span>
-      <span><i class="key" style="--c:var(--load)"></i>Load <b id="ro-load">0.0</b></span>
-      <span><i class="key" id="ro-bkey" style="--c:var(--drain)"></i><span id="ro-bl">Battery</span> <b id="ro-batt">0.0</b></span>
-      <span>SOC <b id="ro-soc">80%</b></span>
-      <span><i class="key" id="ro-gkey" style="--c:var(--track)"></i>Gen <b id="ro-gen">OFF</b></span>
+      <div class="wrap ro-in">
+        <span><b id="ro-time">13:00</b></span>
+        <span><i class="key" style="--c:var(--solar)"></i>Solar <b id="ro-solar">0.0</b> kW</span>
+        <span><i class="key" style="--c:var(--load)"></i>Use <b id="ro-load">0.0</b> kW</span>
+        <span><i class="key" id="ro-bkey" style="--c:var(--drain)"></i><span id="ro-bl">Battery</span> <b id="ro-batt">0.0</b> kW</span>
+        <span>Charge <b id="ro-soc">80%</b></span>
+        <span><i class="key" id="ro-gkey" style="--c:var(--track)"></i>Generator <b id="ro-gen">OFF</b></span>
+      </div>
     </div>
 
     <div class="sim">
@@ -678,7 +781,7 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
                 <span id="playLabel">Play</span>
               </button>
               <fieldset class="seg inline">
-                <legend>1 sim-hour per</legend>
+                <legend>1 hour takes</legend>
                 <div class="seg-opts">
                   <input type="radio" name="speed" id="spd-1" value="1" checked><label for="spd-1">1 s</label>
                   <input type="radio" name="speed" id="spd-5" value="5"><label for="spd-5">5 s</label>
@@ -694,64 +797,72 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
           <p class="help" id="daylight">Daylight 05:35–20:26</p>
         </div>
 
+        <p class="story" id="story"></p>
         <div class="banner" id="banner" role="alert" hidden>
           <span aria-hidden="true">⚠</span><span id="bannerText"></span>
         </div>
         <div class="chips" id="chips" aria-label="Status"></div>
 
         <div class="meters">
-          <div class="meter" id="m-solar" role="group" aria-label="Solar output">
-            <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--solar)"></i>Solar output</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--solar)"></span><span class="fill hatch" data-b style="--c:var(--solar)"></span></div>
-            <div class="m-sub" data-s></div>
-          </div>
-
-          <div class="meter" id="m-load" role="group" aria-label="Load">
-            <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--load)"></i>Load</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--load)"></span><span class="mark" data-b style="--c:var(--ink-2)" title="One A/C starting"></span><span class="mark end" style="--c:var(--ink)" title="12 kW inverter limit"></span></div>
-            <div class="m-ends"><span>0</span><span>12 kW inverter limit</span></div>
-            <div class="m-sub" data-s></div>
-          </div>
-
-          <div class="meter leg" id="m-l1" role="group" aria-label="Leg L1">
-            <div class="m-head"><span class="m-name">Leg L1</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--load)"></span></div>
-          </div>
-          <div class="meter leg" id="m-l2" role="group" aria-label="Leg L2">
-            <div class="m-head"><span class="m-name">Leg L2</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--load)"></span></div>
-          </div>
-
-          <div class="meter" id="m-batt" role="group" aria-label="Battery flow">
-            <div class="m-head"><span class="m-name"><i class="key" data-k style="--c:var(--charge)"></i>Battery</span><span class="m-val"><b data-v>Idle</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--charge)"></span><span class="mark" style="left:50%;--c:var(--ink-2)"></span></div>
-            <div class="m-ends"><span>← Draining 12.8 kW</span><span>Charging 12.8 kW →</span></div>
-            <div class="m-sub" data-s></div>
-          </div>
-
-          <div class="meter" id="m-soc" role="group" aria-label="Battery charge">
-            <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--soc)"></i>Battery charge</span><span class="m-val"><b data-v>80%</b><span data-p></span></span></div>
-            <div class="track">
-              <span class="fill" data-a style="--c:var(--soc)"></span>
-              <span class="mark" style="left:20%;--c:var(--ink)"></span>
-              <span class="mark" data-b style="--c:var(--gen)"></span>
-              <span class="mark" data-c style="--c:var(--gen)"></span>
+          <section class="mgroup" aria-labelledby="mg-in">
+            <h4 class="mg-h" id="mg-in">Power in</h4>
+            <div class="meter" id="m-solar" role="group" aria-label="Solar output">
+              <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--solar)"></i>Solar output</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--solar)"></span><span class="fill hatch" data-b style="--c:var(--solar)"></span></div>
+              <div class="m-sub" data-s></div>
             </div>
-            <div class="m-keys"><span><i style="--c:var(--ink)"></i>20% floor</span><span><i style="--c:var(--gen)"></i><span data-ks>Generator start 25%</span></span><span><i style="--c:var(--gen)"></i><span data-kp>stop 90%</span></span></div>
-            <div class="m-sub" data-s></div>
-          </div>
+            <div class="meter" id="m-gen" role="group" aria-label="Generator">
+              <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--gen)"></i>Generator</span><span class="m-val"><span class="run" data-r>OFF</span><b data-v>0.0 kW</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--gen)"></span></div>
+              <div class="m-sub" data-s></div>
+            </div>
+          </section>
 
-          <div class="meter" id="m-gen" role="group" aria-label="Generator">
-            <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--gen)"></i>Generator</span><span class="m-val"><span class="run" data-r>OFF</span><b data-v>0.0 kW</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--gen)"></span></div>
-            <div class="m-sub" data-s></div>
-          </div>
+          <section class="mgroup" aria-labelledby="mg-out">
+            <h4 class="mg-h" id="mg-out">Power out</h4>
+            <div class="meter" id="m-load" role="group" aria-label="Power in use">
+              <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--load)"></i>Power in use</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--load)"></span><span class="mark tick" data-b style="--c:var(--ink-2)" title="One A/C starting"></span><span class="mark" style="left:80%;--c:var(--ink)" title="12 kW on battery"></span><span class="mark end" style="--c:var(--ink)" title="15 kW with solar"></span></div>
+              <div class="m-ends"><span>0</span><span>15 kW</span></div>
+              <div class="m-keys"><span><i style="--c:var(--ink)"></i>12 kW limit on battery</span><span><i style="--c:var(--ink)"></i>15 kW limit with solar</span></div>
+              <div class="m-sub" data-s></div>
+            </div>
+            <div class="meter leg" id="m-l1" role="group" aria-label="Side L1">
+              <div class="m-head"><span class="m-name">Side L1</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--load)"></span></div>
+            </div>
+            <div class="meter leg" id="m-l2" role="group" aria-label="Side L2">
+              <div class="m-head"><span class="m-name">Side L2</span><span class="m-val"><b data-v>0.0 kW</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--load)"></span></div>
+            </div>
+            <p class="m-note">A 240V service has two 120V sides, L1 and L2. Each can carry up to 7.5 kW.</p>
+            <div class="meter" id="m-inv" role="group" aria-label="Inverter workload">
+              <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--neutral)"></i>Inverter workload</span><span class="m-val"><b data-v>0%</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--neutral)"></span></div>
+              <div class="m-sub" data-s></div>
+            </div>
+          </section>
 
-          <div class="meter" id="m-inv" role="group" aria-label="Inverter use">
-            <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--neutral)"></i>Inverter use</span><span class="m-val"><b data-v>0%</b><span data-p></span></span></div>
-            <div class="track"><span class="fill" data-a style="--c:var(--neutral)"></span></div>
-            <div class="m-sub" data-s></div>
-          </div>
+          <section class="mgroup" aria-labelledby="mg-batt">
+            <h4 class="mg-h" id="mg-batt">Battery</h4>
+            <div class="meter" id="m-batt" role="group" aria-label="Charging or draining">
+              <div class="m-head"><span class="m-name"><i class="key" data-k style="--c:var(--charge)"></i>Charging or draining</span><span class="m-val"><b data-v>Idle</b><span data-p></span></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--charge)"></span><span class="mark" style="left:50%;--c:var(--ink-2)"></span></div>
+              <div class="m-ends"><span>← Draining 14.1 kW</span><span>Charging 14.1 kW →</span></div>
+              <div class="m-sub" data-s></div>
+            </div>
+            <div class="meter" id="m-soc" role="group" aria-label="Charge level">
+              <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--soc)"></i>Charge level</span><span class="m-val"><b data-v>80%</b><span data-p></span></span></div>
+              <div class="track">
+                <span class="fill" data-a style="--c:var(--soc)"></span>
+                <span class="mark" style="left:10%;--c:var(--ink)"></span>
+                <span class="mark" data-b style="--c:var(--gen)"></span>
+                <span class="mark" data-c style="--c:var(--gen)"></span>
+              </div>
+              <div class="m-keys"><span><i style="--c:var(--ink)"></i>10% reserve</span><span><i style="--c:var(--gen)"></i><span data-ks>Generator start 25%</span></span><span><i style="--c:var(--gen)"></i><span data-kp>stop 90%</span></span></div>
+              <div class="m-sub" data-s></div>
+            </div>
+          </section>
         </div>
         <p class="session" id="session">Since reset: generator 0.0 h, propane 0.0 gal. Press Play to run the clock.</p>
         <p class="vh" id="srSummary" aria-live="polite"></p>
@@ -760,12 +871,18 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
       <!-- controls -->
       <div class="sim-ctl">
         <div class="card ctl-card">
+          <h3>Loads <span class="est">Estimate</span></h3>
+          <p class="help" style="margin:-6px 0 16px">Watts each item uses while it's running. The 24-hour projection also accounts for how much of the day each one runs.</p>
+          <div id="loadGroups"></div>
+        </div>
+
+        <div class="card ctl-card">
           <h3>Sun and weather</h3>
           <fieldset class="seg">
-            <legend>Array</legend>
+            <legend>Solar panels</legend>
             <div class="seg-opts">
-              <input type="radio" name="array" id="arr-phase1" value="phase1"><label for="arr-phase1">Phase 1<small>11.61 kWdc</small></label>
-              <input type="radio" name="array" id="arr-full" value="full" checked><label for="arr-full">Full<small>15.48 kWdc</small></label>
+              <input type="radio" name="array" id="arr-phase1" value="phase1"><label for="arr-phase1">Phase 1<small>11.61 kW</small></label>
+              <input type="radio" name="array" id="arr-full" value="full" checked><label for="arr-full">Full<small>15.48 kW</small></label>
             </div>
           </fieldset>
           <fieldset class="seg">
@@ -781,13 +898,13 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
               <span class="reftick" style="--f:.53" aria-hidden="true"></span>
               <input type="range" id="psh" min="1" max="6" step="0.05" value="4.5" aria-describedby="psh-h">
             </div>
-            <div class="ticklabels" aria-hidden="true"><span class="first">1.0</span><span style="--f:.53">3.65 annual avg</span><span class="last">6.0</span></div>
-            <p class="help" id="psh-h">Summer default 4.5 is a placeholder until the site PVWatts run.</p>
+            <div class="ticklabels" aria-hidden="true"><span class="first">1.0</span><span style="--f:.53">3.65 yearly avg</span><span class="last">6.0</span></div>
+            <p class="help" id="psh-h">Hours of full sun a day. The summer default of 4.5 is a placeholder until the site solar study.</p>
           </div>
           <div class="ctl">
-            <div class="ctl-top"><label for="cloud">Cloud factor</label><output id="cloud-o" for="cloud">100%</output></div>
+            <div class="ctl-top"><label for="cloud">Sun vs. an average day</label><output id="cloud-o" for="cloud">100%</output></div>
             <input type="range" id="cloud" min="0" max="100" step="1" value="100" aria-describedby="cloud-h">
-            <p class="help" id="cloud-h">Share of an average day's solar output. 100% is an average day for the season.</p>
+            <p class="help" id="cloud-h">100% is an average day for the season. Lower it for cloudy days.</p>
           </div>
         </div>
 
@@ -795,23 +912,17 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
           <h3>Battery and generator</h3>
           <div class="ctl">
             <div class="ctl-top"><label for="soc">Battery charge at start</label><output id="soc-o" for="soc">80%</output></div>
-            <input type="range" id="soc" min="20" max="100" step="1" value="80" aria-describedby="soc-h">
+            <input type="range" id="soc" min="10" max="100" step="1" value="80" aria-describedby="soc-h">
             <p class="help" id="soc-h">Sets the battery now and at 00:00 in the 24-hour projection.</p>
           </div>
           <div class="ctl">
             <div class="ctl-top"><label for="gstart">Generator starts at</label><output id="gstart-o" for="gstart">25%</output></div>
-            <input type="range" id="gstart" min="20" max="50" step="1" value="25">
+            <input type="range" id="gstart" min="10" max="50" step="1" value="25">
           </div>
           <div class="ctl">
             <div class="ctl-top"><label for="gstop">Generator stops at</label><output id="gstop-o" for="gstop">90%</output></div>
             <input type="range" id="gstop" min="55" max="100" step="1" value="90">
           </div>
-        </div>
-
-        <div class="card ctl-card">
-          <h3>Loads <span class="est">Estimate</span></h3>
-          <p class="help" style="margin:-4px 0 12px">Running watts when the load is on. The 24-hour projection uses each load's share of the day.</p>
-          <div id="loadGroups"></div>
         </div>
 
         <div class="ctl-foot"><button type="button" class="btn" id="reset">Reset to defaults</button></div>
@@ -822,29 +933,29 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
     <div class="card proj">
       <div class="proj-head">
         <h3>24-hour projection <span class="est">Estimate</span></h3>
-        <p>The whole day with the current loads and settings, starting at 00:00 from the starting battery charge. Each load runs at its average share of the day.</p>
+        <p>The whole day with the current settings, starting at midnight from the starting battery charge. Each item runs for its usual share of the day, spread evenly.</p>
       </div>
       <div class="proj-legend">
         <span><i class="lk" style="--c:var(--soc)"></i>Battery charge</span>
         <span><i class="sw" style="--c:var(--gen);--o:.35"></i>Generator running</span>
         <span><i class="sw" style="--c:var(--solar)"></i>Daylight</span>
         <span><i class="lk dash" style="--c:var(--gen)"></i>Generator start and stop</span>
-        <span><i class="lk dash" style="--c:var(--ink-2)"></i>20% floor</span>
+        <span><i class="lk dash" style="--c:var(--ink-2)"></i>10% reserve</span>
       </div>
       <div class="chart" id="chart" tabindex="0" role="img" aria-label="Battery charge over 24 hours. Use the left and right arrow keys to read values."></div>
       <div class="totals" id="totals">
         <div class="tot"><div class="tl">Solar</div><div class="tv"><b id="t-solar">0</b>kWh</div><div class="ts" id="t-solar-s"></div></div>
-        <div class="tot"><div class="tl">Load</div><div class="tv"><b id="t-load">0</b>kWh</div><div class="ts" id="t-load-s"></div></div>
+        <div class="tot"><div class="tl">Power used</div><div class="tv"><b id="t-load">0</b>kWh</div><div class="ts" id="t-load-s"></div></div>
         <div class="tot"><div class="tl">Generator</div><div class="tv"><b id="t-gen">0</b>h</div><div class="ts" id="t-gen-s"></div></div>
         <div class="tot"><div class="tl">Propane</div><div class="tv"><b id="t-fuel">0</b>gal</div><div class="ts">of ~400 gal usable</div></div>
-        <div class="tot"><div class="tl">Curtailed</div><div class="tv"><b id="t-curt">0</b>kWh</div><div class="ts">solar the battery couldn't take</div></div>
-        <div class="tot"><div class="tl">Battery at 24:00</div><div class="tv"><b id="t-end">0</b>%</div><div class="ts" id="t-end-s"></div></div>
+        <div class="tot"><div class="tl">Unused solar</div><div class="tv"><b id="t-curt">0</b>kWh</div><div class="ts">solar the battery couldn't take</div></div>
+        <div class="tot"><div class="tl">Battery at midnight</div><div class="tv"><b id="t-end">0</b>%</div><div class="ts" id="t-end-s"></div></div>
       </div>
       <details class="more">
         <summary>Hourly table</summary>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th scope="col">Time</th><th scope="col">Battery</th><th scope="col">Solar kW</th><th scope="col">Load kW</th><th scope="col">Battery kW</th><th scope="col">Generator kW</th></tr></thead>
+            <thead><tr><th scope="col">Time</th><th scope="col">Battery</th><th scope="col">Solar kW</th><th scope="col">Use kW</th><th scope="col">Battery kW</th><th scope="col">Generator kW</th></tr></thead>
             <tbody id="hourBody"></tbody>
           </table>
         </div>
@@ -855,13 +966,13 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
 </main>
 
 <script>
-/* MODEL:BEGIN - pure power model; no DOM. Numbers from the agent brief, Sep 27, 2026. */
+/* MODEL:BEGIN - pure power model; no DOM. Numbers from the agent brief (market survey Sep 27–28, 2026). */
 var SimModel = (function () {
   'use strict';
   var K = Object.freeze({
-    INV_MAX: 12000, LEG_MAX: 8000, BATT_RATE: 12800, CAP: 43020, FLOOR: 0.20,
-    GEN_MAX: 14000, DERATE: 0.75, CH_EFF: 0.96, DIS_EFF: 0.94, PV_CAP: 18000,
-    IDLE: 70, SOLAR_BAR: 15500, AC_START_EXTRA: 1400
+    INV_MAX: 12000, INV_MAX_PV: 15000, PV_BOOST: 3000, LEG_MAX: 7500, BATT_RATE: 14080, CAP: 40960, FLOOR: 0.10,
+    GEN_MAX: 18000, DERATE: 0.75, CH_EFF: 0.96, DIS_EFF: 0.94, PV_CAP: 19500,
+    IDLE: 90, SOLAR_BAR: 15500, LOAD_BAR: 15000, AC_START_EXTRA: 1400
   });
   var ARRAYS = {
     phase1: { w: 11610, kwdc: '11.61' },
@@ -943,7 +1054,7 @@ var SimModel = (function () {
       r.charge = r.pvToBatt + r.genCharge;
       r.gen = r.genLoad + r.genCharge;
       r.curtail = pv - r.pvToBatt;
-      r.fuelRate = 1 + 2 * (r.gen / K.GEN_MAX);
+      r.fuelRate = 1.2 + 1.9 * (r.gen / K.GEN_MAX);  // estimate from the brief
     } else if (pv >= load) {
       var surplus = pv - load;
       r.charge = Math.min(surplus, chargeLim);
@@ -972,12 +1083,16 @@ var SimModel = (function () {
     st.soc = Math.min(K.CAP, Math.max(0, st.soc + (f.charge * K.CH_EFF - f.drain) * dtH));
     return f;
   }
-  function overloads(ln, genOn) {
+  // What the inverter can carry right now: 12 kW on battery, rising toward 15 kW with solar; the generator when it runs.
+  function loadLimit(pv, genOn) {
+    return genOn ? K.GEN_MAX : K.INV_MAX + Math.min(Math.max(0, pv), K.PV_BOOST);
+  }
+  function overloads(ln, genOn, pv) {
     var out = [];
-    if (!genOn && ln.total > K.INV_MAX) out.push('load is over the 12 kW inverter limit');
-    if (genOn && ln.total > K.GEN_MAX) out.push('load is over the 14 kW generator rating');
-    if (ln.l1 > K.LEG_MAX) out.push('leg L1 is over its 8 kW limit');
-    if (ln.l2 > K.LEG_MAX) out.push('leg L2 is over its 8 kW limit');
+    if (!genOn && ln.total > loadLimit(pv, false)) out.push('the camp is using more than the inverter can supply (12 kW on battery, up to 15 kW with solar)');
+    if (genOn && ln.total > K.GEN_MAX) out.push('the camp is using more than the 18 kW generator can supply');
+    if (ln.l1 > K.LEG_MAX) out.push('side L1 is over its 7.5 kW limit');
+    if (ln.l2 > K.LEG_MAX) out.push('side L2 is over its 7.5 kW limit');
     return out;
   }
   // 24 hours in 1-minute steps from 00:00 at the starting SOC.
@@ -1002,7 +1117,7 @@ var SimModel = (function () {
   }
   return { K: K, ARRAYS: ARRAYS, SEASONS: SEASONS, LOADS: LOADS, DEFAULTS: DEFAULTS, defaults: defaults,
            defaultOn: defaultOn, loadNow: loadNow, loadAvg: loadAvg, sun: sun, solarW: solarW,
-           dispatch: dispatch, flowsAt: flowsAt, step: step, overloads: overloads, project: project };
+           dispatch: dispatch, flowsAt: flowsAt, step: step, loadLimit: loadLimit, overloads: overloads, project: project };
 })();
 if (typeof module !== 'undefined') module.exports = SimModel;
 /* MODEL:END */
@@ -1059,73 +1174,83 @@ function hhmm(m) {
 }
 function link(text, href) { return h('a', { href: href, target: '_blank', rel: 'noopener', text: text }); }
 
-/* ---------- system tab data (from the spec, Sep 27, 2026) ---------- */
+/* ---------- system tab data (spec and brief, market survey Sep 27–28, 2026) ---------- */
 var REQS = [
-  ['R1', 'Four sites', 'Power a 30-ft camper (50A, 120/240V), a small camper (30A, 120V), a cabin and a shed.', '50A and 30A camper pedestals off a camp subpanel; 20A circuits to the cabin and the shed.'],
-  ['R2', 'Overnight A/C', 'One A/C per dwelling, three in all, able to run through the night.', '34.4 kWh of usable battery covers the ~32 kWh overnight load. Soft starters on all three A/Cs.'],
-  ['R3', 'Year-round use', 'Usable in every season. Winter heat is propane, not electric.', 'A winter day needs ~11 kWh against 21–32 kWh/day of winter solar. Self-heating batteries; the generator covers extended overcast.', true],
-  ['R4', 'Split-phase AC', '120/240V split-phase, 60 Hz.', 'EG4 18kPV: 12 kW continuous, 8 kW per 120V leg.'],
-  ['R5', 'Battery system', '48V nominal, LiFePO4.', 'Three EG4 WallMount 280Ah batteries, 43.0 kWh.'],
-  ['R6', 'Solar share', 'Array about 15.6 kWdc (the owner\'s 80A target), supplying 67% of summer daily energy.', '15.48 kWdc full array: ~42 kWh/day on annual-average sun, 65% of the design day. Summer sun runs above the annual average, so 67% is met in summer.', true],
-  ['R7', 'Phased build', 'Build the solar in two phases, about two-thirds then one-third.', '27 modules, then 9 (75% / 25%), because string length is fixed by voltage. Racking, conduit and string wiring for all 36 go in during phase 1.'],
-  ['R8', 'New gear, auto-start backup', 'All equipment new, including a Generac-class propane generator that starts itself when the battery runs low. The owner\'s existing generator is not part of the system.', 'Generac Guardian 14 kW on LP, started and stopped by the inverter\'s 2-wire contact at set battery levels.'],
-  ['R9', 'Power center', 'Inverter, batteries and main panel in an insulated 10 ft shipping container.', 'Container with a thermostatic exhaust fan. Batteries charge only between 32°F and 113°F; the inverter is rated to 140°F.'],
-  ['R10', 'Schedule', 'Install summer 2027, energize fall 2027.', 'Design complete. Site survey, permits and owner confirmations remain.']
+  ['R1', 'Four places to power', 'A 30-ft camper (50A, 120/240V), a small camper (30A, 120V), a cabin and a shed.', 'Camper hookups (50A and 30A) at a small electrical panel near the camp, plus a 20A circuit each to the cabin and the shed.'],
+  ['R2', 'A/C all night', 'One A/C in each dwelling, three in all, able to run through the night.', 'The batteries hold 36.9 kWh of usable power, and a night needs about 32 kWh. Soft starters on the A/Cs are optional; the inverter handles their start-up surge on its own.'],
+  ['R3', 'Year-round use', 'Usable in every season. Winter heat is propane, not electric.', 'A winter day needs about 11 kWh, plus the container heater if it\'s electric. Winter sun provides 21–32 kWh a day, the container is heated, and the generator covers long cloudy stretches.', true, 'wait'],
+  ['R4', 'House-style power', '120/240V, the same as a house (split-phase, 60 Hz).', 'The Sol-Ark 15K inverter supplies 12 kW from the batteries and 15 kW with solar, up to 7.5 kW on each 120V side.'],
+  ['R5', 'Battery type', '48V lithium iron phosphate (LiFePO4) batteries.', 'Eight Pytes V5 batteries, 41.0 kWh in all, certified as a system with the Sol-Ark (UL 9540).'],
+  ['R6', 'Solar share', 'About 15.5 kW of panels (the owner\'s 80A target), covering 67% of a summer day\'s power.', 'The full 15.48 kW of panels makes about 42 kWh a day with average sun, 65% of the summer design day. Summer sun is stronger than average, so the 67% target is met in summer. The generator covers the rest: about 2 hours and 5 gal of propane a day in summer.'],
+  ['R7', 'Two-step solar build', 'Put in the solar in two phases, about two-thirds then one-third.', '27 panels first, then 9 more (75% / 25%). Panels are wired in groups of 9, which sets the split. Racking and wiring for all 36 go in during phase 1.'],
+  ['R8', 'New gear, automatic backup', 'All new equipment, including a Generac-class propane generator that starts itself when the batteries run low. The owner\'s current generator is not reused.', 'Kohler 18RCA, 18 kW on propane. The inverter starts and stops it at set battery levels through a small relay.'],
+  ['R9', 'Equipment room', 'Inverter, batteries and main panel in an insulated 10 ft shipping container.', 'Insulated container with a thermostat-controlled heater and exhaust fan. None of the chosen equipment is rated for the −37°F state record low, so the heater keeps the batteries at 32°F or warmer.'],
+  ['R10', 'Schedule', 'Install summer 2027, power on fall 2027.', 'Equipment selected. Quotes, the site walk-through, permits and two owner answers remain.', false, 'wait']
 ];
 var EQUIPMENT = [
-  { item: 'Inverter/charger', product: 'EG4 18kPV', qty: '1', c: '--neutral',
-    specs: [['Continuous', '12,000 W'], ['Per 120V leg', '8,000 W max'], ['Surge', '14,700 W', 'for 10 min'],
-            ['Battery charge/discharge', '250 A max', '12,800 W at 51.2 V'], ['Solar inputs', '3 MPPTs'],
-            ['Idle draw', '~70 W'], ['Generator bypass', '90 A']],
-    src: ['Spec sheet', 'https://eg4electronics.com/wp-content/uploads/2024/04/EG4-18KPV-12LV-Spec-Sheet.pdf'] },
-  { item: 'Batteries', product: 'EG4 WallMount Indoor 280Ah', qty: '3', c: '--charge',
-    specs: [['Each', '14.34 kWh'], ['Bank total', '43.0 kWh'], ['Usable window', '20–100% SOC', '34.4 kWh'],
-            ['Continuous current', '200 A each'], ['Cold weather', 'Self-heating']],
-    src: ['Product page', 'https://eg4electronics.com/categories/batteries/eg4-wallmount-indoor-280ah-lithium-battery/'] },
-  { item: 'PV modules', product: 'Qcells Q.TRON BLK M-G2+ 430W', qty: '27 + 9', qtyNote: 'phase 1 + phase 2', c: '--solar',
-    specs: [['Phase 1', '11.61 kWdc', '27 modules'], ['Full array', '15.48 kWdc', '36 modules'], ['Strings', '4 of 9 modules']],
-    src: ['Data sheet', 'https://cdn.enfsolar.com/z/pp/2024/8/r53k60kkgehh5/qcells-data-sheet-q-tron-blk-m-g2-series-405-430-2024-03-rev.pdf'] },
-  { item: 'Generator', product: 'Generac Guardian 14kW, propane', qty: '1', c: '--gen',
-    specs: [['Output on LP', '14,000 W'], ['Fuel at 50% load', '2 gal/h'], ['Fuel at 100% load', '3 gal/h']],
-    src: ['Product page', 'https://www.electricgeneratorsdirect.com/Generac-Guardian-7225-Standby-Generator/p111026.html'] },
-  { item: 'Propane tank', product: '500 gal', qty: '1', c: '--lp',
-    specs: [['Usable', '~400 gal']],
-    src: ['Fuel use reference', 'https://independentlypowered.com/generac-generator-fuel-consumption/'] },
-  { item: 'A/C soft starters', product: 'Micro-Air EasyStart or equivalent', qty: '3', c: '--load',
-    specs: [['Purpose', 'Reduce compressor start surge']],
-    src: ['Why it matters', 'https://www.microair.net/blogs/news/what-size-generator-do-you-need-to-run-an-rv-air-conditioner'] },
-  { item: 'Power center', product: 'Insulated 10 ft shipping container', qty: '1', c: '--neutral',
-    specs: [['Ventilation', 'Thermostatic exhaust fan'], ['Houses', 'Inverter, batteries and main panel']] }
+  { key: 'inv', item: 'Inverter/charger', product: 'Sol-Ark 15K-2P-N', qty: '1', c: '--neutral',
+    what: 'The heart of the system. It turns solar and battery power into 120/240V household power, charges the batteries, and starts the generator when they run low.',
+    specs: [['Steady output', '12,000 W', 'on battery; 15,000 W with solar'], ['Each 120V side', '7,500 W max'], ['Short bursts', '24,000 W', 'for up to 10 seconds'],
+            ['Battery charging', 'Up to 14,080 W', '275 A'], ['Solar input', '19.5 kW', 'on 3 inputs'], ['Power it uses itself', '~90 W'], ['Generator input', '80 A']],
+    page: 'https://sol-ark.com/residential-energy-solutions/whole-home-15k-2p-hybrid-inverter/',
+    docs: [['Datasheet', 'https://sol-ark.com/wp-content/uploads/2026/09/15KDatasheet_PS-00001_Rev_8_10Sept2026.pdf'], ['Manuals and certificates', 'https://sol-ark.com/document/15k-2p-n-datasheet/']] },
+  { key: 'batt', item: 'Batteries', product: 'Pytes V5', qty: '8', c: '--charge',
+    what: 'Store solar power for night and cloudy days. Each module heats itself in the cold.',
+    specs: [['Each', '5.12 kWh'], ['All eight', '40.96 kWh'], ['Usable', '36.9 kWh', 'kept between 10% and 100% charge'], ['Current', '100 A each'], ['Cold weather', 'Self-heating'], ['Certified', 'UL 9540', 'as a system with the Sol-Ark 15K']],
+    page: 'https://www.pytesusa.com/Low-Voltage-Battery/v5.html',
+    docs: [['Datasheet', 'https://www.pytesusa.com/public/upload/20260527/12f047afbebb22c3c3b303e387333b41.pdf'], ['Sol-Ark pairing flyer (UL 9540)', 'https://www.solar-electric.com/lib/wind-sun/Pytes-UL9540-Certified-ESS-System.pdf']] },
+  { key: 'pv', item: 'Solar panels', product: 'Qcells Q.TRON BLK M-G2+ 430W', qty: '27 + 9', qtyNote: 'phase 1 + phase 2', c: '--solar',
+    what: 'Ground-mounted panels that turn sunlight into power, put in over two phases.',
+    specs: [['Each panel', '430 W'], ['Phase 1', '11.61 kW', '27 panels'], ['Full build', '15.48 kW', '36 panels'], ['Wiring', '4 groups of 9']],
+    page: 'https://us.qcells.com/q-tron-blk-m-g2/',
+    docs: [['Datasheet', 'https://media.qcells.com/v/1FhTENgd/']] },
+  { key: 'gen', item: 'Generator', product: 'Kohler 18RCA, propane', qty: '1', c: '--gen',
+    what: 'Backup power. It starts on its own when the batteries run low, recharges them, then shuts off.',
+    specs: [['Output on propane', '18,000 W', '75 A'], ['Fuel at half load', '~2.1 gal/h'], ['Auto-start', '2-wire start', 'through a 12V relay']],
+    page: null, docs: [] },
+  { key: 'tank', item: 'Propane tank', product: '500 gal', qty: '1', c: '--lp',
+    what: 'Fuel for the generator.',
+    specs: [['Usable', '~400 gal', 'tanks are filled to about 80%']], generic: true },
+  { key: 'soft', item: 'A/C soft starters', product: 'Micro-Air EasyStart or equivalent', qty: 'Up to 3', qtyNote: 'one per A/C', c: '--load', optional: true,
+    what: 'Nice to have, not required. A small add-on for an A/C that softens the power spike when its compressor kicks on. The inverter can start the A/Cs without them.',
+    specs: [['Required?', 'No', 'the inverter\'s 24 kW surge rating covers A/C starts'], ['Where', 'On each A/C, if added']],
+    page: 'https://www.microair.net/products/easystart-breeze-soft-starter', pageLabel: 'EasyStart Breeze, the RV model' },
+  { key: 'pc', item: 'Power center', product: 'Insulated 10 ft container with heater and exhaust fan', qty: '1', c: '--neutral',
+    what: 'A secure, weatherproof room for the inverter, batteries and main panel, kept warm in winter and vented in summer.',
+    specs: [['Heating', 'Thermostatic heater', 'keeps the batteries at 32°F or warmer'], ['Cooling', 'Exhaust fan'], ['Holds', 'Inverter, batteries, main panel']], generic: true }
 ];
 var CAPACITY = [
-  { measure: 'Peak demand', design: '~7.8 kW running, ~9.3 kW during one A/C start', cap: '12 kW inverter',
-    need: [{ v: 7.8, c: '--load', t: '7.8 kW running' }, { v: 1.5, c: '--load', soft: true, t: '9.3 kW during one A/C start' }], needTxt: '7.8 / 9.3 kW',
-    have: [{ v: 12, c: '--neutral', t: '12 kW inverter' }], haveTxt: '12 kW',
-    verdict: 'Fits: 65% of the inverter running, 78% during an A/C start.' },
-  { measure: 'Summer design day', design: '~65 kWh (54 A/C, 9 base, 1.7 idle)', cap: 'Solar full array ~42 kWh/day on annual-average sun; generator ~22 kWh',
-    need: [{ v: 65, c: '--load', t: '65 kWh design day' }], needTxt: '65 kWh',
-    have: [{ v: 42, c: '--solar', t: 'Solar ~42 kWh' }, { v: 22, c: '--gen', t: 'Generator ~22 kWh' }], haveTxt: '42 + 22 kWh',
-    verdict: 'Solar covers ~65%; the generator covers the rest in about 2 hours.' },
-  { measure: 'Overnight, 12 h', design: '~32 kWh', cap: '34.4 kWh usable battery',
+  { measure: 'Busiest moment', design: 'About 7.8 kW with everything running; about 9.3 kW for a moment while an A/C starts', cap: '12 kW inverter on battery, 15 kW with solar',
+    need: [{ v: 7.8, c: '--load', t: '7.8 kW with everything running' }, { v: 1.5, c: '--load', soft: true, t: '9.3 kW while an A/C starts' }], needTxt: '7.8 / 9.3 kW',
+    have: [{ v: 12, c: '--neutral', t: '12 kW on battery' }, { v: 3, c: '--neutral', hatch: true, t: 'Up to 15 kW with solar' }], haveTxt: '12 / 15 kW',
+    verdict: 'Fits: 65% of the battery-only rating with everything on, 78% while an A/C starts.', ok: true },
+  { measure: 'Hot summer day', design: 'About 65 kWh (A/C 54, everything else 9, inverter 2.2)', cap: 'Solar about 42 kWh on an average-sun day; generator about 22 kWh',
+    need: [{ v: 65, c: '--load', t: '65 kWh on a hot summer day' }], needTxt: '65 kWh',
+    have: [{ v: 42, c: '--solar', t: 'Solar about 42 kWh' }, { v: 22, c: '--gen', t: 'Generator about 22 kWh' }], haveTxt: '42 + 22 kWh',
+    verdict: 'Solar covers about 65%; the generator makes up the rest in about 2 hours.' },
+  { measure: 'One night (12 hours)', design: 'About 32 kWh', cap: '36.9 kWh of usable battery',
     need: [{ v: 32, c: '--load', t: '32 kWh overnight' }], needTxt: '32 kWh',
-    have: [{ v: 34.4, c: '--charge', t: '34.4 kWh usable battery' }], haveTxt: '34.4 kWh',
-    verdict: 'Fits: 93% of the usable battery.' },
-  { measure: 'Winter day (propane heat, no A/C)', design: '~11 kWh', cap: 'Solar 21–32 kWh/day',
-    need: [{ v: 11, c: '--load', t: '11 kWh winter day' }], needTxt: '11 kWh',
-    have: [{ v: 21, c: '--solar', t: 'Solar 21 kWh/day, low end' }, { v: 11, c: '--solar', hatch: true, t: 'Solar up to 32 kWh/day' }], haveTxt: '21–32 kWh',
-    verdict: 'Fits: solar alone covers a winter day; the generator is for extended overcast.' },
-  { measure: 'Generator in summer', design: '~2 h/day, ~5 gal propane', cap: '400 gal usable, ~80 days',
-    need: [{ v: 5, c: '--gen', t: '5 gal per summer day' }], needTxt: '5 gal/day',
+    have: [{ v: 36.9, c: '--charge', t: '36.9 kWh of usable battery' }], haveTxt: '36.9 kWh',
+    verdict: 'Fits: uses 87% of the usable battery.', ok: true },
+  { measure: 'Winter day (propane heat, no A/C)', design: 'About 11 kWh, plus the container heater if it\'s electric', cap: 'Solar 21–32 kWh a day',
+    need: [{ v: 11, c: '--load', t: '11 kWh on a winter day' }], needTxt: '11 kWh',
+    have: [{ v: 21, c: '--solar', t: 'Solar 21 kWh a day, low end' }, { v: 11, c: '--solar', hatch: true, t: 'Solar up to 32 kWh a day' }], haveTxt: '21–32 kWh',
+    verdict: 'Fits: winter sun covers a normal day; the generator is for long cloudy stretches.', ok: true },
+  { measure: 'Generator fuel in summer', design: 'About 2 hours and 5 gal of propane a day', cap: '400 gal usable in the tank',
+    need: [{ v: 5, c: '--gen', t: '5 gal a summer day' }], needTxt: '5 gal/day',
     have: [{ v: 400, c: '--lp', t: '400 gal usable' }], haveTxt: '400 gal',
     verdict: 'One tank fill lasts about 80 summer days.' }
 ];
 var STRINGS = [
-  ['1', '25A usable, 31A short-circuit, 2 inputs', '2', '27.5A / 26.1A', '1 string in phase 1, 1 in phase 2'],
-  ['2', '15A usable, 19A short-circuit', '1', '13.7A / 13.1A', 'Phase 1'],
-  ['3', '15A usable, 19A short-circuit', '1', '13.7A / 13.1A', 'Phase 1']
+  ['1', '26A usable, 44A short-circuit, 2 inputs', '2', '27.5A / 26.1A', '1 string in phase 1, 1 in phase 2'],
+  ['2', '26A usable, 44A short-circuit', '1', '13.7A / 13.1A', 'Phase 1'],
+  ['3', '26A usable, 44A short-circuit', '1', '13.7A / 13.1A', 'Phase 1']
 ];
 var DIST = [
-  ['Main panel', 'In the power center, fed from the inverter LOAD terminals. Conductors and overcurrent protection per EG4 manual (90A generator bypass).'],
+  ['Main panel', 'In the power center, fed from the inverter\'s load output. Conductors and overcurrent protection per the Sol-Ark manual.'],
+  ['Generator input', 'Sol-Ark generator port, 80A continuous; the Kohler 18RCA delivers 75A.'],
+  ['Generator bypass', 'Manual transfer switch so the camp can run directly on the generator if the inverter fails.'],
+  ['Start relay', '12V DC interposing relay, coil under 100mA, with its own 12V supply. Sol-Ark\'s start contact is rated 12V, 100mA.'],
   ['Camp feeder', 'To a subpanel at the camp, sized for 3% maximum voltage drop once distance is measured.'],
   ['Camper, 30-ft', '50A 120/240V receptacle (NEMA 14-50), splits across both legs.'],
   ['Camper, small', '30A 120V receptacle (TT-30) on L1.'],
@@ -1133,70 +1258,104 @@ var DIST = [
   ['Shed', '20A 120V circuit on L1.'],
   ['GFCI', 'Per NEC for outdoor and RV receptacles.'],
   ['Grounding and bonding', 'One neutral-ground bond, at the main panel. Grounding electrode at the power center. Generator neutral unbonded.'],
-  ['DC', 'Battery conductors and fusing rated for 250A per EG4 manual. PV disconnect and AFCI are built into the 18kPV.'],
+  ['DC', 'Battery conductors and fusing rated for 275A per the Sol-Ark manual. Arc-fault and ground-fault detection are built into the Sol-Ark; PV disconnect per manual.'],
+  ['Battery rack', 'Pytes-compatible rack or cabinet for the eight modules; model and price to confirm.'],
   ['Array and racking', 'Ground mount for all 36 modules, away from structures. Full footprint, conduit and string wiring installed in phase 1.']
 ];
 var OPEN = [
-  ['Confirm the 67% target: the generator runs about 2 hours a day in summer and burns about 5 gal of propane.', 'Owner'],
   ['Confirm winter heat is propane, not electric.', 'Owner'],
-  ['Cabin A/C nameplate amps.', 'Owner'],
-  ['Array location and shading, feeder distances, container, generator and tank placement and setbacks.', 'Site walk-through'],
-  ['County permit and inspection; licensed electrician for final connections.', 'Will'],
-  [['Confirm WallMount Indoor availability; ', ['one dealer lists it discontinued', 'https://www.currentconnected.com/product/eg4-indoor-wallmount-48v-280ah-14-3kwh-lifepo4/'], '. Substitute: ', ['EG4 WallMount All Weather 280Ah', 'https://eg4electronics.com/categories/batteries/eg4-wallmount-all-weather-battery/'], '.'], 'Will']
+  ['Read the amps rating on the cabin A/C\'s nameplate sticker.', 'Owner'],
+  ['Choose the container heater: propane direct-vent (doesn\'t draw on the batteries) or electric.', 'Will'],
+  ['Get quotes for the Kohler 18RCA without the transfer switch and for the Pytes V5 rack, and confirm Kohler\'s non-standby warranty covers the 18 kW model.', 'Will'],
+  ['Ask the county inspector whether a UL 9540 system listing is required. The Sol-Ark with Pytes V5 has one.', 'Will'],
+  ['Choose spots for the solar panels, container, generator and propane tank; check for shade; measure the wire runs.', 'Site walk-through'],
+  ['Get the county permit and inspection, and hire a licensed electrician for the final connections.', 'Owner']
 ];
 
-/* ---------- equipment selection data (verbatim from the brief) ---------- */
+/* ---------- equipment selection data (market survey Sep 27–28, 2026) ----------
+   rows: [option, key specs, pros, cons, price]; the first row is the pick.
+   out: options ruled out before the comparison, [name, reason]. */
+function pageOf(key) { var e = EQUIPMENT.filter(function (x) { return x.key === key; })[0]; return e && e.page; }
 var SELECTION = [
-  { name: 'Inverter/charger',
-    min: '120/240V split-phase; >= 9.3 kW for one A/C start on 7.8 kW running; >= 15.5 kWdc PV input; accepts strings of 9 x 430W (296V at max power, 407V cold); generator input for 14 kW propane with 2-wire auto-start; operates in an unheated container',
+  { name: 'Inverter/charger', key: 'inv',
+    min: '120/240V off-grid power; at least 10 kW steady and 9.3 kW for an A/C start; takes at least 15.5 kW of panels; starts the generator automatically (2-wire start); talks to several battery brands (closed-loop communication); rated to −4°F or colder; UL 1741 safety listing',
+    out: [['EG4 12000XP', 'needs 32°F or warmer at full load'], ['Sol-Ark 12K-2P-N', 'only 9 kW and 13 kW of panels'], ['Victron MultiPlus-II ×2 or ×3', '8 kW, or unequal units on each side'],
+          ['Schneider XW Pro', 'discontinued'], ['OutBack Radian', 'can\'t communicate with lithium batteries (open-loop only)'], ['SMA Sunny Island', 'no longer sold'],
+          ['Growatt SPF 12000T', 'needs 32°F or warmer; only 7 kW of panels'], ['Deye', 'not sold or supported in the US'], ['MidNite The One', '15.0 kW of panels, 0.5 kW short'],
+          ['Fortress Envy', 'generator start and battery communication not documented']],
     rows: [
-      ['EG4 18kPV', '12 kW continuous, 14.7 kW for 10 min; 18 kW PV on 3 MPPTs up to 600V; 250A battery; 90A generator bypass, 2-wire start; ~70W idle; -13 to 140F; 10-year warranty; ~$4,850', 'Meets every minimum in one box; 3 MPPTs fit the four-string, two-phase array; widest temperature range', 'MPPT 2 and 3 limited to 15A; MPPT 1 clips ~4% after phase 2; grid-tie features unused'],
-      ['EG4 12000XP', '12 kW continuous, 18 kW surge; 24 kW PV on 2 MPPTs at 35A; 90A generator, 2-wire start', 'Purpose-built off-grid; more PV headroom', 'Rated 0-45C at full load; 5-year warranty; two MPPTs fit phasing less cleanly'],
-      ['Sol-Ark 15K', '12 kW battery-only, 15 kW with PV; 24 kVA surge; 19.5 kW PV on 3 MPPTs at 26A; 275A battery; 90W idle; -13 to 131F', 'Strongest surge; no MPPT clipping', 'Costs more for less PV input; higher idle draw'],
-      ['Victron MultiPlus-II x3 + MPPT + Cerbo', '12 kW continuous, 27 kW surge; ~$7,550 before charge controller', 'Best light-load efficiency; 10-15 year service life; modular', 'Highest cost; five boxes to wire and configure']
+      ['Sol-Ark 15K-2P-N', '12 kW on battery, 15 kW with solar; 7.5 kW per 120V side; 24 kW for 10 seconds; 19.5 kW of panels on 3 solar inputs (26A, 500V); 275A battery charging; 80A generator input; uses about 90W itself; runs from −13°F to 131°F; 10-year warranty',
+       'Strongest surge of the single-box options; the full array fits with about 4 kW to spare; works with the most battery brands, including UL 9540 certified pairings; US support',
+       'Its small generator-start contact (12V, 100mA) needs a relay; needs a heated container; uses the most power itself; built by Deye', '$5,229'],
+      ['Victron 2× Quattro 48/10000 + Cerbo GX + 3× MPPT 250/100', '16 kW; 20 kW peak per unit; inverters rated to −40°F',
+       'Best cold rating; some redundancy with two units; flexible generator control',
+       'The UL-listed setup forces strings of 5 panels (35 panels); the Cerbo controller is IEC-only and rated to −4°F; 5-year warranty; needs a Victron installer', '$7,737'],
+      ['EG4 18kPV (previous pick)', '12 kW, 8 kW per side; 18 kW of panels; 250A battery charging; 90A generator input; uses 70W itself; rated to −13°F; 10-year warranty',
+       'Cheapest option that passed; lowest power use; generator start wires directly',
+       '2026 reviews report firmware and circuit-board failures and slow support; a law firm opened an investigation in July 2025 (no findings)', '$4,000']
+    ],
+    also: 'EG4 FlexBOSS21 + GridBOSS (about $5,400; 6 kW per side); Sol-Ark 12K-2P-LL ($3,975; rated to −40°F, but exactly 10 kW, and only 12 kW of panels usable).' },
+  { name: 'Batteries', key: 'batt',
+    min: '48V lithium iron phosphate (LiFePO4); at least 32 kWh usable; at least 275A combined; on Sol-Ark\'s approved list, ideally Victron\'s and EG4\'s too; heats itself or has documented cold-weather charging; UL 1973 and UL 9540A safety listings',
+    out: [['EG4 WallMount 280Ah and 314Ah', 'not on Sol-Ark\'s approved list'], ['EG4 LL-S', 'not on Sol-Ark\'s list, and no heater'], ['Fortress eVault and eFlex', 'no heater; no closed-loop link to Victron'],
+          ['SimpliPHI 6.6', 'no heater'], ['HomeGrid, RUiXU, SOK, BigBattery', 'not on the inverter makers\' approved lists'], ['Deka Duration', 'no heater']],
+    rows: [
+      ['Pytes V5 ×8', '41 kWh, 36.9 kWh usable at 90%; 100A each; charges from 32°F to 113°F, runs from 14°F to 122°F, heater works from about 0°F; 10 years, 6,000 cycles or 19.35 MWh per unit',
+       'The only heated battery on Sol-Ark\'s, Victron\'s and EG4\'s approved lists; UL 9540 certified as a system with the Sol-Ark 15K; more than 600A combined',
+       'Warranty needs 14°F or warmer around the batteries; eight modules plus a rack; lowest lifetime-energy warranty cap', '$11,600 plus rack'],
+      ['Discover Helios ESS ×3', '48.2 kWh, all of it usable; 200A each; runs down to −13°F; sealed (IP65); 10 years and 93 MWh',
+       'Best cold ratings; cheapest; only three units; direct Victron link',
+       'Won\'t charge below 39°F; heater runs only above 50% charge or while charging; not on EG4\'s list; UL 9540 status conflicts between sources; restock late October', '$10,650'],
+      ['Pytes V16 ×3', '48.2 kWh; 150–200A each (sources conflict); heated; sealed (IP66)',
+       'Smallest footprint; Sol-Ark certified',
+       'New in 2026; not on EG4\'s or Victron\'s lists; lifetime-energy cap not found', '$10,977']
     ] },
-  { name: 'Batteries',
-    min: '48V LiFePO4; >= 32 kWh usable overnight (>= 40 kWh nominal at 80%); >= 250A combined continuous; >= 300Ah total (EG4 minimum for the 18kPV); closed-loop communication; self-heating',
+  { name: 'Solar panels', key: 'pv',
+    min: 'Strings of 9 stay at or below 500V on the coldest day (−37°F) and at or above 175V on a hot day; two strings fit within 26A per solar input; residential size; tier 1 (bankable) maker; in stock in the US',
+    out: [['REC Alpha Pure-R/RX and Trina Vertex S+', '9 in a string reaches 541–681V on a cold day'], ['600W+ commercial panels', 'over 500V and over 26A'], ['Meyer Burger', 'US arm went bankrupt in 2025']],
     rows: [
-      ['EG4 WallMount Indoor 280Ah x3', '14.34 kWh and 200A each; self-heating; charges 32-113F; ~$2,900 each', '43 kWh, 600A combined; built-in busbars; ~$200/kWh, lowest checked', 'One dealer lists it discontinued, another backordered; indoor-rated only'],
-      ['EG4 WallMount All Weather 280Ah x3', '14.3 kWh and 140A each; IP65; self-heating; 10-year warranty', 'Can mount outdoors; 420A combined still covers 250A', 'Lower per-battery current; price not checked'],
-      ['EG4 LL-S 100Ah x8', '5.12 kWh each, 41 kWh total; 100A BMS; ~$1,350 each', 'Expands in small steps', '~$264/kWh; eight units and a rack; self-heating not listed'],
-      ['Tesla Powerwall 3', '13.5 kWh with 11.5 kW inverter; $13,500-17,500 installed each', 'Polished, one installer', 'No direct generator integration; grid-tied design; installer lock-in; several times the cost per kWh']
+      ['Qcells Q.TRON BLK M-G2+ 430', '430W; 39.32V open-circuit, 13.74A short-circuit; 408V per string on the coldest day, about 251–256V on a hot day; snow and wind rating 5,400 Pa design, 8,100 Pa tested; tier 1; 25/25-year warranty',
+       'Checked against every inverter finalist; splits exactly into the two phases; assembled in Georgia; in stock',
+       'Collects light on the front only (monofacial); the Georgia plant paused in late 2025 and resumed in March 2026', '$255.42 each, $9,195'],
+      ['Silfab SIL-440 QD', '440W; 404V per string on the coldest day; 4,000 Pa rear load; 25/30-year warranty; made in North America',
+       '15.8 kW from 36 panels; stronger rear-load rating; in stock', 'Not tier 1', '$259 each'],
+      ['HD Hyundai HiN-T440NF(BK)', '440W; glass on both sides and collects light from the back too (about 80% as much); 405V per string on the coldest day; 5,400 Pa on both sides; tier 1',
+       'Cheapest at $0.47 per watt; extra output from the back side; fits Sol-Ark\'s 44A limit', 'Origin and tariff exposure unknown; 54 lb', '$207.71 each']
     ] },
-  { name: 'PV modules',
-    min: '15.5 kWdc in four equal strings; cold string Voc under 550V at -37F; string Imp < 15A and Isc < 19A; string voltage near 360V nominal; mountain snow and wind loads',
+  { name: 'Generator', key: 'gen',
+    min: 'Propane, 120/240V; covers the 7.9 kW busiest moment plus about 6 kW of charging, so an 18 kW class unit runs near 75%; 80A or less on propane; documented 2-wire auto-start; outdoor enclosure; cold-weather kit; new and Generac-class (owner\'s requirement)',
+    out: [['Generac Protector QS 22 kW and Kohler 20RCA', '92A and 83A, over the 80A limit'], ['Cummins RS13A and RS17A', 'no documented 2-wire start; not warranted for off-grid use'],
+          ['Generac EcoGen and Briggs & Stratton 12 and 17 kW', 'discontinued'], ['14 kW units, including the previous Generac pick', 'would run near 100%']],
     rows: [
-      ['Qcells Q.TRON BLK M-G2+ 430', 'Voc 39.32V, Isc 13.74A, Imp 13.05A, Vmp 32.94V; -0.24%/K; 22.0%; 5,400 Pa snow; 25-year warranty; ~$268 each', 'Strings of 9 at 407V cold and 13.05A fit every inverter limit; ~$0.62/W', 'Commodity panels likely cost less per watt'],
-      ['Mission Solar 430', '18.2 W/sq ft vs Qcells 20.5', 'Same class, domestic brand', '~12% more area; string limits not checked'],
-      ['Commercial 500-550W', '~78 x 39 in. or larger', 'Fewer modules and racking', 'Strings must be redesigned; current may exceed 15A on MPPT 2 and 3; heavier']
+      ['Kohler 18RCA', '18 kW on propane, 75A; about 2.1 gal/h at half load; 999 cc engine at 3,600 rpm; 69 dB',
+       '2-wire start documented on the standard controller; published warranty for non-standby use; cold package with a carburetor heater; dealer in Morgantown',
+       'Non-standby warranty is 18 months or 1,000 hours; minimum temperature not published; price without the transfer switch not found', '$5,875 with transfer switch'],
+      ['Briggs & Stratton PowerProtect PP18', '18 kW on propane, 75A; 2.2 gal/h at half load, 3.5 at full; rated to −20°F; 7 years or 1,000 hours for non-emergency use, covering parts, labor and travel',
+       'Best written warranty; published cold rating', 'Steps to enable 2-wire start not confirmed; highest fuel use; one WV dealer', '$5,746'],
+      ['Generac 7259 (18 kW)', '18 kW on propane, 75A; 1.65 gal/h at half load, 2.87 at full; 65 dB',
+       'The owner\'s named brand; about 11 dealers nearby; lowest fuel use and price',
+       'Warranty excludes off-grid damage from its 2-wire kit; needs dealer programming; cold rating not published', '$5,039 (sale)']
     ] },
-  { name: 'Generator',
-    min: 'propane; 120/240V 60 Hz; within 4.0-21.6 kW and 90A bypass; carries 7.9 kW peak and still charges; 2-wire auto-start; outdoor standby enclosure; new, Generac-class (owner requirement)',
+  { name: 'Propane tank', key: 'tank',
+    min: 'Keeps up with the generator at full load (up to 3.5 gal/h) in winter cold, when a small tank can\'t turn liquid to gas fast enough; covers about 5 gal a day in summer; tanks are filled to about 80%',
     rows: [
-      ['Generac Guardian 14 kW', '14 kW LP, 58.3A; 2 gal/h at 50%, 3 gal/h full; 65 dBA; air-cooled', '~6 kW left for charging at peak; under 90A bypass; supports 2-wire start; wide dealer network', '2-wire start needs dealer controller setting and harness; air-cooled 3,600 rpm'],
-      ['Generac Guardian 10 kW', '0.97 gal/h at 50%, 1.48 full', 'Lower fuel and cost', 'Only ~2 kW left for charging at peak; runs near full load'],
-      ['Generac Guardian 22 kW', '2.53 gal/h at 50%, 3.90 full', 'Ample headroom', '~92A exceeds the 90A bypass; must be capped in settings; more fuel'],
-      ['Liquid-cooled 1,800 rpm (Kohler class)', 'Longer life, quieter, ~2x cost', 'Best if run hours grow', 'Double the price for ~2 h/day summer use']
+      ['500 gal', 'About 400 gal usable; about 80 summer days', 'About one refill per summer; enough surface area for winter draw', 'Needs a larger pad and more setback distance', 'Not priced'],
+      ['250 gal', 'About 200 gal usable; about 40 days', 'Cheaper and smaller', 'Two or more refills per summer; less margin in winter cold', 'Not priced'],
+      ['1,000 gal', 'About 800 gal usable; about 160 days', 'One fill per season, or enough to heat the dwellings too', 'Costs more and harder to place', 'Not priced']
     ] },
-  { name: 'Propane tank',
-    min: 'full-load draw (3 gal/h) in winter without vaporization freeze-up; ~5 gal/day in summer; filled to ~80%',
+  { name: 'A/C soft starters', key: 'soft', optional: true,
+    note: 'The Sol-Ark can start the A/Cs on its own. One A/C starting brings the camp to about 9.3 kW, and even all three starting at the same moment comes to about 12.1 kW (estimate), well within the inverter\'s 24 kW surge rating. A soft starter makes each start gentler; Micro-Air says it cuts the start-up surge by as much as 70%.',
+    min: 'Soften the start-up surge of each A/C; fit the rooftop RV units and the cabin unit',
     rows: [
-      ['500 gal', '~400 gal usable, ~80 summer days', 'About one refill per summer; enough surface for winter full-load draw', 'Larger pad and setbacks'],
-      ['250 gal', '~200 gal usable, ~40 days', 'Cheaper, smaller', 'Two+ refills per summer; less vaporization margin'],
-      ['1,000 gal', '~800 gal usable, ~160 days', 'One fill per season, or dwelling heat too', 'Cost and placement; oversized for generator alone']
+      ['Micro-Air EasyStart', 'Soft starter for RV air conditioners', 'Widely used on rooftop units; set up from a phone app (Bluetooth)', 'One install per A/C; not yet confirmed to fit the cabin unit', 'Not priced'],
+      ['SoftStartRV', 'Soft starter for RV air conditioners', 'Does the same job', 'Same limits', 'Not priced']
     ] },
-  { name: 'A/C soft starters',
-    min: 'cut start current on all three A/Cs so simultaneous starts stay inside inverter surge; fit rooftop RV units and the cabin unit',
+  { name: 'Power center', key: 'pc',
+    min: 'Room for the Sol-Ark (31.8 × 19.4 × 12 in.), eight rack-mounted battery modules and the main panel, with working space; keeps the batteries at 32°F or warmer (the Pytes warranty needs 14°F around them; the Sol-Ark is rated to −13°F) against a −37°F record low; vented for summer; generator stays outside',
     rows: [
-      ['Micro-Air EasyStart', 'Soft starter for RV A/C', 'Widely used on rooftop units; Bluetooth setup', 'One install per A/C; cabin unit compatibility unconfirmed'],
-      ['SoftStartRV', 'Soft starter for RV A/C', 'Same purpose', 'Same caveats']
-    ] },
-  { name: 'Power center enclosure',
-    min: 'fits inverter (34.3 x 20.5 x 11.2 in.), three batteries (36.4 x 18.1 x 9.6 in. each) and main panel with clearances; batteries 32-113F for charging; inverter above -13F vs -37F state record low; ventilated for summer',
-    rows: [
-      ['Insulated 10 ft container, thermostatic exhaust fan', 'Owner\'s choice', 'Secure, weatherproof, movable; enough wall space', 'Needs insulation and vent; summer heat gain'],
-      ['Insulated 20 ft container', 'More room', 'Space for spares and future batteries', 'More cost and footprint than needed'],
-      ['Outdoor pad, NEMA 4X inverter + All Weather batteries', 'No enclosure', 'Nothing to build', 'Batteries spend energy self-heating in winter; less secure; contrary to owner request']
+      ['Insulated 10 ft container with thermostatic heater and exhaust fan', 'Owner\'s choice', 'Secure, weatherproof and movable', 'Needs insulation, a heater and a vent; heater type (propane direct-vent or electric) not chosen yet', 'Not priced'],
+      ['Insulated 20 ft container', 'More room', 'Space for spares and future batteries', 'More cost and space', 'Not priced'],
+      ['Outdoor pad, no container', 'No building', 'Nothing to build', 'None of the finalists is rated for −37°F; less secure; not what the owner asked for', 'Not priced']
     ] }
 ];
 
@@ -1207,20 +1366,31 @@ function renderSystem() {
     rb.appendChild(h('tr', null,
       h('td', { class: 'rid' }, r[0]),
       h('td', { 'data-label': 'Requirement' }, h('span', { class: 'rtitle' }, r[1], r[4] ? h('span', { class: 'tag', text: 'To confirm' }) : null), r[2]),
-      h('td', { class: 'soft', 'data-label': 'How the design meets it', text: r[3] })));
+      h('td', { class: 'soft', 'data-label': 'How the design meets it' },
+        h('div', { class: 'met' },
+          r[5] === 'wait'
+            ? h('span', { class: 'st wait', title: 'Pending', 'aria-label': 'Pending' }, '?')
+            : h('span', { class: 'st ok', title: 'Met by the design', 'aria-label': 'Met by the design' }, '✓'),
+          h('span', { text: r[3] })))));
   });
 
   var pl = $('#plates');
   EQUIPMENT.forEach(function (e) {
-    pl.appendChild(h('article', { class: 'card plate' },
+    var links = [];
+    if (e.page) links.push(link((e.pageLabel ? 'Product page: ' + e.pageLabel : 'Product page') + ' ↗', e.page));
+    (e.docs || []).forEach(function (d) { links.push(link(d[0] + ' ↗', d[1])); });
+    pl.appendChild(h('article', { class: 'card plate' + (e.optional ? ' optional' : ''), id: 'eq-' + e.key },
       h('div', { class: 'plate-id' },
-        h('div', { class: 'plate-cat' }, h('i', { class: 'dot', style: '--c:var(' + e.c + ')' }), e.item),
+        h('div', { class: 'plate-cat' }, h('i', { class: 'dot', style: '--c:var(' + e.c + ')' }), e.item, e.optional ? h('span', { class: 'tag opt', text: 'Optional' }) : null),
         h('h3', { class: 'plate-name', text: e.product }),
         h('div', { class: 'plate-qty' }, 'Qty ', h('b', { text: e.qty }), e.qtyNote ? ' (' + e.qtyNote + ')' : ''),
-        e.src ? h('div', { class: 'plate-src' }, link(e.src[0] + ' ↗', e.src[1])) : null),
-      h('dl', { class: 'specs' }, e.specs.map(function (s) {
-        return h('div', null, h('dt', { text: s[0] }), h('dd', null, s[1], s[2] ? h('small', { text: s[2] }) : null));
-      }))));
+        links.length ? h('ul', { class: 'plate-links' }, links.map(function (a) { return h('li', null, a); }))
+          : e.generic ? h('p', { class: 'plate-src', text: 'Standard item; no specific model.' }) : null),
+      h('div', { class: 'plate-body' },
+        h('p', { class: 'plate-what', text: e.what }),
+        h('dl', { class: 'specs' }, e.specs.map(function (s) {
+          return h('div', null, h('dt', { text: s[0] }), h('dd', null, s[1], s[2] ? h('small', { text: s[2] }) : null));
+        })))));
   });
 
   var cl = $('#capList');
@@ -1241,14 +1411,16 @@ function renderSystem() {
     cl.appendChild(h('div', { class: 'cap-row' },
       h('div', { class: 'cap-text' },
         h('h3', { text: c.measure }),
-        h('dl', null, h('dt', { text: 'Design' }), h('dd', { text: c.design }), h('dt', { text: 'Capacity' }), h('dd', { text: c.cap })),
-        h('p', { class: 'cap-verdict', text: c.verdict })),
-      h('div', { class: 'cap-bars' }, bar('Design', c.need, c.needTxt), bar('Capacity', c.have, c.haveTxt))));
+        h('dl', null, h('dt', { text: 'Needs' }), h('dd', { text: c.design }), h('dt', { text: 'Has' }), h('dd', { text: c.cap })),
+        c.ok
+          ? h('p', { class: 'cap-verdict met' }, h('span', { class: 'st ok', 'aria-hidden': 'true' }, '✓'), h('span', { text: c.verdict }))
+          : h('p', { class: 'cap-verdict', text: c.verdict })),
+      h('div', { class: 'cap-bars' }, bar('Needs', c.need, c.needTxt), bar('Has', c.have, c.haveTxt))));
   });
 
   var sb = $('#stringBody');
   STRINGS.forEach(function (r) {
-    sb.appendChild(h('tr', null, h('td', { class: 'rid', text: r[0] }), h('td', { 'data-label': 'Limits (18kPV)', text: r[1] }),
+    sb.appendChild(h('tr', null, h('td', { class: 'rid', text: r[0] }), h('td', { 'data-label': 'Limits (Sol-Ark 15K)', text: r[1] }),
       h('td', { class: 'n', 'data-label': 'Strings', text: r[2] }), h('td', { class: 'n', 'data-label': 'Isc / Imp', text: r[3] }), h('td', { 'data-label': 'Phase', text: r[4] })));
   });
   var db = $('#distBody');
@@ -1258,31 +1430,61 @@ function renderSystem() {
   var ob = $('#openBody');
   OPEN.forEach(function (r) {
     var body = Array.isArray(r[0]) ? r[0].map(function (p) { return Array.isArray(p) ? link(p[0], p[1]) : p; }) : r[0];
-    ob.appendChild(h('tr', null, h('td', null, body), h('td', { class: 'soft', 'data-label': 'Owner', text: r[1] })));
+    ob.appendChild(h('tr', null, h('td', null, body), h('td', { 'data-label': 'Who' }, h('span', { class: 'owner', text: r[1] }))));
   });
 }
 
 /* ---------- render: equipment selection ---------- */
 function renderSelection() {
+  var sumBody = $('#sumBody');
   var list = $('#selList');
   SELECTION.forEach(function (c, i) {
+    var pick = c.rows[0], href = pageOf(c.key);
+    var jump = h('a', { href: '#sel-' + i, class: 'jump', text: c.name });
+    jump.addEventListener('click', function (e) {
+      e.preventDefault();
+      var card = document.getElementById('sel-' + i);
+      if (card) card.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    });
+    sumBody.appendChild(h('tr', null,
+      h('th', { scope: 'row' }, jump),
+      h('td', { 'data-label': 'Pick' }, h('span', { class: 'pickname' },
+        c.optional ? h('span', { class: 'st opt', 'aria-hidden': 'true' }) : h('span', { class: 'st ok', 'aria-hidden': 'true' }, '✓'),
+        h('span', null, href ? link(pretty(pick[0]) + ' ↗', href) : pretty(pick[0]), c.optional ? h('span', { class: 'tag opt', text: 'Optional' }) : null))),
+      h('td', { class: 'soft', 'data-label': 'Runners-up', text: c.rows.slice(1).map(function (r) { return pretty(r[0]); }).join('; ') }),
+      h('td', { class: 'price', 'data-label': 'Price', text: pick[4] })));
+
     var table = h('table', { class: 'tbl stack' },
-      h('colgroup', null, h('col', { class: 'c-opt' }), h('col', { class: 'c-key' }), h('col', { class: 'c-pro' }), h('col', { class: 'c-con' })),
+      h('colgroup', null, h('col', { class: 'c-opt' }), h('col', { class: 'c-key' }), h('col', { class: 'c-pro' }), h('col', { class: 'c-con' }), h('col', { class: 'c-price' })),
       h('thead', null, h('tr', null,
         h('th', { scope: 'col', text: 'Option' }), h('th', { scope: 'col', text: 'Key specs' }),
-        h('th', { scope: 'col', text: '+ Pros' }), h('th', { scope: 'col', text: '− Cons' }))),
+        h('th', { scope: 'col' }, h('span', { class: 'pm good', 'aria-hidden': 'true' }, '+'), 'Pros'),
+        h('th', { scope: 'col' }, h('span', { class: 'pm bad', 'aria-hidden': 'true' }, '−'), 'Cons'),
+        h('th', { scope: 'col', text: 'Price' }))),
       h('tbody', null, c.rows.map(function (r, j) {
+        var name = j === 0 && href ? link(pretty(r[0]) + ' ↗', href) : pretty(r[0]);
         return h('tr', { class: j === 0 ? 'pick' : 'alt' },
-          h('th', { scope: 'row', class: 'oname' }, pretty(r[0]), j === 0 ? h('div', null, h('span', { class: 'badge', text: 'Selected' })) : h('span', { class: 'vh', text: ' (runner-up)' })),
+          h('th', { scope: 'row', class: 'oname' }, name, j === 0
+            ? h('div', null, c.optional ? h('span', { class: 'badge soft', text: 'Suggested' }) : h('span', { class: 'badge', text: '✓ Selected' }))
+            : h('span', { class: 'vh', text: ' (runner-up)' })),
           h('td', { 'data-label': 'Key specs' }, ul(items(r[1]))),
           h('td', { class: 'pro', 'data-label': '+ Pros' }, ul(items(r[2]))),
-          h('td', { class: 'con', 'data-label': '− Cons' }, ul(items(r[3]))));
+          h('td', { class: 'con', 'data-label': '− Cons' }, ul(items(r[3]))),
+          h('td', { class: 'price', 'data-label': 'Price', text: r[4] }));
       })));
-    var mins = items(c.min);
-    list.appendChild(h('article', { class: 'card sel', 'aria-labelledby': 'sel-' + i },
-      h('div', { class: 'sel-head' }, h('h3', { id: 'sel-' + i, text: c.name }), h('span', { class: 'sel-count', text: (i + 1) + ' of ' + SELECTION.length })),
-      h('div', { class: 'minspec' }, h('h4', { text: 'Minimum specs' }), ul(mins)),
-      h('div', { class: 'opts tbl-wrap' }, table)));
+    var screened = c.out && c.out.length
+      ? h('details', { class: 'screened' },
+          h('summary', null, 'Ruled out ', h('span', { class: 'cnt', text: '(' + c.out.length + ')' })),
+          h('ul', null, c.out.map(function (o) { return h('li', null, h('b', { text: o[0] }), ': ' + o[1]); })))
+      : h('p', { class: 'screened none', text: 'No options were ruled out before this comparison.' });
+    list.appendChild(h('article', { class: 'card sel' + (c.optional ? ' optional' : ''), id: 'sel-' + i, 'aria-labelledby': 'selh-' + i },
+      h('div', { class: 'sel-head' }, h('h3', { id: 'selh-' + i }, c.name, c.optional ? h('span', { class: 'tag opt', text: 'Optional' }) : null),
+        h('span', { class: 'sel-count', text: (i + 1) + ' of ' + SELECTION.length })),
+      c.note ? h('p', { class: 'optnote' }, h('b', { text: 'Nice to have, not required. ' }), c.note) : null,
+      h('div', { class: 'minspec' }, h('h4', { text: c.optional ? 'If you add them, they should' : 'Must have' }), ul(items(c.min))),
+      screened,
+      h('div', { class: 'opts tbl-wrap' }, table),
+      c.also ? h('p', { class: 'also' }, h('b', { text: 'Also passed: ' }), c.also) : null));
   });
 }
 
@@ -1303,7 +1505,7 @@ function selectTab(name, opts) {
   if (opts.push && location.hash.slice(1) !== name) history.replaceState(null, '', '#' + name);
   var bar = $('#tabbar');
   if (opts.push && window.scrollY > bar.offsetTop) window.scrollTo(0, bar.offsetTop);
-  if (name === 'simulator') { drawChart(); } else { pause(); }
+  if (name === 'simulator') { drawChart(); updateStick(); } else { pause(); }
   updateReadoutVisibility();
 }
 function initTabs() {
@@ -1320,8 +1522,12 @@ function initTabs() {
       selectTab(TABS[n], { focus: true, push: true });
     });
   });
-  window.addEventListener('hashchange', function () { selectTab(location.hash.slice(1)); });
-  selectTab(location.hash.slice(1) || 'system');
+  $$('[data-go]').forEach(function (b) {
+    b.addEventListener('click', function () { selectTab(b.getAttribute('data-go'), { push: true, focus: true }); });
+  });
+  window.addEventListener('hashchange', function () { var t = location.hash.slice(1); if (TABS.indexOf(t) >= 0) selectTab(t); });
+  var h0 = location.hash.slice(1);
+  selectTab(TABS.indexOf(h0) >= 0 ? h0 : 'system');
 }
 var darkMQ = window.matchMedia('(prefers-color-scheme: dark)');
 function isDark() {
@@ -1349,8 +1555,8 @@ var live = { t: 780, soc: S.startSoc * K.CAP, genOn: S.startSoc <= S.genStart + 
 var proj = null, playing = false, raf = 0, lastTs = 0, acc = 0;
 
 var DWELLINGS = [
-  { id: 'camper50', name: '30-ft camper', note: '50A pedestal · 120/240V' },
-  { id: 'camper30', name: 'Small camper', note: '30A pedestal · 120V' },
+  { id: 'camper50', name: '30-ft camper', note: '50A hookup · 120/240V' },
+  { id: 'camper30', name: 'Small camper', note: '30A hookup · 120V' },
   { id: 'cabin', name: 'Cabin', note: '20A circuit · 120V' },
   { id: 'shed', name: 'Shed', note: '20A circuit · 120V' }
 ];
@@ -1368,15 +1574,15 @@ function renderLoads() {
         input, h('span', { class: 'switch', 'aria-hidden': 'true' }),
         h('span', { class: 'load-name', text: l.name }),
         h('span', { class: 'load-w', text: l.w.toLocaleString('en-US') + ' W' }),
-        h('span', { class: 'load-meta', text: l.leg + ' · runs ' + Math.round(l.duty * 100) + '% of the day' })));
+        h('span', { class: 'load-meta', text: 'Runs ' + Math.round(l.duty * 100) + '% of the day · side ' + l.leg })));
     });
     root.appendChild(g);
   });
   root.appendChild(h('div', { class: 'dwell' },
     h('div', { class: 'dwell-head' }, h('b', { text: 'Power center' }), h('span', { text: 'always on' })),
     h('div', { class: 'load fixed' }, h('span', { class: 'switch', 'aria-hidden': 'true' }),
-      h('span', { class: 'load-name', text: 'Inverter idle' }), h('span', { class: 'load-w', text: '70 W' }),
-      h('span', { class: 'load-meta', text: 'Split across L1 and L2 · runs 100% of the day' }))));
+      h('span', { class: 'load-name', text: 'Inverter\'s own use' }), h('span', { class: 'load-w', text: '70 W' }),
+      h('span', { class: 'load-meta', text: 'Always on · split across both sides' }))));
 }
 function updateDwellTotals() {
   DWELLINGS.forEach(function (d) {
@@ -1408,7 +1614,8 @@ var lastChips = '';
 function renderLive() {
   var ln = M_.loadNow(S.on);
   var f = M_.flowsAt(live, S, ln.total, live.t / 60, 1 / 60);
-  var over = M_.overloads(ln, live.genOn);
+  var over = M_.overloads(ln, live.genOn, f.pv);
+  var limit = M_.loadLimit(f.pv, live.genOn);
   var arr = M_.ARRAYS[S.array];
   var socFrac = live.soc / K.CAP;
   var net = f.charge - f.drain;
@@ -1423,27 +1630,25 @@ function renderLive() {
   setFill(MT.solar.a, 0, used / K.SOLAR_BAR);
   setFill(MT.solar.b, used / K.SOLAR_BAR, f.curtail / K.SOLAR_BAR, used > 1);
   setText(MT.solar.v, kw(f.pv));
-  setText(MT.solar.p, pc(f.pv, arr.w) + '% of ' + arr.kwdc + ' kWdc array');
+  setText(MT.solar.p, pc(f.pv, arr.w) + '% of the ' + arr.kwdc + ' kW of panels');
   setText(MT.solar.s,
-    f.pv <= 0 ? 'Sun is down.' :
-    f.curtail > 0.5 ? kw(f.curtail) + ' curtailed (hatched): ' + (f.atChargeLimit ? 'battery is charging at its 12.8 kW limit.' : 'battery is full.') :
-    live.genOn ? 'All solar goes to the battery while the generator carries the loads.' :
-    f.pv >= ln.total ? 'Solar covers the whole load; the extra charges the battery.' : 'Solar covers part of the load; the battery covers the rest.');
+    f.curtail > 0.5 ? kw(f.curtail) + ' unused (striped) because ' + (f.atChargeLimit ? 'the battery is already charging as fast as it can.' : 'the battery is full.') :
+    live.genOn && f.pv > 0 ? 'All of it goes to the battery while the generator runs.' : '');
 
   // Load
-  var loadOver = !live.genOn && ln.total > K.INV_MAX;
-  setFill(MT.load.a, 0, ln.total / K.INV_MAX);
+  var loadOver = ln.total > limit;
+  setFill(MT.load.a, 0, ln.total / K.LOAD_BAR);
   MT.load.a.classList.toggle('over', loadOver);
   setText(MT.load.v, kw(ln.total));
-  setText(MT.load.p, pc(ln.total, K.INV_MAX) + '% of 12 kW');
+  setText(MT.load.p, pc(ln.total, limit) + '% of the ' + kw(limit) + ' limit now');
   if (ln.anyAC) {
     var peak = ln.total + K.AC_START_EXTRA;
     MT.load.b.hidden = false;
-    MT.load.b.style.left = Math.min(100, peak / K.INV_MAX * 100).toFixed(2) + '%';
-    setText(MT.load.s, 'Tick: one A/C starting, about ' + kw(peak) + ' for a moment. Inverter surge rating is 14.7 kW for 10 min.');
+    MT.load.b.style.left = Math.min(100, peak / K.LOAD_BAR * 100).toFixed(2) + '%';
+    setText(MT.load.s, 'The small tick shows one A/C starting up: about ' + kw(peak) + ' for a moment. The inverter can handle 24 kW for 10 seconds.');
   } else {
     MT.load.b.hidden = true;
-    setText(MT.load.s, 'Running watts of every load that is on, plus 70 W inverter idle.');
+    setText(MT.load.s, '');
   }
   // Legs
   [['l1', ln.l1], ['l2', ln.l2]].forEach(function (p) {
@@ -1451,7 +1656,7 @@ function renderLive() {
     setFill(m.a, 0, w / K.LEG_MAX);
     m.a.classList.toggle('over', w > K.LEG_MAX);
     setText(m.v, kw(w));
-    setText(m.p, pc(w, K.LEG_MAX) + '% of 8 kW');
+    setText(m.p, pc(w, K.LEG_MAX) + '% of 7.5 kW');
   });
 
   // Battery flow (centered at zero)
@@ -1461,25 +1666,25 @@ function renderLive() {
     bm.a.hidden = false; bm.a.style.left = 'calc(50% + 1px)'; bm.a.style.width = 'max(0px, calc(' + (Math.min(1, net / K.BATT_RATE) * 50).toFixed(3) + '% - 1px))';
     bm.k.style.setProperty('--c', 'var(--charge)');
     setText(bm.v, 'Charging ' + kw(net));
-    setText(bm.p, pc(net, K.BATT_RATE) + '% of 12.8 kW max');
-    setText(bm.s, live.genOn
-      ? 'From the generator (' + kw(f.genCharge) + ')' + (f.pvToBatt > 0.5 ? ' and solar (' + kw(f.pvToBatt) + ')' : '') + (f.atChargeLimit ? ', at the 250 A charge limit.' : '.')
-      : 'From solar the loads don\'t need' + (f.atChargeLimit ? ', at the 250 A charge limit.' : '.'));
+    setText(bm.p, pc(net, K.BATT_RATE) + '% of 14.1 kW max');
+    setText(bm.s, (live.genOn
+      ? 'From the generator (' + kw(f.genCharge) + ')' + (f.pvToBatt > 0.5 ? ' and solar (' + kw(f.pvToBatt) + ')' : '')
+      : 'From spare solar') + (f.atChargeLimit ? ', as fast as the batteries can charge.' : '.'));
   } else if (net < -0.5) {
     var d = -net, wd = Math.min(1, d / K.BATT_RATE) * 50;
     bm.a.style.setProperty('--c', 'var(--drain)'); bm.a.classList.add('left');
     bm.a.hidden = false; bm.a.style.left = 'calc(' + (50 - wd).toFixed(3) + '% - 1px)'; bm.a.style.width = 'max(0px, calc(' + wd.toFixed(3) + '% - 1px))';
     bm.k.style.setProperty('--c', 'var(--drain)');
     setText(bm.v, 'Draining ' + kw(d));
-    setText(bm.p, pc(d, K.BATT_RATE) + '% of 12.8 kW max');
+    setText(bm.p, pc(d, K.BATT_RATE) + '% of 14.1 kW max');
     var toStart = (live.soc - S.genStart * K.CAP) / d;
-    setText(bm.s, 'Covers the ' + kw(ln.total - f.pv) + ' solar can\'t, plus 6% conversion loss.' +
+    setText(bm.s, 'Includes about 6% lost in conversion.' +
       (toStart > 0 && toStart < 48 ? ' At this rate the generator starts in about ' + toStart.toFixed(1) + ' h.' : ''));
   } else {
     bm.a.hidden = true; bm.k.style.setProperty('--c', 'var(--track)');
     setText(bm.v, 'Idle ' + kw(0));
-    setText(bm.p, '0% of 12.8 kW max');
-    setText(bm.s, socFrac >= 0.999 ? 'Battery is full.' : 'No flow in or out.');
+    setText(bm.p, '0% of 14.1 kW max');
+    setText(bm.s, socFrac >= 0.999 ? 'Battery is full.' : '');
   }
 
   // SOC
@@ -1487,10 +1692,10 @@ function renderLive() {
   MT.soc.b.style.left = (S.genStart * 100) + '%';
   MT.soc.c.style.left = (S.genStop * 100) + '%';
   setText(MT.soc.v, Math.round(socFrac * 100) + '%');
-  setText(MT.soc.p, (live.soc / 1000).toFixed(1) + ' of 43.0 kWh');
+  setText(MT.soc.p, (live.soc / 1000).toFixed(1) + ' of ' + (K.CAP / 1000).toFixed(1) + ' kWh');
   setText($('[data-ks]', MT.soc.root), 'Generator start ' + Math.round(S.genStart * 100) + '%');
   setText($('[data-kp]', MT.soc.root), 'stop ' + Math.round(S.genStop * 100) + '%');
-  setText(MT.soc.s, 'Usable window 20–100%: ' + (Math.max(0, live.soc - K.FLOOR * K.CAP) / 1000).toFixed(1) + ' kWh available now.');
+  setText(MT.soc.s, (Math.max(0, live.soc - K.FLOOR * K.CAP) / 1000).toFixed(1) + ' kWh left before the 10% reserve.');
 
   // Generator
   var gm = MT.gen;
@@ -1499,9 +1704,9 @@ function renderLive() {
   gm.r.classList.toggle('is-off', !live.genOn);
   setText(gm.r, live.genOn ? 'RUNNING' : 'OFF');
   setText(gm.v, kw(live.genOn ? f.gen : 0));
-  setText(gm.p, pc(live.genOn ? f.gen : 0, K.GEN_MAX) + '% of 14 kW');
+  setText(gm.p, pc(live.genOn ? f.gen : 0, K.GEN_MAX) + '% of 18 kW');
   setText(gm.s, live.genOn
-    ? kw(f.genLoad) + ' to loads · ' + kw(f.genCharge) + ' charging · burning ' + f.fuelRate.toFixed(1) + ' gal/h. Stops at ' + Math.round(S.genStop * 100) + '% battery.'
+    ? kw(f.genLoad) + ' to the camp, ' + kw(f.genCharge) + ' to the batteries, burning ' + f.fuelRate.toFixed(1) + ' gal of propane an hour.'
     : 'Starts when the battery falls to ' + Math.round(S.genStart * 100) + '%.');
 
   // Inverter use
@@ -1509,7 +1714,10 @@ function renderLive() {
   MT.inv.a.classList.toggle('over', loadOver);
   setText(MT.inv.v, pc(ln.total, K.INV_MAX) + '%');
   setText(MT.inv.p, kw(ln.total) + ' of 12 kW');
-  setText(MT.inv.s, live.genOn ? 'Loads are passing through from the generator (90 A bypass).' : 'Inverter supplies every load from solar and battery.');
+  setText(MT.inv.s, live.genOn ? 'The generator is powering the camp through the inverter\'s generator input.' : ln.total > K.INV_MAX ? 'Above 12 kW the inverter needs help from solar, up to 15 kW.' : '');
+
+  // Plain-language status
+  renderStory(story(f, ln, net, socFrac));
 
   // Status chips
   var chips = [];
@@ -1517,7 +1725,7 @@ function renderLive() {
   else if (net < -0.5) chips.push(['↓', 'Draining', '--drain']);
   else chips.push(['–', 'Idle', '--track', 'off']);
   chips.push(live.genOn ? ['', 'Generator ON', '--gen'] : ['', 'Generator OFF', '--track', 'off']);
-  if (f.curtail > 0.5) chips.push(['', 'Curtailing', '--solar']);
+  if (f.curtail > 0.5) chips.push(['', 'Unused solar', '--solar']);
   if (over.length) chips.push(['⚠', 'Overload', '--danger', 'alert']);
   var key = chips.map(function (c) { return c[1]; }).join('|');
   if (key !== lastChips) {
@@ -1526,7 +1734,7 @@ function renderLive() {
     box.textContent = '';
     chips.forEach(function (c) {
       box.appendChild(h('span', { class: 'chip' + (c[3] ? ' ' + c[3] : '') },
-        c[0] ? h('span', { class: 'ic', 'aria-hidden': 'true', text: c[0] }) : h('i', { class: 'dot', style: '--c:var(' + c[2] + ')' }),
+        c[0] ? h('span', { class: 'ic', 'aria-hidden': 'true', style: '--c:var(' + c[2] + ')', text: c[0] }) : h('i', { class: 'dot', style: '--c:var(' + c[2] + ')' }),
         c[1]));
     });
   }
@@ -1539,7 +1747,7 @@ function renderLive() {
 
   setText($('#session'), 'Since reset: generator ' + live.genH.toFixed(1) + ' h, propane ' + live.fuel.toFixed(1) + ' gal.' + (playing ? '' : ' Press Play to run the clock.'));
 
-  // Compact readout (phones)
+  // Compact readout (shown when the meters scroll out of view)
   setText($('#ro-time'), hhmm(live.t));
   setText($('#ro-solar'), (f.pv / 1000).toFixed(1));
   setText($('#ro-load'), (ln.total / 1000).toFixed(1));
@@ -1554,17 +1762,54 @@ function renderLive() {
   return { f: f, ln: ln, net: net, over: over };
 }
 
+// Values wrapped in \u0001...\u0002 render bold so the eye can find the numbers.
+function B(x) { return '\u0001' + x + '\u0002'; }
+function bkw(w) { return B(kw(w)); }
+var lastStory = '';
+function renderStory(str) {
+  if (str === lastStory) return;
+  lastStory = str;
+  var el = $('#story');
+  el.textContent = '';
+  str.split(/\u0001|\u0002/).forEach(function (part, i) {
+    if (part) el.appendChild(i % 2 ? h('b', { text: part }) : document.createTextNode(part));
+  });
+}
+function story(f, ln, net, socFrac) {
+  var kw = bkw;
+  var at = B(Math.round(socFrac * 100) + '%');
+  if (live.genOn) {
+    return 'The battery ran low, so the generator is running at ' + kw(f.gen) + ': ' + kw(f.genLoad) + ' for the camp and ' +
+      kw(f.genCharge) + ' to recharge.' + (f.pvToBatt > 0.5 ? ' Solar adds ' + kw(f.pvToBatt) + ' to the charge.' : '') +
+      ' The battery is at ' + at + ' and the generator shuts off at ' + B(Math.round(S.genStop * 100) + '%') + '.';
+  }
+  if (f.pv <= 0) {
+    return 'The sun is down. The camp is using ' + kw(ln.total) + ', all of it from the battery, which is at ' + at + '. The generator is off.';
+  }
+  if (net < -0.5) {
+    return 'The sun is making ' + kw(f.pv) + ' and the camp is using ' + kw(ln.total) + ', so the battery covers the other ' +
+      kw(ln.total - f.pv) + '. It is at ' + at + '. The generator is off.';
+  }
+  var s = 'The sun is making ' + kw(f.pv) + ', more than the ' + kw(ln.total) + ' the camp is using';
+  if (net > 0.5) {
+    s += ', so ' + kw(net) + ' goes into the battery, now at ' + at + '.';
+    if (f.curtail > 0.5) s += ' The battery can\'t take the last ' + kw(f.curtail) + ', so that solar goes unused.';
+    return s;
+  }
+  return s + '. The battery is full, so the extra ' + kw(f.curtail) + ' goes unused.';
+}
 var srTimer = 0;
 function announce() {
   clearTimeout(srTimer);
   srTimer = setTimeout(function () {
-    var ln = M_.loadNow(S.on);
-    var f = M_.dispatch(M_.solarW(live.t / 60, S), ln.total, live.soc, live.genOn, 1 / 60);
-    var net = f.charge - f.drain;
-    $('#srSummary').textContent = 'At ' + hhmm(live.t) + ': solar ' + kw(f.pv) + ', load ' + kw(ln.total) + ', battery ' +
-      (net > 0.5 ? 'charging ' + kw(net) : net < -0.5 ? 'draining ' + kw(-net) : 'idle') + ' at ' + Math.round(live.soc / K.CAP * 100) +
-      '%, generator ' + (live.genOn ? 'running' : 'off') + '.';
+    $('#srSummary').textContent = 'At ' + hhmm(live.t) + ': ' + $('#story').textContent;
   }, 500);
+}
+function updateStick() {
+  var p = $('#simLive');
+  if (!p || p.offsetParent === null) return;
+  var fits = window.innerWidth >= 960 && p.offsetHeight + $('#tabbar').offsetHeight + 28 <= window.innerHeight;
+  p.classList.toggle('stick', fits);
 }
 
 /* ---------- projection chart ---------- */
@@ -1601,7 +1846,7 @@ function drawChart() {
   svg.appendChild(sv('line', { class: 'ch-thr', x1: m.l, x2: W - m.r, y1: Y(S.genStop), y2: Y(S.genStop) }));
   svg.appendChild(sv('text', { class: 'ch-lbl', x: m.l + 6, y: Y(S.genStop) - 5 }, 'Generator stop ' + Math.round(S.genStop * 100) + '%'));
   svg.appendChild(sv('text', { class: 'ch-lbl', x: m.l + 6, y: Y(S.genStart) - 5 }, 'Generator start ' + Math.round(S.genStart * 100) + '%'));
-  svg.appendChild(sv('text', { class: 'ch-lbl', x: m.l + 6, y: Y(K.FLOOR) + 14 }, 'Floor 20%'));
+  svg.appendChild(sv('text', { class: 'ch-lbl', x: m.l + 6, y: Y(K.FLOOR) - 5 }, 'Reserve ' + Math.round(K.FLOOR * 100) + '%'));
   // SOC area and line
   var d = '';
   for (var j = 0; j <= 1440; j += 2) d += (j ? 'L' : 'M') + X(j).toFixed(1) + ' ' + Y(proj.soc[j]).toFixed(1);
@@ -1667,7 +1912,7 @@ function showCross(min) {
   tip.appendChild(h('div', { class: 'tt', text: hhmm(min) }));
   tip.appendChild(row('--soc', Math.round(soc * 100) + '%', 'battery'));
   tip.appendChild(row('--solar', kw(proj.pv[i]), 'solar'));
-  tip.appendChild(row('--load', kw(proj.loadW), 'load (average)'));
+  tip.appendChild(row('--load', kw(proj.loadW), 'in use (average)'));
   tip.appendChild(row(net > 0.5 ? '--charge' : '--drain', net > 0.5 ? kw(net) : net < -0.5 ? kw(-net) : '0.0 kW', net > 0.5 ? 'charging' : net < -0.5 ? 'draining' : 'battery idle'));
   tip.appendChild(row('--gen', proj.genOn[i] ? kw(proj.gen[i]) : 'Off', 'generator'));
   tip.hidden = false;
@@ -1705,7 +1950,7 @@ function renderProjection() {
   $('#t-solar').textContent = proj.solarKWh.toFixed(1);
   $('#t-solar-s').textContent = (proj.solarKWh - proj.curtKWh).toFixed(1) + ' kWh used';
   $('#t-load').textContent = proj.loadKWh.toFixed(1);
-  $('#t-load-s').textContent = 'A/C ' + (proj.load.ac * 24 / 1000).toFixed(1) + ' · base ' + (proj.load.base * 24 / 1000).toFixed(1) + ' · idle ' + (proj.load.idle * 24 / 1000).toFixed(1);
+  $('#t-load-s').textContent = 'A/C ' + (proj.load.ac * 24 / 1000).toFixed(1) + ' · other ' + (proj.load.base * 24 / 1000).toFixed(1) + ' · inverter ' + (proj.load.idle * 24 / 1000).toFixed(1);
   $('#t-gen').textContent = proj.genH.toFixed(1);
   $('#t-gen-s').textContent = 'starts at ' + Math.round(S.genStart * 100) + '%, stops at ' + Math.round(S.genStop * 100) + '%';
   $('#t-fuel').textContent = proj.fuel.toFixed(1);
@@ -1752,8 +1997,8 @@ function syncOutputs() {
   $('#gstart-o').textContent = Math.round(S.genStart * 100) + '%';
   $('#gstop-o').textContent = Math.round(S.genStop * 100) + '%';
   $('#psh-h').textContent = S.season === 'summer'
-    ? 'Summer default 4.5 is a placeholder until the site PVWatts run. Tick marks the 3.65 h annual average.'
-    : 'Winter default 2.2. Tick marks the 3.65 h annual average.';
+    ? 'Hours of full sun a day. The summer default of 4.5 is a placeholder until the site solar study. The tick marks the 3.65-hour yearly average.'
+    : 'Hours of full sun a day. The winter default is 2.2. The tick marks the 3.65-hour yearly average.';
   $$('input[type=range]').forEach(paint);
   syncDaylight();
   updateDwellTotals();
@@ -1763,6 +2008,7 @@ function changed(reproject) {
   if (reproject) renderProjection();
   renderLive();
   announce();
+  updateStick();
 }
 function resetGen() { live.genOn = live.soc / K.CAP <= S.genStart + 1e-9; }
 function initControls() {
@@ -1868,7 +2114,7 @@ initReadout();
 var rzT = 0;
 window.addEventListener('resize', function () {
   clearTimeout(rzT);
-  rzT = setTimeout(function () { measureBar(); drawChart(); }, 120);
+  rzT = setTimeout(function () { measureBar(); drawChart(); updateStick(); }, 120);
 });
 })();
 </script>
