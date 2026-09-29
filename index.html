@@ -271,7 +271,9 @@ p{margin:0}
 .opts tr.alt{color:var(--ink-2)}
 .opts tr.alt .oname{color:var(--ink-2)}
 .opts col.c-opt{width:18%} .opts col.c-key{width:30%} .opts col.c-pro,.opts col.c-con{width:20%} .opts col.c-price{width:12%}
-.opts td.price,.sum-tbl td.price{font:600 15px/1.4 var(--font-din);white-space:nowrap}
+.opts td.price,.sum-tbl td.price{min-width:112px}
+.price .pv{display:block;font:600 15.5px/1.35 var(--font-din);white-space:nowrap;color:var(--ink)}
+.price small{display:block;margin-top:2px;font-size:13px;line-height:1.35;color:var(--muted)}
 .opts .oname a{color:inherit}
 .sel{scroll-margin-top:calc(var(--tabbar-h) + 16px)}
 .sum-tbl th a.jump{color:var(--ink);text-decoration-color:var(--line-2)}
@@ -282,6 +284,7 @@ p{margin:0}
 .subtotal b{font:600 18px var(--font-din);color:var(--ink)}
 .callouts{display:grid;gap:12px;margin:18px 0 28px}
 @media (min-width:760px){ .callouts{grid-template-columns:1fr 1fr} }
+@media (min-width:1100px){ .callouts{grid-template-columns:1fr 1fr 1fr} }
 .callout{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);font-size:15.5px;line-height:1.5}
 .callout .st{margin-top:2px}
 .screened{margin:0 0 16px;font-size:15px}
@@ -493,12 +496,12 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   </div>
   <h1>WV Farm Camp Power System</h1>
   <p class="lede">Solar panels, a battery bank and a propane generator that starts itself, powering two campers, a cabin and a shed with the same 120/240V power as a house. Installation is planned for summer 2027.</p>
-  <p class="status"><span class="status-mark" aria-hidden="true"></span>Equipment selected; quotes and site survey pending.</p>
+  <p class="status"><span class="status-mark" aria-hidden="true"></span>Equipment selected and confirmed in stock Sep 28, 2026; quotes and site survey pending.</p>
   <dl class="keyfigs">
     <div><dt>Solar panels</dt><dd><b>15.48</b>kW<small>11.61 kW in phase 1</small></dd></div>
     <div><dt>Battery bank</dt><dd><b>41.0</b>kWh<small>36.9 kWh usable</small></dd></div>
     <div><dt>Inverter</dt><dd><b>12</b>kW<small>on battery; 15 kW with solar</small></dd></div>
-    <div><dt>Generator</dt><dd><b>18</b>kW<small>propane, starts itself</small></dd></div>
+    <div><dt>Generator</dt><dd><b>14</b>kW<small>propane, starts itself</small></dd></div>
   </dl>
 </header>
 
@@ -540,7 +543,7 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
       <figure class="card diagram">
         <svg class="oneline" viewBox="0 0 400 656" role="img" aria-labelledby="dg-t dg-d">
           <title id="dg-t">System one-line diagram</title>
-          <desc id="dg-d">The solar panels feed the Sol-Ark 15K inverter's solar inputs. The eight battery modules connect to the inverter in both directions. The propane tank feeds the Kohler generator, which feeds the inverter's generator input; the inverter starts the generator through a 12V relay over a dashed start-signal line. A manual bypass switch lets the generator feed the main panel directly. The inverter's output feeds the main panel. The inverter, batteries, relay, bypass switch, main panel and heater sit inside the power center container. The main panel feeds the camp panel, the cabin 20A circuit and the shed 20A circuit. The camp panel feeds a 50A hookup for the 30-ft camper and a 30A hookup for the small camper.</desc>
+          <desc id="dg-d">The solar panels feed the Sol-Ark 15K inverter's solar inputs. The eight batteries, in two cabinets, connect to the inverter in both directions. The propane tank feeds the Kohler 14 kW generator, which feeds the inverter's generator input; the inverter starts the generator through a 12V relay over a dashed start-signal line. A manual bypass switch lets the generator feed the main panel directly. The inverter's output feeds the main panel. The inverter, battery cabinets, relay, bypass switch, main panel and heater sit inside the power center container. The main panel feeds the camp panel, the cabin 20A circuit and the shed 20A circuit. The camp panel feeds a 50A hookup for the 30-ft camper and a 30A hookup for the small camper.</desc>
           <defs>
             <marker id="ah-solar" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah-solar" d="M0 .6 8 4 0 7.4z"/></marker>
             <marker id="ah-batt" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah-batt" d="M0 .6 8 4 0 7.4z"/></marker>
@@ -590,12 +593,12 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
 
           <rect class="box" x="236" y="96" width="152" height="58" rx="8"/>
           <text class="nt" x="248" y="119">Generator</text>
-          <text class="ns" x="248" y="138">Kohler 18 kW · propane</text>
+          <text class="ns" x="248" y="138">Kohler 14 kW · propane</text>
 
           <rect class="box" x="16" y="200" width="116" height="78" rx="8"/>
           <text class="nt" x="28" y="223">Batteries</text>
-          <text class="ns" x="28" y="243">8 × 5.12 kWh</text>
-          <text class="ns" x="28" y="260">41.0 kWh · 48V</text>
+          <text class="ns" x="28" y="243">41.0 kWh · 48V</text>
+          <text class="ns" x="28" y="260">8 in 2 cabinets</text>
 
           <rect class="box" x="162" y="200" width="128" height="78" rx="8"/>
           <text class="nt" x="174" y="223">Sol-Ark 15K</text>
@@ -729,7 +732,7 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
   <section class="block" aria-labelledby="h-sel">
     <div class="block-head">
       <h2 id="h-sel">Equipment selection</h2>
-      <p>For each part of the system: what it has to do, what was ruled out, what we picked and the runners-up, with pros, cons and prices. Picks come from a market survey on Sep 27–28, 2026; prices are approximate.</p>
+      <p>For each part of the system: what it has to do, what was ruled out, what we picked and the runners-up, with pros, cons and prices. Picks come from a market survey on Sep 27–28, 2026, and each was confirmed in stock at a US retailer on Sep 28. Prices are approximate.</p>
     </div>
     <div class="card tbl-wrap">
       <table class="tbl stack sum-tbl">
@@ -737,8 +740,9 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
         <tbody id="sumBody"></tbody>
       </table>
     </div>
-    <p class="subtotal">Major-equipment subtotal about <b>$31,900</b>, not counting the battery rack, racking, tank, container, wiring, freight and labor.</p>
+    <p class="subtotal">Major-equipment subtotal about <b>$34,100</b> including the battery cabinets, not counting racking, tank, container, wiring, freight and labor.</p>
     <div class="callouts">
+      <div class="callout"><span class="st ok" aria-hidden="true">✓</span><p><b>Every pick is in stock.</b> Each was confirmed in stock at a US retailer on Sep 28, 2026. The Kohler 18 kW generator and the Micro-Air EasyStart were replaced when they failed that check.</p></div>
       <div class="callout"><span class="st wait" aria-hidden="true">!</span><p><b>The container is heated.</b> None of the chosen batteries or inverters is rated for West Virginia's −37°F record low.</p></div>
       <div class="callout"><span class="st wait" aria-hidden="true">!</span><p><b>A small relay starts the generator.</b> The Sol-Ark's generator-start contact is rated only 12V and 100mA, so a relay sits between it and the generator's 2-wire start input.</p></div>
     </div>
@@ -813,7 +817,8 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
             </div>
             <div class="meter" id="m-gen" role="group" aria-label="Generator">
               <div class="m-head"><span class="m-name"><i class="key" style="--c:var(--gen)"></i>Generator</span><span class="m-val"><span class="run" data-r>OFF</span><b data-v>0.0 kW</b><span data-p></span></span></div>
-              <div class="track"><span class="fill" data-a style="--c:var(--gen)"></span></div>
+              <div class="track"><span class="fill" data-a style="--c:var(--gen)"></span><span class="mark" data-b style="--c:var(--ink)" title="Power limit"></span></div>
+              <div class="m-keys"><span><i style="--c:var(--ink)"></i><span data-kl>Power limit 10.0 kW</span></span></div>
               <div class="m-sub" data-s></div>
             </div>
           </section>
@@ -923,6 +928,11 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
             <div class="ctl-top"><label for="gstop">Generator stops at</label><output id="gstop-o" for="gstop">90%</output></div>
             <input type="range" id="gstop" min="55" max="100" step="1" value="90">
           </div>
+          <div class="ctl">
+            <div class="ctl-top"><label for="glimit">Generator power limit</label><output id="glimit-o" for="glimit">10.0 kW</output></div>
+            <input type="range" id="glimit" min="6" max="14" step="0.5" value="10" aria-describedby="glimit-h">
+            <p class="help" id="glimit-h">The Sol-Ark's Gen Limit Power setting. It caps how much the generator supplies by trimming battery charging; the camp's own use always comes first.</p>
+          </div>
         </div>
 
         <div class="ctl-foot"><button type="button" class="btn" id="reset">Reset to defaults</button></div>
@@ -966,12 +976,12 @@ details.more .tbl th,details.more .tbl td{padding:6px 10px}
 </main>
 
 <script>
-/* MODEL:BEGIN - pure power model; no DOM. Numbers from the agent brief (market survey Sep 27–28, 2026). */
+/* MODEL:BEGIN - pure power model; no DOM. Numbers from the agent brief (market survey Sep 27–28, 2026; stock checked Sep 28). */
 var SimModel = (function () {
   'use strict';
   var K = Object.freeze({
     INV_MAX: 12000, INV_MAX_PV: 15000, PV_BOOST: 3000, LEG_MAX: 7500, BATT_RATE: 14080, CAP: 40960, FLOOR: 0.10,
-    GEN_MAX: 18000, DERATE: 0.75, CH_EFF: 0.96, DIS_EFF: 0.94, PV_CAP: 19500,
+    GEN_MAX: 14000, DERATE: 0.75, CH_EFF: 0.96, DIS_EFF: 0.94, PV_CAP: 19500,
     IDLE: 90, SOLAR_BAR: 15500, LOAD_BAR: 15000, AC_START_EXTRA: 1400
   });
   var ARRAYS = {
@@ -996,7 +1006,7 @@ var SimModel = (function () {
     { id: 'misc_cabin',      name: 'Lights, fans, outlets', dwelling: 'cabin',    w: 200,  duty: 0.20, leg: 'L2' },
     { id: 'tools_shed',      name: 'Power tools',           dwelling: 'shed',     w: 1500, duty: 0.05, leg: 'L1', defaultOff: true }
   ];
-  var DEFAULTS = Object.freeze({ array: 'full', season: 'summer', psh: 4.5, cloud: 1, startSoc: 0.80, genStart: 0.25, genStop: 0.90 });
+  var DEFAULTS = Object.freeze({ array: 'full', season: 'summer', psh: 4.5, cloud: 1, startSoc: 0.80, genStart: 0.25, genStop: 0.90, genLimit: 10000 });
 
   function defaultOn() {
     var on = {};
@@ -1005,7 +1015,7 @@ var SimModel = (function () {
   }
   function defaults() {
     return { array: DEFAULTS.array, season: DEFAULTS.season, psh: DEFAULTS.psh, cloud: DEFAULTS.cloud,
-             startSoc: DEFAULTS.startSoc, genStart: DEFAULTS.genStart, genStop: DEFAULTS.genStop, on: defaultOn() };
+             startSoc: DEFAULTS.startSoc, genStart: DEFAULTS.genStart, genStop: DEFAULTS.genStop, genLimit: DEFAULTS.genLimit, on: defaultOn() };
   }
   // Instantaneous load: every enabled load at running W, idle split evenly across legs.
   function loadNow(on) {
@@ -1039,7 +1049,8 @@ var SimModel = (function () {
     return Math.min(K.PV_CAP, Math.max(0, w));
   }
   // One dispatch decision. soc in Wh; dtH is the step length used to keep SOC inside 20-100%.
-  function dispatch(pv, load, soc, genOn, dtH) {
+  // genLimit is the Sol-Ark's Gen Limit Power: the generator carries the load (up to its rating) and charges only up to the limit.
+  function dispatch(pv, load, soc, genOn, dtH, genLimit) {
     var room = Math.max(0, K.CAP - soc);
     var avail = Math.max(0, soc - K.FLOOR * K.CAP);
     var chargeLim = Math.min(K.BATT_RATE, room / (K.CH_EFF * dtH));
@@ -1050,11 +1061,12 @@ var SimModel = (function () {
       // Generator carries the load; spare generator capacity plus all PV charge the battery.
       r.genLoad = Math.min(load, K.GEN_MAX);
       r.pvToBatt = Math.min(pv, chargeLim);
-      r.genCharge = Math.max(0, Math.min(K.GEN_MAX - r.genLoad, chargeLim - r.pvToBatt));
+      var lim = genLimit == null ? K.GEN_MAX : Math.min(genLimit, K.GEN_MAX);
+      r.genCharge = Math.max(0, Math.min(lim - load, chargeLim - r.pvToBatt));
       r.charge = r.pvToBatt + r.genCharge;
       r.gen = r.genLoad + r.genCharge;
       r.curtail = pv - r.pvToBatt;
-      r.fuelRate = 1.2 + 1.9 * (r.gen / K.GEN_MAX);  // estimate from the brief
+      r.fuelRate = 1.07 + 1.16 * (r.gen / K.GEN_MAX);  // estimate from the brief
     } else if (pv >= load) {
       var surplus = pv - load;
       r.charge = Math.min(surplus, chargeLim);
@@ -1074,8 +1086,8 @@ var SimModel = (function () {
     if (st.genOn && frac >= s.genStop - 1e-9) st.genOn = false;
     if (!st.genOn && frac <= s.genStart + 1e-9) st.genOn = true;
     var pv = solarW(tH, s);
-    var f = dispatch(pv, loadW, st.soc, st.genOn, dtH);
-    if (!st.genOn && f.short) { st.genOn = true; f = dispatch(pv, loadW, st.soc, true, dtH); }
+    var f = dispatch(pv, loadW, st.soc, st.genOn, dtH, s.genLimit);
+    if (!st.genOn && f.short) { st.genOn = true; f = dispatch(pv, loadW, st.soc, true, dtH, s.genLimit); }
     return f;
   }
   function step(st, s, loadW, tH, dtH) {
@@ -1090,7 +1102,7 @@ var SimModel = (function () {
   function overloads(ln, genOn, pv) {
     var out = [];
     if (!genOn && ln.total > loadLimit(pv, false)) out.push('the camp is using more than the inverter can supply (12 kW on battery, up to 15 kW with solar)');
-    if (genOn && ln.total > K.GEN_MAX) out.push('the camp is using more than the 18 kW generator can supply');
+    if (genOn && ln.total > K.GEN_MAX) out.push('the camp is using more than the 14 kW generator can supply');
     if (ln.l1 > K.LEG_MAX) out.push('side L1 is over its 7.5 kW limit');
     if (ln.l2 > K.LEG_MAX) out.push('side L2 is over its 7.5 kW limit');
     return out;
@@ -1174,50 +1186,55 @@ function hhmm(m) {
 }
 function link(text, href) { return h('a', { href: href, target: '_blank', rel: 'noopener', text: text }); }
 
-/* ---------- system tab data (spec and brief, market survey Sep 27–28, 2026) ---------- */
+/* ---------- system tab data (spec and brief; picks confirmed in stock Sep 28, 2026) ---------- */
 var REQS = [
   ['R1', 'Four places to power', 'A 30-ft camper (50A, 120/240V), a small camper (30A, 120V), a cabin and a shed.', 'Camper hookups (50A and 30A) at a small electrical panel near the camp, plus a 20A circuit each to the cabin and the shed.'],
-  ['R2', 'A/C all night', 'One A/C in each dwelling, three in all, able to run through the night.', 'The batteries hold 36.9 kWh of usable power, and a night needs about 32 kWh. Soft starters on the A/Cs are optional; the inverter handles their start-up surge on its own.'],
+  ['R2', 'A/C all night', 'One A/C in each dwelling, three in all, able to run through the night.', 'The batteries hold 36.9 kWh of usable power, and a night needs about 32 kWh. Soft starters on the two camper A/Cs are a suggested add-on, not needed day to day.'],
   ['R3', 'Year-round use', 'Usable in every season. Winter heat is propane, not electric.', 'A winter day needs about 11 kWh, plus the container heater if it\'s electric. Winter sun provides 21–32 kWh a day, the container is heated, and the generator covers long cloudy stretches.', true, 'wait'],
   ['R4', 'House-style power', '120/240V, the same as a house (split-phase, 60 Hz).', 'The Sol-Ark 15K inverter supplies 12 kW from the batteries and 15 kW with solar, up to 7.5 kW on each 120V side.'],
-  ['R5', 'Battery type', '48V lithium iron phosphate (LiFePO4) batteries.', 'Eight Pytes V5 batteries, 41.0 kWh in all, certified as a system with the Sol-Ark (UL 9540).'],
-  ['R6', 'Solar share', 'About 15.5 kW of panels (the owner\'s 80A target), covering 67% of a summer day\'s power.', 'The full 15.48 kW of panels makes about 42 kWh a day with average sun, 65% of the summer design day. Summer sun is stronger than average, so the 67% target is met in summer. The generator covers the rest: about 2 hours and 5 gal of propane a day in summer.'],
+  ['R5', 'Battery type', '48V lithium iron phosphate (LiFePO4) batteries.', 'Eight Pytes V5 batteries in two cabinets, 41.0 kWh in all, certified as a system with the Sol-Ark (UL 9540).'],
+  ['R6', 'Solar share', 'About 15.5 kW of panels (the owner\'s 80A target), covering 67% of a summer day\'s power.', 'The full 15.48 kW of panels makes about 42 kWh a day with average sun, 65% of the summer design day. Summer sun is stronger than average, so the 67% target is met in summer. The generator covers the rest: about 3 hours and 6 gal of propane a day in summer.'],
   ['R7', 'Two-step solar build', 'Put in the solar in two phases, about two-thirds then one-third.', '27 panels first, then 9 more (75% / 25%). Panels are wired in groups of 9, which sets the split. Racking and wiring for all 36 go in during phase 1.'],
-  ['R8', 'New gear, automatic backup', 'All new equipment, including a Generac-class propane generator that starts itself when the batteries run low. The owner\'s current generator is not reused.', 'Kohler 18RCA, 18 kW on propane. The inverter starts and stops it at set battery levels through a small relay.'],
+  ['R8', 'New gear, automatic backup', 'All new equipment, including a Generac-class propane generator that starts itself when the batteries run low. The owner\'s current generator is not reused.', 'Kohler 14RCA on propane, which Kohler markets for off-grid primary power. The inverter starts and stops it at set battery levels through a small relay, and limits how hard it runs (near 10 kW).'],
   ['R9', 'Equipment room', 'Inverter, batteries and main panel in an insulated 10 ft shipping container.', 'Insulated container with a thermostat-controlled heater and exhaust fan. None of the chosen equipment is rated for the −37°F state record low, so the heater keeps the batteries at 32°F or warmer.'],
-  ['R10', 'Schedule', 'Install summer 2027, power on fall 2027.', 'Equipment selected. Quotes, the site walk-through, permits and two owner answers remain.', false, 'wait']
+  ['R10', 'Schedule', 'Install summer 2027, power on fall 2027.', 'Equipment selected and confirmed in stock on Sep 28, 2026. Quotes, the site walk-through, permits and two owner answers remain.', false, 'wait']
 ];
 var EQUIPMENT = [
   { key: 'inv', item: 'Inverter/charger', product: 'Sol-Ark 15K-2P-N', qty: '1', c: '--neutral',
     what: 'The heart of the system. It turns solar and battery power into 120/240V household power, charges the batteries, and starts the generator when they run low.',
     specs: [['Steady output', '12,000 W', 'on battery; 15,000 W with solar'], ['Each 120V side', '7,500 W max'], ['Short bursts', '24,000 W', 'for up to 10 seconds'],
-            ['Battery charging', 'Up to 14,080 W', '275 A'], ['Solar input', '19.5 kW', 'on 3 inputs'], ['Power it uses itself', '~90 W'], ['Generator input', '80 A']],
+            ['Battery charging', 'Up to 14,080 W', '275 A'], ['Solar input', '19.5 kW', 'on 3 inputs'], ['Power it uses itself', '~90 W'],
+            ['Generator input', '80 A', 'with an adjustable power limit (Gen Limit Power)']],
     page: 'https://sol-ark.com/residential-energy-solutions/whole-home-15k-2p-hybrid-inverter/',
     docs: [['Datasheet', 'https://sol-ark.com/wp-content/uploads/2026/09/15KDatasheet_PS-00001_Rev_8_10Sept2026.pdf'], ['Manuals and certificates', 'https://sol-ark.com/document/15k-2p-n-datasheet/']] },
-  { key: 'batt', item: 'Batteries', product: 'Pytes V5', qty: '8', c: '--charge',
-    what: 'Store solar power for night and cloudy days. Each module heats itself in the cold.',
-    specs: [['Each', '5.12 kWh'], ['All eight', '40.96 kWh'], ['Usable', '36.9 kWh', 'kept between 10% and 100% charge'], ['Current', '100 A each'], ['Cold weather', 'Self-heating'], ['Certified', 'UL 9540', 'as a system with the Sol-Ark 15K']],
+  { key: 'batt', item: 'Batteries', product: 'Pytes V5, in two V-BOX-OC cabinets', qty: '8', qtyNote: '4 per cabinet', c: '--charge',
+    what: 'Store solar power for night and cloudy days. Each battery heats itself in the cold.',
+    specs: [['Each', '5.12 kWh'], ['All eight', '40.96 kWh'], ['Usable', '36.9 kWh', 'kept between 10% and 100% charge'], ['Current', '100 A each'], ['Cold weather', 'Self-heating'],
+            ['Cabinets', '2 × V-BOX-OC', 'busbars and DC breaker built in'], ['Certified', 'UL 9540', 'as a system with the Sol-Ark 15K']],
     page: 'https://www.pytesusa.com/Low-Voltage-Battery/v5.html',
-    docs: [['Datasheet', 'https://www.pytesusa.com/public/upload/20260527/12f047afbebb22c3c3b303e387333b41.pdf'], ['Sol-Ark pairing flyer (UL 9540)', 'https://www.solar-electric.com/lib/wind-sun/Pytes-UL9540-Certified-ESS-System.pdf']] },
+    docs: [['Datasheet', 'https://www.pytesusa.com/public/upload/20260527/12f047afbebb22c3c3b303e387333b41.pdf'],
+           ['Cabinet: V-BOX-OC', 'https://www.currentconnected.com/product/pytes-v-box-oc-outdoor-battery-cabinet-for-pytes-v5-server-rack-lithium-batteries-ip55-galvanized-steel-enclosure/'],
+           ['Sol-Ark pairing flyer (UL 9540)', 'https://www.solar-electric.com/lib/wind-sun/Pytes-UL9540-Certified-ESS-System.pdf']] },
   { key: 'pv', item: 'Solar panels', product: 'Qcells Q.TRON BLK M-G2+ 430W', qty: '27 + 9', qtyNote: 'phase 1 + phase 2', c: '--solar',
     what: 'Ground-mounted panels that turn sunlight into power, put in over two phases.',
     specs: [['Each panel', '430 W'], ['Phase 1', '11.61 kW', '27 panels'], ['Full build', '15.48 kW', '36 panels'], ['Wiring', '4 groups of 9']],
     page: 'https://us.qcells.com/q-tron-blk-m-g2/',
     docs: [['Datasheet', 'https://media.qcells.com/v/1FhTENgd/']] },
-  { key: 'gen', item: 'Generator', product: 'Kohler 18RCA, propane', qty: '1', c: '--gen',
-    what: 'Backup power. It starts on its own when the batteries run low, recharges them, then shuts off.',
-    specs: [['Output on propane', '18,000 W', '75 A'], ['Fuel at half load', '~2.1 gal/h'], ['Auto-start', '2-wire start', 'through a 12V relay']],
-    page: null, docs: [] },
+  { key: 'gen', item: 'Generator', product: 'Kohler 14RCA, propane', qty: '1', c: '--gen',
+    what: 'Backup power. It starts on its own when the batteries run low, recharges them, then shuts off. Kohler markets this model for off-grid primary power.',
+    specs: [['Output on propane', '14,000 W', '58 A'], ['Power limit', 'Set near 10 kW', 'on the Sol-Ark, so it runs near 80% after altitude and heat derating'],
+            ['Fuel', '~1.65 gal/h', 'at half load; ~2.23 at full'], ['Auto-start', '2-wire start', 'through a 12V relay']],
+    page: 'https://www.kohlerhomeenergy.rehlko.com/products/home-generators/14rca', docs: [] },
   { key: 'tank', item: 'Propane tank', product: '500 gal', qty: '1', c: '--lp',
     what: 'Fuel for the generator.',
-    specs: [['Usable', '~400 gal', 'tanks are filled to about 80%']], generic: true },
-  { key: 'soft', item: 'A/C soft starters', product: 'Micro-Air EasyStart or equivalent', qty: 'Up to 3', qtyNote: 'one per A/C', c: '--load', optional: true,
-    what: 'Nice to have, not required. A small add-on for an A/C that softens the power spike when its compressor kicks on. The inverter can start the A/Cs without them.',
-    specs: [['Required?', 'No', 'the inverter\'s 24 kW surge rating covers A/C starts'], ['Where', 'On each A/C, if added']],
-    page: 'https://www.microair.net/products/easystart-breeze-soft-starter', pageLabel: 'EasyStart Breeze, the RV model' },
+    specs: [['Usable', '~400 gal', 'tanks are filled to about 80%'], ['Lasts', '~65 summer days', 'of generator use']], generic: true },
+  { key: 'soft', item: 'A/C soft starters', product: 'SoftStartRV', qty: '2', qtyNote: 'the two camper A/Cs', c: '--load', optional: true,
+    what: 'Nice to have, not needed day to day. A small add-on that softens an A/C\'s power spike when its compressor kicks on. Suggested for the two camper A/Cs so they can\'t trip the inverter by starting together.',
+    specs: [['Start current', '65–75% lower'], ['Where', 'The two camper rooftop A/Cs'], ['Cabin A/C', 'Only if conventional', 'not needed for an inverter mini-split']],
+    page: 'https://softstartusa.com/products/softstartrv', docs: [] },
   { key: 'pc', item: 'Power center', product: 'Insulated 10 ft container with heater and exhaust fan', qty: '1', c: '--neutral',
-    what: 'A secure, weatherproof room for the inverter, batteries and main panel, kept warm in winter and vented in summer.',
-    specs: [['Heating', 'Thermostatic heater', 'keeps the batteries at 32°F or warmer'], ['Cooling', 'Exhaust fan'], ['Holds', 'Inverter, batteries, main panel']], generic: true }
+    what: 'A secure, weatherproof room for the inverter, battery cabinets and main panel, kept warm in winter and vented in summer.',
+    specs: [['Heating', 'Thermostatic heater', 'keeps the batteries at 32°F or warmer'], ['Cooling', 'Exhaust fan'], ['Holds', 'Inverter, battery cabinets, main panel']], generic: true }
 ];
 var CAPACITY = [
   { measure: 'Busiest moment', design: 'About 7.8 kW with everything running; about 9.3 kW for a moment while an A/C starts', cap: '12 kW inverter on battery, 15 kW with solar',
@@ -1227,7 +1244,7 @@ var CAPACITY = [
   { measure: 'Hot summer day', design: 'About 65 kWh (A/C 54, everything else 9, inverter 2.2)', cap: 'Solar about 42 kWh on an average-sun day; generator about 22 kWh',
     need: [{ v: 65, c: '--load', t: '65 kWh on a hot summer day' }], needTxt: '65 kWh',
     have: [{ v: 42, c: '--solar', t: 'Solar about 42 kWh' }, { v: 22, c: '--gen', t: 'Generator about 22 kWh' }], haveTxt: '42 + 22 kWh',
-    verdict: 'Solar covers about 65%; the generator makes up the rest in about 2 hours.' },
+    verdict: 'Solar covers about 65%; the generator makes up the rest in about 3 hours.' },
   { measure: 'One night (12 hours)', design: 'About 32 kWh', cap: '36.9 kWh of usable battery',
     need: [{ v: 32, c: '--load', t: '32 kWh overnight' }], needTxt: '32 kWh',
     have: [{ v: 36.9, c: '--charge', t: '36.9 kWh of usable battery' }], haveTxt: '36.9 kWh',
@@ -1236,10 +1253,10 @@ var CAPACITY = [
     need: [{ v: 11, c: '--load', t: '11 kWh on a winter day' }], needTxt: '11 kWh',
     have: [{ v: 21, c: '--solar', t: 'Solar 21 kWh a day, low end' }, { v: 11, c: '--solar', hatch: true, t: 'Solar up to 32 kWh a day' }], haveTxt: '21–32 kWh',
     verdict: 'Fits: winter sun covers a normal day; the generator is for long cloudy stretches.', ok: true },
-  { measure: 'Generator fuel in summer', design: 'About 2 hours and 5 gal of propane a day', cap: '400 gal usable in the tank',
-    need: [{ v: 5, c: '--gen', t: '5 gal a summer day' }], needTxt: '5 gal/day',
+  { measure: 'Generator fuel in summer', design: 'About 3 hours and 6 gal of propane a day', cap: '400 gal usable in the tank',
+    need: [{ v: 6, c: '--gen', t: '6 gal a summer day' }], needTxt: '6 gal/day',
     have: [{ v: 400, c: '--lp', t: '400 gal usable' }], haveTxt: '400 gal',
-    verdict: 'One tank fill lasts about 80 summer days.' }
+    verdict: 'One tank fill lasts about 65 summer days.' }
 ];
 var STRINGS = [
   ['1', '26A usable, 44A short-circuit, 2 inputs', '2', '27.5A / 26.1A', '1 string in phase 1, 1 in phase 2'],
@@ -1248,9 +1265,10 @@ var STRINGS = [
 ];
 var DIST = [
   ['Main panel', 'In the power center, fed from the inverter\'s load output. Conductors and overcurrent protection per the Sol-Ark manual.'],
-  ['Generator input', 'Sol-Ark generator port, 80A continuous; the Kohler 18RCA delivers 75A.'],
+  ['Generator input', 'Sol-Ark generator port, 80A continuous; the Kohler 14RCA delivers 58A. Set Gen Limit Power once site elevation is known.'],
   ['Generator bypass', 'Manual transfer switch so the camp can run directly on the generator if the inverter fails.'],
   ['Start relay', '12V DC interposing relay, coil under 100mA, with its own 12V supply. Sol-Ark\'s start contact is rated 12V, 100mA.'],
+  ['Battery cabinets', 'Two Pytes V-BOX-OC cabinets, 4 batteries each, with busbars and DC breaker built in.'],
   ['Camp feeder', 'To a subpanel at the camp, sized for 3% maximum voltage drop once distance is measured.'],
   ['Camper, 30-ft', '50A 120/240V receptacle (NEMA 14-50), splits across both legs.'],
   ['Camper, small', '30A 120V receptacle (TT-30) on L1.'],
@@ -1259,26 +1277,25 @@ var DIST = [
   ['GFCI', 'Per NEC for outdoor and RV receptacles.'],
   ['Grounding and bonding', 'One neutral-ground bond, at the main panel. Grounding electrode at the power center. Generator neutral unbonded.'],
   ['DC', 'Battery conductors and fusing rated for 275A per the Sol-Ark manual. Arc-fault and ground-fault detection are built into the Sol-Ark; PV disconnect per manual.'],
-  ['Battery rack', 'Pytes-compatible rack or cabinet for the eight modules; model and price to confirm.'],
   ['Array and racking', 'Ground mount for all 36 modules, away from structures. Full footprint, conduit and string wiring installed in phase 1.']
 ];
 var OPEN = [
   ['Confirm winter heat is propane, not electric.', 'Owner'],
-  ['Read the amps rating on the cabin A/C\'s nameplate sticker.', 'Owner'],
+  ['Cabin A/C: is it an inverter mini-split or a conventional unit, and what are its nameplate amps? (A mini-split needs no soft starter; over 12A needs the 20A circuit.) Also the 30-ft camper A/C\'s BTU rating, and the site elevation, which sets how much the generator derates.', 'Owner'],
   ['Choose the container heater: propane direct-vent (doesn\'t draw on the batteries) or electric.', 'Will'],
-  ['Get quotes for the Kohler 18RCA without the transfer switch and for the Pytes V5 rack, and confirm Kohler\'s non-standby warranty covers the 18 kW model.', 'Will'],
+  ['Confirm quantities when ordering: 8 Pytes V5 (one dealer showed 3 in stock; Signature Solar sells in-stock 4-battery bundles) and 36 Qcells panels.', 'Will'],
   ['Ask the county inspector whether a UL 9540 system listing is required. The Sol-Ark with Pytes V5 has one.', 'Will'],
   ['Choose spots for the solar panels, container, generator and propane tank; check for shade; measure the wire runs.', 'Site walk-through'],
   ['Get the county permit and inspection, and hire a licensed electrician for the final connections.', 'Owner']
 ];
 
-/* ---------- equipment selection data (market survey Sep 27–28, 2026) ----------
-   rows: [option, key specs, pros, cons, price]; the first row is the pick.
+/* ---------- equipment selection data (market survey Sep 27–28, 2026; stock checked Sep 28) ----------
+   rows: [option, key specs, pros, cons, price, price note]; the first row is the pick.
    out: options ruled out before the comparison, [name, reason]. */
 function pageOf(key) { var e = EQUIPMENT.filter(function (x) { return x.key === key; })[0]; return e && e.page; }
 var SELECTION = [
   { name: 'Inverter/charger', key: 'inv',
-    min: '120/240V off-grid power; at least 10 kW steady and 9.3 kW for an A/C start; takes at least 15.5 kW of panels; starts the generator automatically (2-wire start); talks to several battery brands (closed-loop communication); rated to −4°F or colder; UL 1741 safety listing',
+    min: '120/240V off-grid power; at least 10 kW steady and 9.3 kW for an A/C start; takes at least 15.5 kW of panels; starts the generator automatically (2-wire start); talks to several battery brands (closed-loop communication); rated to −4°F or colder; UL 1741 safety listing; in stock',
     out: [['EG4 12000XP', 'needs 32°F or warmer at full load'], ['Sol-Ark 12K-2P-N', 'only 9 kW and 13 kW of panels'], ['Victron MultiPlus-II ×2 or ×3', '8 kW, or unequal units on each side'],
           ['Schneider XW Pro', 'discontinued'], ['OutBack Radian', 'can\'t communicate with lithium batteries (open-loop only)'], ['SMA Sunny Island', 'no longer sold'],
           ['Growatt SPF 12000T', 'needs 32°F or warmer; only 7 kW of panels'], ['Deye', 'not sold or supported in the US'], ['MidNite The One', '15.0 kW of panels, 0.5 kW short'],
@@ -1286,72 +1303,76 @@ var SELECTION = [
     rows: [
       ['Sol-Ark 15K-2P-N', '12 kW on battery, 15 kW with solar; 7.5 kW per 120V side; 24 kW for 10 seconds; 19.5 kW of panels on 3 solar inputs (26A, 500V); 275A battery charging; 80A generator input; uses about 90W itself; runs from −13°F to 131°F; 10-year warranty',
        'Strongest surge of the single-box options; the full array fits with about 4 kW to spare; works with the most battery brands, including UL 9540 certified pairings; US support',
-       'Its small generator-start contact (12V, 100mA) needs a relay; needs a heated container; uses the most power itself; built by Deye', '$5,229'],
+       'Its small generator-start contact (12V, 100mA) needs a relay; needs a heated container; uses the most power itself; built by Deye', '$5,229', 'RES Supply; also in stock at ShopSolar and US Solar Supplier'],
       ['Victron 2× Quattro 48/10000 + Cerbo GX + 3× MPPT 250/100', '16 kW; 20 kW peak per unit; inverters rated to −40°F',
        'Best cold rating; some redundancy with two units; flexible generator control',
        'The UL-listed setup forces strings of 5 panels (35 panels); the Cerbo controller is IEC-only and rated to −4°F; 5-year warranty; needs a Victron installer', '$7,737'],
-      ['EG4 18kPV (previous pick)', '12 kW, 8 kW per side; 18 kW of panels; 250A battery charging; 90A generator input; uses 70W itself; rated to −13°F; 10-year warranty',
+      ['EG4 18kPV (original pick)', '12 kW, 8 kW per side; 18 kW of panels; 250A battery charging; 90A generator input; uses 70W itself; rated to −13°F; 10-year warranty',
        'Cheapest option that passed; lowest power use; generator start wires directly',
        '2026 reviews report firmware and circuit-board failures and slow support; a law firm opened an investigation in July 2025 (no findings)', '$4,000']
     ],
     also: 'EG4 FlexBOSS21 + GridBOSS (about $5,400; 6 kW per side); Sol-Ark 12K-2P-LL ($3,975; rated to −40°F, but exactly 10 kW, and only 12 kW of panels usable).' },
   { name: 'Batteries', key: 'batt',
-    min: '48V lithium iron phosphate (LiFePO4); at least 32 kWh usable; at least 275A combined; on Sol-Ark\'s approved list, ideally Victron\'s and EG4\'s too; heats itself or has documented cold-weather charging; UL 1973 and UL 9540A safety listings',
+    min: '48V lithium iron phosphate (LiFePO4); at least 32 kWh usable; at least 275A combined; on Sol-Ark\'s approved list, ideally Victron\'s and EG4\'s too; heats itself or has documented cold-weather charging; UL 1973 and UL 9540A safety listings; in stock',
     out: [['EG4 WallMount 280Ah and 314Ah', 'not on Sol-Ark\'s approved list'], ['EG4 LL-S', 'not on Sol-Ark\'s list, and no heater'], ['Fortress eVault and eFlex', 'no heater; no closed-loop link to Victron'],
           ['SimpliPHI 6.6', 'no heater'], ['HomeGrid, RUiXU, SOK, BigBattery', 'not on the inverter makers\' approved lists'], ['Deka Duration', 'no heater']],
     rows: [
-      ['Pytes V5 ×8', '41 kWh, 36.9 kWh usable at 90%; 100A each; charges from 32°F to 113°F, runs from 14°F to 122°F, heater works from about 0°F; 10 years, 6,000 cycles or 19.35 MWh per unit',
+      ['Pytes V5 ×8 in two V-BOX-OC cabinets', '41 kWh, 36.9 kWh usable at 90%; 100A each; charges from 32°F to 113°F, runs from 14°F to 122°F, heater works from about 0°F; 10 years, 6,000 cycles or 19.35 MWh per unit; each cabinet holds 4, with busbars and DC breaker built in',
        'The only heated battery on Sol-Ark\'s, Victron\'s and EG4\'s approved lists; UL 9540 certified as a system with the Sol-Ark 15K; more than 600A combined',
-       'Warranty needs 14°F or warmer around the batteries; eight modules plus a rack; lowest lifetime-energy warranty cap', '$11,600 plus rack'],
+       'Warranty needs 14°F or warmer around the batteries; lowest lifetime-energy warranty cap; one dealer had only 3 in stock, so buy as bundles', '$14,098', '$7,049 per in-stock 4-battery bundle with cabinet (Signature Solar)'],
       ['Discover Helios ESS ×3', '48.2 kWh, all of it usable; 200A each; runs down to −13°F; sealed (IP65); 10 years and 93 MWh',
-       'Best cold ratings; cheapest; only three units; direct Victron link',
+       'Best cold ratings; only three units; direct Victron link',
        'Won\'t charge below 39°F; heater runs only above 50% charge or while charging; not on EG4\'s list; UL 9540 status conflicts between sources; restock late October', '$10,650'],
       ['Pytes V16 ×3', '48.2 kWh; 150–200A each (sources conflict); heated; sealed (IP66)',
        'Smallest footprint; Sol-Ark certified',
        'New in 2026; not on EG4\'s or Victron\'s lists; lifetime-energy cap not found', '$10,977']
     ] },
   { name: 'Solar panels', key: 'pv',
-    min: 'Strings of 9 stay at or below 500V on the coldest day (−37°F) and at or above 175V on a hot day; two strings fit within 26A per solar input; residential size; tier 1 (bankable) maker; in stock in the US',
+    min: 'Strings of 9 stay at or below 500V on the coldest day (−37°F) and at or above 175V on a hot day; two strings fit within 26A per solar input; residential size; tier 1 (bankable) maker; in stock',
     out: [['REC Alpha Pure-R/RX and Trina Vertex S+', '9 in a string reaches 541–681V on a cold day'], ['600W+ commercial panels', 'over 500V and over 26A'], ['Meyer Burger', 'US arm went bankrupt in 2025']],
     rows: [
       ['Qcells Q.TRON BLK M-G2+ 430', '430W; 39.32V open-circuit, 13.74A short-circuit; 408V per string on the coldest day, about 251–256V on a hot day; snow and wind rating 5,400 Pa design, 8,100 Pa tested; tier 1; 25/25-year warranty',
-       'Checked against every inverter finalist; splits exactly into the two phases; assembled in Georgia; in stock',
-       'Collects light on the front only (monofacial); the Georgia plant paused in late 2025 and resumed in March 2026', '$255.42 each, $9,195'],
+       'Checked against every inverter finalist; splits exactly into the two phases; assembled in Georgia',
+       'Collects light on the front only (monofacial); the Georgia plant paused in late 2025 and resumed in March 2026', '$9,195', '$255.42 each, in stock (A1 SolarStore)'],
       ['Silfab SIL-440 QD', '440W; 404V per string on the coldest day; 4,000 Pa rear load; 25/30-year warranty; made in North America',
        '15.8 kW from 36 panels; stronger rear-load rating; in stock', 'Not tier 1', '$259 each'],
       ['HD Hyundai HiN-T440NF(BK)', '440W; glass on both sides and collects light from the back too (about 80% as much); 405V per string on the coldest day; 5,400 Pa on both sides; tier 1',
        'Cheapest at $0.47 per watt; extra output from the back side; fits Sol-Ark\'s 44A limit', 'Origin and tariff exposure unknown; 54 lb', '$207.71 each']
     ] },
   { name: 'Generator', key: 'gen',
-    min: 'Propane, 120/240V; covers the 7.9 kW busiest moment plus about 6 kW of charging, so an 18 kW class unit runs near 75%; 80A or less on propane; documented 2-wire auto-start; outdoor enclosure; cold-weather kit; new and Generac-class (owner\'s requirement)',
-    out: [['Generac Protector QS 22 kW and Kohler 20RCA', '92A and 83A, over the 80A limit'], ['Cummins RS13A and RS17A', 'no documented 2-wire start; not warranted for off-grid use'],
-          ['Generac EcoGen and Briggs & Stratton 12 and 17 kW', 'discontinued'], ['14 kW units, including the previous Generac pick', 'would run near 100%']],
+    min: 'Propane, 120/240V; carries the 7.9 kW busiest moment after derating for altitude and summer heat; 80A or less on propane; documented 2-wire auto-start; maker supports off-grid use; outdoor enclosure; cold-weather kit; new and Generac-class (owner\'s requirement); in stock',
+    sizing: 'The Sol-Ark\'s power limit (Gen Limit Power) caps how much the generator supplies by trimming battery charging, so a 14 kW unit can run near 80%. Kohler derates 4% per 1,000 ft above 500 ft and 2% per 10°F above 60°F: about 12.3 kW at 2,000 ft on a 90°F day. A 10 kW limit carries the 7.9 kW busiest moment and charges about 7 kW against a typical 2.7 kW overnight load. The trade-off is about 3 hours of summer run time a day instead of about 2.',
+    out: [['Kohler 18RCA', 'previous pick; no longer in Kohler\'s lineup'], ['Briggs & Stratton PP18', 'listed as discontinued; not for prime power'],
+          ['Generac Protector QS 22 kW and Kohler 20RCA', '92A and 83A, over the 80A limit'], ['Cummins RS13A and RS17A', 'no documented 2-wire start; not warranted for off-grid use'],
+          ['Generac EcoGen and Briggs & Stratton 12 and 17 kW', 'discontinued']],
     rows: [
-      ['Kohler 18RCA', '18 kW on propane, 75A; about 2.1 gal/h at half load; 999 cc engine at 3,600 rpm; 69 dB',
-       '2-wire start documented on the standard controller; published warranty for non-standby use; cold package with a carburetor heater; dealer in Morgantown',
-       'Non-standby warranty is 18 months or 1,000 hours; minimum temperature not published; price without the transfer switch not found', '$5,875 with transfer switch'],
-      ['Briggs & Stratton PowerProtect PP18', '18 kW on propane, 75A; 2.2 gal/h at half load, 3.5 at full; rated to −20°F; 7 years or 1,000 hours for non-emergency use, covering parts, labor and travel',
-       'Best written warranty; published cold rating', 'Steps to enable 2-wire start not confirmed; highest fuel use; one WV dealer', '$5,746'],
+      ['Kohler 14RCA', '14 kW on propane, 58A; RDC2 controller; about 1.65 gal/h at half load, 2.23 at full; runs from −4°F to 158°F',
+       'Marketed and warrantied for off-grid primary power (18 months or 1,000 hours); 2-wire start on the standard controller, no kit needed; dealer in Morgantown; cheapest finalist',
+       'Relies on the Sol-Ark\'s power limit; about 3 hours a day of summer run time; off-grid warranty is shorter than the standby warranty; needs a cold-weather kit', '$4,999', 'in stock (A&P Electric); $4,899 at Home Depot'],
       ['Generac 7259 (18 kW)', '18 kW on propane, 75A; 1.65 gal/h at half load, 2.87 at full; 65 dB',
-       'The owner\'s named brand; about 11 dealers nearby; lowest fuel use and price',
-       'Warranty excludes off-grid damage from its 2-wire kit; needs dealer programming; cold rating not published', '$5,039 (sale)']
+       'The owner\'s named brand; more headroom, so no power limit needed; about 11 dealers nearby',
+       'Warranty excludes off-grid damage from its 2-wire kit; needs dealer programming; cold rating not published', '$5,599', 'in stock (A&P Electric)']
     ] },
   { name: 'Propane tank', key: 'tank',
-    min: 'Keeps up with the generator at full load (up to 3.5 gal/h) in winter cold, when a small tank can\'t turn liquid to gas fast enough; covers about 5 gal a day in summer; tanks are filled to about 80%',
+    min: 'Keeps up with the generator at full load (about 2.2 gal/h) in winter cold, when a small tank can\'t turn liquid to gas fast enough; covers about 6 gal a day in summer (estimate); tanks are filled to about 80%',
     rows: [
-      ['500 gal', 'About 400 gal usable; about 80 summer days', 'About one refill per summer; enough surface area for winter draw', 'Needs a larger pad and more setback distance', 'Not priced'],
-      ['250 gal', 'About 200 gal usable; about 40 days', 'Cheaper and smaller', 'Two or more refills per summer; less margin in winter cold', 'Not priced'],
-      ['1,000 gal', 'About 800 gal usable; about 160 days', 'One fill per season, or enough to heat the dwellings too', 'Costs more and harder to place', 'Not priced']
+      ['500 gal', 'About 400 gal usable; about 65 summer days', 'About one refill per summer; enough surface area for winter draw', 'Needs a larger pad and more setback distance', 'Not priced'],
+      ['250 gal', 'About 200 gal usable; about 33 days', 'Cheaper and smaller', 'Refills about monthly in summer; less margin in winter cold', 'Not priced'],
+      ['1,000 gal', 'About 800 gal usable; about 130 days', 'One fill per season, or enough to heat the dwellings too', 'Costs more and harder to place', 'Not priced']
     ] },
   { name: 'A/C soft starters', key: 'soft', optional: true,
-    note: 'The Sol-Ark can start the A/Cs on its own. One A/C starting brings the camp to about 9.3 kW, and even all three starting at the same moment comes to about 12.1 kW (estimate), well within the inverter\'s 24 kW surge rating. A soft starter makes each start gentler; Micro-Air says it cuts the start-up surge by as much as 70%.',
-    min: 'Soften the start-up surge of each A/C; fit the rooftop RV units and the cabin unit',
+    note: 'On a normal day each A/C starts fine without one. A 13,500 BTU A/C draws 40–50A as it starts; next to a running A/C on the same 120V side that\'s about 57–67A, inside the Sol-Ark\'s 75A-for-5-seconds limit on battery. Three A/Cs on two sides means two share a side, though. If those two start together, as they likely would right after a restart, the draw is about 83–103A. That trips the inverter, probably at night. A soft starter on each camper A/C prevents that.',
+    min: 'Keep A/C starts inside the Sol-Ark\'s per-side limit on battery alone (75A for 5 seconds); two of the three A/Cs share a 120V side; in stock',
     rows: [
-      ['Micro-Air EasyStart', 'Soft starter for RV air conditioners', 'Widely used on rooftop units; set up from a phone app (Bluetooth)', 'One install per A/C; not yet confirmed to fit the cabin unit', 'Not priced'],
-      ['SoftStartRV', 'Soft starter for RV air conditioners', 'Does the same job', 'Same limits', 'Not priced']
-    ] },
+      ['SoftStartRV ×2', '65–75% less start current; works on 110V or 240V; up to 36,000 BTU; 90-day trial',
+       'Covers the two camper A/Cs, the pair most likely to share a side; also lets the campers run on small generators elsewhere; in stock', '1-year standard warranty', '$598', '$299 each'],
+      ['Micro-Air EasyStart Breeze ×2', 'Up to 75% less start current; set up over Bluetooth', 'Does the same job', 'Out of stock at three of the four retailers checked', '$345 each'],
+      ['SoftStartRV ×3, cabin included', 'Same as above', 'Covers every combination', 'Not needed if the cabin unit is an inverter mini-split', '$897'],
+      ['None; add later', 'Nothing installed', 'No cost now', 'The first trip would happen at a remote site, likely overnight', '$0']
+    ],
+    after: 'The cabin gets one only if its A/C has a conventional compressor.' },
   { name: 'Power center', key: 'pc',
-    min: 'Room for the Sol-Ark (31.8 × 19.4 × 12 in.), eight rack-mounted battery modules and the main panel, with working space; keeps the batteries at 32°F or warmer (the Pytes warranty needs 14°F around them; the Sol-Ark is rated to −13°F) against a −37°F record low; vented for summer; generator stays outside',
+    min: 'Room for the Sol-Ark (31.8 × 19.4 × 12 in.), two Pytes V-BOX-OC battery cabinets and the main panel, with working space; keeps the batteries at 32°F or warmer (the Pytes warranty needs 14°F around them; the Sol-Ark is rated to −13°F) against a −37°F record low; vented for summer; generator stays outside',
     rows: [
       ['Insulated 10 ft container with thermostatic heater and exhaust fan', 'Owner\'s choice', 'Secure, weatherproof and movable', 'Needs insulation, a heater and a vent; heater type (propane direct-vent or electric) not chosen yet', 'Not priced'],
       ['Insulated 20 ft container', 'More room', 'Space for spares and future batteries', 'More cost and space', 'Not priced'],
@@ -1377,7 +1398,7 @@ function renderSystem() {
   var pl = $('#plates');
   EQUIPMENT.forEach(function (e) {
     var links = [];
-    if (e.page) links.push(link((e.pageLabel ? 'Product page: ' + e.pageLabel : 'Product page') + ' ↗', e.page));
+    if (e.page) links.push(link('Product page ↗', e.page));
     (e.docs || []).forEach(function (d) { links.push(link(d[0] + ' ↗', d[1])); });
     pl.appendChild(h('article', { class: 'card plate' + (e.optional ? ' optional' : ''), id: 'eq-' + e.key },
       h('div', { class: 'plate-id' },
@@ -1435,6 +1456,9 @@ function renderSystem() {
 }
 
 /* ---------- render: equipment selection ---------- */
+function priceCell(r) {
+  return h('td', { class: 'price', 'data-label': 'Price' }, h('span', { class: 'pv', text: r[4] }), r[5] ? h('small', { text: r[5] }) : null);
+}
 function renderSelection() {
   var sumBody = $('#sumBody');
   var list = $('#selList');
@@ -1452,7 +1476,7 @@ function renderSelection() {
         c.optional ? h('span', { class: 'st opt', 'aria-hidden': 'true' }) : h('span', { class: 'st ok', 'aria-hidden': 'true' }, '✓'),
         h('span', null, href ? link(pretty(pick[0]) + ' ↗', href) : pretty(pick[0]), c.optional ? h('span', { class: 'tag opt', text: 'Optional' }) : null))),
       h('td', { class: 'soft', 'data-label': 'Runners-up', text: c.rows.slice(1).map(function (r) { return pretty(r[0]); }).join('; ') }),
-      h('td', { class: 'price', 'data-label': 'Price', text: pick[4] })));
+      priceCell(pick)));
 
     var table = h('table', { class: 'tbl stack' },
       h('colgroup', null, h('col', { class: 'c-opt' }), h('col', { class: 'c-key' }), h('col', { class: 'c-pro' }), h('col', { class: 'c-con' }), h('col', { class: 'c-price' })),
@@ -1470,7 +1494,7 @@ function renderSelection() {
           h('td', { 'data-label': 'Key specs' }, ul(items(r[1]))),
           h('td', { class: 'pro', 'data-label': '+ Pros' }, ul(items(r[2]))),
           h('td', { class: 'con', 'data-label': '− Cons' }, ul(items(r[3]))),
-          h('td', { class: 'price', 'data-label': 'Price', text: r[4] }));
+          priceCell(r));
       })));
     var screened = c.out && c.out.length
       ? h('details', { class: 'screened' },
@@ -1480,11 +1504,13 @@ function renderSelection() {
     list.appendChild(h('article', { class: 'card sel' + (c.optional ? ' optional' : ''), id: 'sel-' + i, 'aria-labelledby': 'selh-' + i },
       h('div', { class: 'sel-head' }, h('h3', { id: 'selh-' + i }, c.name, c.optional ? h('span', { class: 'tag opt', text: 'Optional' }) : null),
         h('span', { class: 'sel-count', text: (i + 1) + ' of ' + SELECTION.length })),
-      c.note ? h('p', { class: 'optnote' }, h('b', { text: 'Nice to have, not required. ' }), c.note) : null,
+      c.note ? h('p', { class: 'optnote' }, h('b', { text: 'Nice to have, not needed day to day. ' }), c.note) : null,
+      c.sizing ? h('p', { class: 'optnote' }, h('b', { text: 'How it\'s sized. ' }), c.sizing) : null,
       h('div', { class: 'minspec' }, h('h4', { text: c.optional ? 'If you add them, they should' : 'Must have' }), ul(items(c.min))),
       screened,
       h('div', { class: 'opts tbl-wrap' }, table),
-      c.also ? h('p', { class: 'also' }, h('b', { text: 'Also passed: ' }), c.also) : null));
+      c.also ? h('p', { class: 'also' }, h('b', { text: 'Also passed: ' }), c.also) : null,
+      c.after ? h('p', { class: 'also', text: c.after }) : null));
   });
 }
 
@@ -1704,7 +1730,9 @@ function renderLive() {
   gm.r.classList.toggle('is-off', !live.genOn);
   setText(gm.r, live.genOn ? 'RUNNING' : 'OFF');
   setText(gm.v, kw(live.genOn ? f.gen : 0));
-  setText(gm.p, pc(live.genOn ? f.gen : 0, K.GEN_MAX) + '% of 18 kW');
+  setText(gm.p, pc(live.genOn ? f.gen : 0, K.GEN_MAX) + '% of ' + (K.GEN_MAX / 1000) + ' kW');
+  gm.b.style.left = (S.genLimit / K.GEN_MAX * 100).toFixed(2) + '%';
+  setText($('[data-kl]', gm.root), 'Power limit ' + kw(S.genLimit));
   setText(gm.s, live.genOn
     ? kw(f.genLoad) + ' to the camp, ' + kw(f.genCharge) + ' to the batteries, burning ' + f.fuelRate.toFixed(1) + ' gal of propane an hour.'
     : 'Starts when the battery falls to ' + Math.round(S.genStart * 100) + '%.');
@@ -1987,6 +2015,7 @@ function syncInputs() {
   $('#psh').value = S.psh; $('#cloud').value = Math.round(S.cloud * 100);
   $('#soc').value = Math.round(S.startSoc * 100);
   $('#gstart').value = Math.round(S.genStart * 100); $('#gstop').value = Math.round(S.genStop * 100);
+  $('#glimit').value = S.genLimit / 1000;
   M_.LOADS.forEach(function (l) { $('#ld-' + l.id).checked = !!S.on[l.id]; });
   syncOutputs();
 }
@@ -1996,6 +2025,7 @@ function syncOutputs() {
   $('#soc-o').textContent = Math.round(S.startSoc * 100) + '%';
   $('#gstart-o').textContent = Math.round(S.genStart * 100) + '%';
   $('#gstop-o').textContent = Math.round(S.genStop * 100) + '%';
+  $('#glimit-o').textContent = (S.genLimit / 1000).toFixed(1) + ' kW';
   $('#psh-h').textContent = S.season === 'summer'
     ? 'Hours of full sun a day. The summer default of 4.5 is a placeholder until the site solar study. The tick marks the 3.65-hour yearly average.'
     : 'Hours of full sun a day. The winter default is 2.2. The tick marks the 3.65-hour yearly average.';
@@ -2030,6 +2060,7 @@ function initControls() {
     if (live.genOn && live.soc / K.CAP >= S.genStop) live.genOn = false;
     changed(true);
   });
+  $('#glimit').addEventListener('input', function (e) { S.genLimit = Number(e.target.value) * 1000; changed(true); });
   $('#time').addEventListener('input', function (e) { live.t = Number(e.target.value); acc = 0; renderLive(); announce(); });
   $('#play').addEventListener('click', function () { playing ? pause() : play(); });
   $('#reset').addEventListener('click', function () {
